@@ -1,0 +1,14 @@
+{
+  "name": "project-cendric",
+  "version": "1.0.0",
+  "description": "Cendric AI — Personal Finance & Sri Lankan Tax Intelligence Platform",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "install:server": "cd server && npm install",
+    "build": "cd server && npm install"
+  },
+  "keywords": ["finance", "tax", "rag", "ai", "sri-lanka"],
+  "author": "Piratheep-R",
+  "license": "ISC"
+}
