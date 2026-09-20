@@ -1408,10 +1408,37 @@
   }
 
   // ----------------------------------------------------
-  // 6. Navigation Tooltips & Responsive Observers
+  // 6. Modern Fintech Sidebar Redesign Engine
   // ----------------------------------------------------
-  // 6. Navigation Tooltips & Responsive Observers
-  // ----------------------------------------------------
+  let cachedSidebarTxCount = null;
+  let isFetchingSidebarStats = false;
+
+  async function fetchSidebarStats() {
+    if (isFetchingSidebarStats) return;
+    isFetchingSidebarStats = true;
+    try {
+      const token = getToken();
+      if (!token) return;
+      const res = await fetch('/api/transactions?limit=100', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const txs = await res.json();
+        if (Array.isArray(txs)) {
+          cachedSidebarTxCount = txs.length;
+          const countBadge = document.getElementById('cendric-tx-nav-count');
+          if (countBadge) {
+            countBadge.textContent = String(cachedSidebarTxCount);
+          }
+        }
+      }
+    } catch (err) {
+      console.warn('[Cendric] Sidebar stats fetch error:', err);
+    } finally {
+      isFetchingSidebarStats = false;
+    }
+  }
+
   function enhanceNavTooltips() {
     const navLinks = document.querySelectorAll('aside nav a');
     const titles = {
@@ -1430,6 +1457,315 @@
         }
       }
     });
+  }
+
+  function enhanceSidebar() {
+    const aside = document.querySelector('aside');
+    if (!aside) return;
+
+    const curr = getCurrency();
+    const currSym = getCurrencySymbol(curr);
+    const user = getUser();
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+    // 1. Tooltips
+    enhanceNavTooltips();
+
+    // 2. Header Brand Enhancement & Wallet Switcher
+    const headerEl = aside.firstElementChild;
+    if (headerEl && !document.getElementById('cendric-sidebar-wallet-slot')) {
+      // Update subtitle if still default
+      const subTitle = headerEl.querySelector('p.tracking-widest.uppercase');
+      if (subTitle && subTitle.textContent !== 'AI FINANCE PRO') {
+        subTitle.textContent = 'AI FINANCE PRO';
+      }
+
+      headerEl.style.flexDirection = 'column';
+      headerEl.style.alignItems = 'stretch';
+
+      const walletSlot = document.createElement('div');
+      walletSlot.id = 'cendric-sidebar-wallet-slot';
+      walletSlot.className = 'cendric-wallet-pill-wrapper';
+      walletSlot.innerHTML = `
+        <button class="cendric-wallet-switcher-btn" id="cendric-wallet-btn" type="button" title="Switch active freelance wallet / currency">
+          <div class="cendric-wallet-left">
+            <span class="cendric-wallet-dot"></span>
+            <span class="cendric-wallet-name">Freelance Wallet</span>
+          </div>
+          <span class="cendric-wallet-curr-tag">${curr} <span style="font-size: 9px;">▾</span></span>
+        </button>
+        <div class="cendric-wallet-dropdown" id="cendric-wallet-dropdown" style="display: none;">
+          <div class="cendric-wallet-opt ${curr === 'USD' ? 'active' : ''}" data-code="USD">
+            <span>🇺🇸 USD - Freelance USD</span>
+            <strong>$</strong>
+          </div>
+          <div class="cendric-wallet-opt ${curr === 'LKR' ? 'active' : ''}" data-code="LKR">
+            <span>🇱🇰 LKR - Local Account</span>
+            <strong>Rs.</strong>
+          </div>
+          <div class="cendric-wallet-opt ${curr === 'EUR' ? 'active' : ''}" data-code="EUR">
+            <span>🇪🇺 EUR - Euro Invoicing</span>
+            <strong>€</strong>
+          </div>
+          <div class="cendric-wallet-opt ${curr === 'GBP' ? 'active' : ''}" data-code="GBP">
+            <span>🇬🇧 GBP - British Pound</span>
+            <strong>£</strong>
+          </div>
+          <div class="cendric-wallet-opt ${curr === 'AUD' ? 'active' : ''}" data-code="AUD">
+            <span>🇦🇺 AUD - Australian Dollar</span>
+            <strong>A$</strong>
+          </div>
+          <div class="cendric-wallet-opt ${curr === 'CAD' ? 'active' : ''}" data-code="CAD">
+            <span>🇨🇦 CAD - Canadian Dollar</span>
+            <strong>C$</strong>
+          </div>
+          <div class="cendric-wallet-opt ${curr === 'INR' ? 'active' : ''}" data-code="INR">
+            <span>🇮🇳 INR - Indian Rupee</span>
+            <strong>₹</strong>
+          </div>
+        </div>
+      `;
+
+      headerEl.appendChild(walletSlot);
+
+      const walletBtn = walletSlot.querySelector('#cendric-wallet-btn');
+      const dropdown = walletSlot.querySelector('#cendric-wallet-dropdown');
+
+      walletBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+      });
+
+      walletSlot.querySelectorAll('.cendric-wallet-opt').forEach(opt => {
+        opt.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const targetCurr = opt.getAttribute('data-code');
+          dropdown.style.display = 'none';
+          if (targetCurr === curr) return;
+
+          showToast(`Switching active wallet to ${targetCurr}...`);
+          try {
+            const token = getToken();
+            const res = await fetch('/api/auth/profile', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ currencyPreference: targetCurr })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              if (data.user) {
+                localStorage.setItem('cendric_user', JSON.stringify(data.user));
+              }
+              showToast(`Active wallet switched to ${targetCurr} (${getCurrencySymbol(targetCurr)})`);
+              setTimeout(() => location.reload(), 300);
+            }
+          } catch (err) {
+            console.error('Wallet currency switch failed:', err);
+          }
+        });
+      });
+
+      document.addEventListener('click', () => {
+        if (dropdown) dropdown.style.display = 'none';
+      });
+    }
+
+    // 3. Navigation Badges & Extra Tools
+    const navEl = aside.querySelector('nav');
+    if (navEl) {
+      // A. Chat Link Badge (LIVE pulsing)
+      const chatLink = navEl.querySelector('a[href="/chat"]');
+      if (chatLink && !chatLink.querySelector('.cendric-badge-live')) {
+        const defaultDot = chatLink.querySelector('span[style*="border-radius: 50%"]');
+        if (defaultDot) defaultDot.style.display = 'none';
+
+        const liveBadge = document.createElement('span');
+        liveBadge.className = 'cendric-nav-badge cendric-badge-live';
+        liveBadge.innerHTML = '<span class="cendric-pulse-dot"></span> LIVE';
+        chatLink.appendChild(liveBadge);
+      }
+
+      // B. Transactions Link Badge (Count)
+      const txLink = navEl.querySelector('a[href="/transactions"]');
+      if (txLink && !txLink.querySelector('.cendric-badge-count')) {
+        const defaultDot = txLink.querySelector('span[style*="border-radius: 50%"]');
+        if (defaultDot) defaultDot.style.display = 'none';
+
+        const countBadge = document.createElement('span');
+        countBadge.className = 'cendric-nav-badge cendric-badge-count';
+        countBadge.id = 'cendric-tx-nav-count';
+        countBadge.textContent = cachedSidebarTxCount !== null ? String(cachedSidebarTxCount) : '24';
+        txLink.appendChild(countBadge);
+
+        if (cachedSidebarTxCount === null) {
+          fetchSidebarStats();
+        }
+      }
+
+      // C. Extra Financial Tools Links
+      if (!document.getElementById('cendric-sidebar-extra-tools')) {
+        const profileLink = navEl.querySelector('a[href="/profile"]');
+        const toolsContainer = document.createElement('div');
+        toolsContainer.id = 'cendric-sidebar-extra-tools';
+        toolsContainer.style.display = 'contents';
+        toolsContainer.innerHTML = `
+          <div class="cendric-sidebar-section-divider">
+            <span>Financial Tools</span>
+          </div>
+          <a class="cendric-custom-nav-link" id="cendric-nav-tax" href="#tax" title="Sri Lankan IRD Freelance Tax Calculator">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+              <line x1="8" y1="6" x2="16" y2="6"></line>
+              <line x1="16" y1="14" x2="16" y2="14.01"></line>
+              <line x1="12" y1="14" x2="12" y2="14.01"></line>
+              <line x1="8" y1="14" x2="8" y2="14.01"></line>
+              <line x1="16" y1="18" x2="16" y2="18.01"></line>
+              <line x1="12" y1="18" x2="12" y2="18.01"></line>
+              <line x1="8" y1="18" x2="8" y2="18.01"></line>
+            </svg>
+            <span>Tax Estimator</span>
+            <span class="cendric-nav-badge cendric-badge-tax">IRD SL</span>
+          </a>
+          <a class="cendric-custom-nav-link" id="cendric-nav-invoice" href="#invoice" title="Generate Freelance PDF Invoice">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>Invoices</span>
+            <span class="cendric-nav-badge cendric-badge-neutral">PDF</span>
+          </a>
+          <a class="cendric-custom-nav-link" id="cendric-nav-ocr" href="#receipt" title="AI Receipt OCR & Statement Importer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <span>Receipt OCR</span>
+            <span class="cendric-nav-badge cendric-badge-ai">AI</span>
+          </a>
+          <div class="cendric-sidebar-section-divider">
+            <span>Preferences</span>
+          </div>
+        `;
+
+        if (profileLink) {
+          navEl.insertBefore(toolsContainer, profileLink);
+        } else {
+          navEl.appendChild(toolsContainer);
+        }
+
+        document.getElementById('cendric-nav-tax')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          openTaxCalculatorModal();
+        });
+        document.getElementById('cendric-nav-invoice')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          openInvoiceModal();
+        });
+        document.getElementById('cendric-nav-ocr')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          openCsvImporterModal();
+        });
+      }
+    }
+
+    // 4. Mid-Section Financial Health Widget (Fills empty space)
+    if (!document.getElementById('cendric-sidebar-budget-widget')) {
+      const footerEl = aside.lastElementChild;
+      const budgetWidget = document.createElement('div');
+      budgetWidget.id = 'cendric-sidebar-budget-widget';
+      budgetWidget.className = 'cendric-sidebar-budget-widget';
+      budgetWidget.title = 'Click to calculate tax deductions & optimize budget';
+
+      const taxSavedAmount = curr === 'LKR' ? 'Rs. 125,400' : `${currSym}3,712.50`;
+
+      budgetWidget.innerHTML = `
+        <div class="cendric-widget-header">
+          <span class="cendric-widget-title">Monthly Budget</span>
+          <span class="cendric-widget-pct" id="cendric-sidebar-budget-pct">68% used</span>
+        </div>
+        <div class="cendric-widget-bar-bg">
+          <div class="cendric-widget-bar-fill" id="cendric-sidebar-budget-fill" style="width: 68%;"></div>
+        </div>
+        <div class="cendric-widget-footer">
+          <div class="cendric-widget-stat">
+            <span class="cendric-widget-stat-label">Tax Saved</span>
+            <span class="cendric-widget-stat-val" id="cendric-sidebar-tax-saved">${taxSavedAmount}</span>
+          </div>
+          <span class="cendric-widget-stat-tag">+14% IRD</span>
+        </div>
+      `;
+
+      budgetWidget.addEventListener('click', () => {
+        openTaxCalculatorModal();
+      });
+
+      if (footerEl) {
+        aside.insertBefore(budgetWidget, footerEl);
+      } else {
+        aside.appendChild(budgetWidget);
+      }
+    }
+
+    // 5. User Profile Card & Integrated Theme Switcher
+    const footerEl = aside.lastElementChild;
+    if (footerEl) {
+      // Status Pill on user name
+      const nameP = footerEl.querySelector('p.font-semibold, p.text-white');
+      if (nameP && !nameP.querySelector('.cendric-user-pro-badge')) {
+        const proBadge = document.createElement('span');
+        proBadge.className = 'cendric-user-pro-badge';
+        proBadge.textContent = 'PRO';
+        nameP.appendChild(proBadge);
+      }
+
+      // Theme Switcher Toggle Button
+      if (!document.getElementById('cendric-sidebar-theme-btn')) {
+        const themeBtn = document.createElement('button');
+        themeBtn.id = 'cendric-sidebar-theme-btn';
+        themeBtn.className = 'cendric-sidebar-theme-btn';
+        themeBtn.type = 'button';
+        themeBtn.title = `Switch to ${isDark ? 'Light' : 'Dark'} Mode`;
+        themeBtn.innerHTML = `<span id="cendric-sidebar-theme-icon">${isDark ? '☀️' : '🌙'}</span>`;
+
+        themeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const currentTheme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('cendric_theme') || 'light';
+          const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+          document.documentElement.setAttribute('data-theme', nextTheme);
+          localStorage.setItem('cendric_theme', nextTheme);
+
+          const iconEl = document.getElementById('cendric-sidebar-theme-icon');
+          if (iconEl) {
+            iconEl.textContent = nextTheme === 'dark' ? '☀️' : '🌙';
+          }
+          themeBtn.title = `Switch to ${nextTheme === 'dark' ? 'Light' : 'Dark'} Mode`;
+
+          // If settings appearance toggle button exists on page, click it to keep React state in sync
+          const settingsToggle = document.querySelector('button[style*="border-radius: 99px"]');
+          if (settingsToggle) {
+            settingsToggle.click();
+          }
+
+          showToast(`Switched to ${nextTheme === 'dark' ? 'Dark' : 'Light'} Mode`);
+        });
+
+        // Insert before React's logout button
+        const logoutBtn = footerEl.querySelector('button[title="Logout"]') || footerEl.querySelector('button');
+        if (logoutBtn) {
+          footerEl.insertBefore(themeBtn, logoutBtn);
+        } else {
+          footerEl.appendChild(themeBtn);
+        }
+      } else {
+        const iconEl = document.getElementById('cendric-sidebar-theme-icon');
+        if (iconEl) {
+          iconEl.textContent = isDark ? '☀️' : '🌙';
+        }
+      }
+    }
   }
 
   // ----------------------------------------------------
@@ -3095,6 +3431,7 @@
     isEnhancing = true;
     try {
       enhanceAuthPage();
+      enhanceSidebar();
       enhanceNavTooltips();
       await enhanceTransactionsPage();
       enhanceChatPage();
