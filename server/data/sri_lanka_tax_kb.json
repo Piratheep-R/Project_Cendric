@@ -1,0 +1,82 @@
+[
+  {
+    "id": "sl_tax_pit_slabs",
+    "title": "Sri Lankan Personal Income Tax (PIT) Brackets & Slabs",
+    "act": "Inland Revenue Act No. 24 of 2017 (First & Third Schedules, as amended)",
+    "section": "Section 4, Section 5, and First Schedule",
+    "category": "Income Tax Slabs",
+    "keywords": ["tax slab", "pit", "personal income tax", "tax brackets", "rates", "how much tax", "relief", "calculate tax", "percentage", "rate", "income tax"],
+    "summary": "Tax-free personal relief is LKR 1,200,000 per year (LKR 100,000/month). Income above relief is taxed in progressive LKR 500,000 slabs starting from 6% up to 36%.",
+    "content": "Under the Inland Revenue Act No. 24 of 2017 (as amended), every resident individual is entitled to a personal tax-free relief of LKR 1,200,000 per Year of Assessment (equivalent to LKR 100,000 per month). Any taxable income exceeding LKR 1,200,000 is taxed according to the following progressive tax slabs:\n- First LKR 500,000 of taxable income (LKR 1,200,001 to 1,700,000): 6% (Tax: LKR 30,000)\n- Next LKR 500,000 of taxable income (LKR 1,700,001 to 2,200,000): 12% (Tax: LKR 60,000)\n- Next LKR 500,000 of taxable income (LKR 2,200,001 to 2,700,000): 18% (Tax: LKR 90,000)\n- Next LKR 500,000 of taxable income (LKR 2,700,001 to 3,200,000): 24% (Tax: LKR 120,000)\n- Next LKR 500,000 of taxable income (LKR 3,200,001 to 3,700,000): 30% (Tax: LKR 150,000)\n- Balance taxable income exceeding LKR 3,700,000: 36%\n\nTaxable Income = Total Gross Earnings minus Allowable Business Expenses (Section 11) minus LKR 1,200,000 Personal Relief."
+  },
+  {
+    "id": "sl_tax_it_export_exemption",
+    "title": "Tax Treatment of IT, Software & Freelance Export Services",
+    "act": "Inland Revenue Act No. 24 of 2017 (Third Schedule) & Ministry of Finance Directives",
+    "section": "Third Schedule (Exempt Amounts) & Foreign Currency Export Provisions",
+    "category": "IT Freelance Exemption",
+    "keywords": ["upwork", "fiverr", "usd", "foreign currency", "export", "it services", "software", "overseas", "freelancer", "remittance", "exempt", "remit", "dollar"],
+    "summary": "Gains and profits derived by resident individuals from providing IT and enabled services to clients outside Sri Lanka remitted in foreign currency through official banking channels qualify for tax concessions or exemptions.",
+    "content": "Under the Third Schedule of the Inland Revenue Act No. 24 of 2017 and government export incentives, earnings derived by resident individuals from providing Information Technology (IT) and enabled services (including software engineering, web development, graphic design, UI/UX, BPO, and digital consulting) to persons outside Sri Lanka are granted beneficial tax status, provided:\n1. The service is provided to a recipient outside Sri Lanka and utilized abroad.\n2. The payments are received in convertible foreign currency (e.g., USD, EUR, GBP, AUD).\n3. The foreign funds are remitted to Sri Lanka through authorized commercial banking channels (into a Business Foreign Currency Account - BFCA or Personal Foreign Currency Account - PFCA).\n\nFreelancers working through platforms like Upwork, Fiverr, Deel, or direct overseas clients must retain bank inward remittance credit advices, invoices, and client contracts to establish that funds represent IT export income."
+  },
+  {
+    "id": "sl_tax_tin_registration",
+    "title": "Mandatory Taxpayer Identification Number (TIN) Requirement",
+    "act": "Inland Revenue Act No. 24 of 2017 & IRD Gazette Notice",
+    "section": "Section 102 & Public Notice PN/TIN/2023-01",
+    "category": "TIN Registration",
+    "keywords": ["tin", "tax identification number", "register tin", "mandatory", "ramis", "bank account", "vehicle", "age 18", "penalty", "registration"],
+    "summary": "TIN registration is legally mandatory for all Sri Lankan residents aged 18 and older since January 1, 2024. Having a TIN does not automatically mean you have to pay tax; only if your income exceeds LKR 1.2M.",
+    "content": "From January 1, 2024, obtaining a Taxpayer Identification Number (TIN) is mandatory for all Sri Lankan residents who reach 18 years of age, or who earn gross income exceeding LKR 1,200,000 per year.\nA TIN is required by law for:\n- Opening a current or fixed deposit bank account in Sri Lanka\n- Registering or transferring motor vehicles\n- Registering title to land or property\n- Obtaining building plan approvals and local business registrations\n\nImportant: Registering for a TIN DOES NOT automatically make you liable to pay tax. You only pay income tax if your taxable net earnings exceed the LKR 1,200,000 threshold.\nRegistration is free online via the Inland Revenue Department RAMIS e-Services portal (eservices.ird.gov.lk). Failure to register can carry a penalty of up to LKR 50,000 under Section 177."
+  },
+  {
+    "id": "sl_tax_wht_advance_tax",
+    "title": "Withholding Tax (WHT) / Advance Personal Income Tax (APIT) on Services",
+    "act": "Inland Revenue Act No. 24 of 2017",
+    "section": "Section 85 (Withholding by Employers and Service Payers)",
+    "category": "Withholding Tax (WHT)",
+    "keywords": ["wht", "withholding tax", "apit", "advance tax", "5%", "service fee", "local client", "t10", "certificate", "deduction at source"],
+    "summary": "Local corporate clients must deduct 5% WHT on service fees exceeding LKR 100,000 per month paid to resident freelancers. Freelancers can use WHT Form T.10 as credit against their final tax.",
+    "content": "Under Section 85 of the Inland Revenue Act No. 24 of 2017:\n1. When a resident corporate entity, company, or institution pays service fees to a resident individual freelancer or consultant for professional, vocational, or technical services (e.g. software development, design, consulting, marketing) exceeding LKR 100,000 per month, the payer is required to deduct 5% Withholding Tax (WHT / Advance Income Tax) at source.\n2. The payer must provide a Withholding Tax Certificate (Form T.10) to the freelancer detailing the gross payment and tax withheld.\n3. The 5% deducted is not an additional tax; it is an advance tax payment that the freelancer offsets directly against their annual Personal Income Tax liability.\n4. If the freelancer's total annual tax liability is zero or less than the total WHT deducted, the excess can be claimed as a tax refund from the IRD upon filing the annual return.\n5. Foreign overseas clients (e.g. US, UK, EU) do NOT deduct Sri Lankan WHT."
+  },
+  {
+    "id": "sl_tax_allowable_deductions",
+    "title": "Allowable Business Expense Deductions for Freelancers",
+    "act": "Inland Revenue Act No. 24 of 2017",
+    "section": "Section 11 (General Principles of Deductions) & Section 16 (Capital Allowances)",
+    "category": "Deductible Expenses",
+    "keywords": ["deduct", "expense", "laptop", "internet", "software", "figma", "github", "chatgpt", "claim", "receipt", "deductions", "office", "equipment"],
+    "summary": "Freelancers can deduct all expenses incurred wholly and exclusively in producing their freelance income: software subscriptions, internet bills, laptop depreciation (25% per year), office space, and training.",
+    "content": "Under Section 11 of the Inland Revenue Act, expenses incurred wholly and exclusively in the production of income from self-employment or freelance business are fully deductible from gross revenue before calculating taxable profit:\n1. Software Subscriptions & Cloud Tools: GitHub, Figma, AWS, Vercel, Google Workspace, Adobe Creative Cloud, JetBrains, ChatGPT Plus, antivirus, domain registrations.\n2. Telecommunications & Internet: Home broadband, 4G/5G mobile data, and phone bills (apportioned to business usage, typically 70% to 80%).\n3. Capital Allowance / Depreciation (Section 16): Information technology equipment (laptops, PCs, monitors, UPS, webcams) can be depreciated over 4 years at 25% per year (or over 3 years at 33.3% per year).\n4. Workspace & Utilities: Coworking space desk fees (Likuid, Hatch, Regus) or a dedicated home office portion of electricity and rent.\n5. Professional Development: Online courses (Coursera, Udemy), technical books, certification fees directly relevant to your freelance trade.\n6. Bank & Payment Gateway Fees: Bank charges on foreign wire transfers, Wise fees, Stripe fees, and PayPal withdrawal fees.\n\nAll deductions require proof: invoices, digital receipts, and bank statements must be maintained for 5 years."
+  },
+  {
+    "id": "sl_tax_vat_sscl_rules",
+    "title": "Value Added Tax (VAT) and Social Security Levy (SSCL) Thresholds",
+    "act": "Value Added Tax Act No. 14 of 2002 (as amended) & SSCL Act No. 25 of 2022",
+    "section": "VAT Section 3 & SSCL Section 4",
+    "category": "VAT & Indirect Taxes",
+    "keywords": ["vat", "value added tax", "18%", "sscl", "threshold", "60 million", "indirect tax", "register vat"],
+    "summary": "Standard VAT rate is 18%. The registration threshold is LKR 60 Million per year (LKR 15M/quarter). Freelancers earning below LKR 60M/year do not need to register for or charge VAT.",
+    "content": "1. VAT Registration Threshold:\nEffective January 1, 2024, the VAT threshold is LKR 60 Million per annum (or LKR 15 Million for any taxable quarter). Resident freelancers earning below LKR 60 Million per year from services are NOT required to register for VAT, charge VAT on client invoices, or submit VAT returns.\n\n2. Zero-Rated Export of Services:\nEven for registered entities, services provided to a person outside Sri Lanka for consumption outside Sri Lanka and paid in convertible foreign currency are treated as zero-rated (0% VAT).\n\n3. Social Security Contribution Levy (SSCL):\nSSCL is charged at 2.5% on turnover exceeding LKR 120 Million per annum (LKR 30 Million per quarter). Individual freelancers below this threshold are completely exempt from SSCL."
+  },
+  {
+    "id": "sl_tax_calendar_deadlines",
+    "title": "Sri Lankan Tax Compliance Calendar, Deadlines & Penalties",
+    "act": "Inland Revenue Act No. 24 of 2017",
+    "section": "Section 90 (Advance Tax Payments) & Section 93 (Returns of Income)",
+    "category": "Tax Deadlines",
+    "keywords": ["deadline", "calendar", "due date", "november 30", "quarterly", "august 15", "penalty", "file return", "assessment year"],
+    "summary": "Assessment Year runs April 1 to March 31. Four quarterly advance installments due on Aug 15, Nov 15, Feb 15, and May 15. Final Annual Return is due on or before November 30.",
+    "content": "The Sri Lankan Year of Assessment (Y/A) runs from April 1 of a calendar year to March 31 of the next calendar year.\n\nKey Filing & Payment Deadlines:\n1. Quarterly Advance Personal Income Tax (APIT) Installments:\n   - 1st Installment (Quarter Apr 1 - Jun 30): Due on or before August 15\n   - 2nd Installment (Quarter Jul 1 - Sep 30): Due on or before November 15\n   - 3rd Installment (Quarter Oct 1 - Dec 31): Due on or before February 15\n   - 4th Installment (Quarter Jan 1 - Mar 31): Due on or before May 15\n2. Annual Return of Income (Final Tax Return):\n   - Must be submitted on or before November 30 following the end of the Year of Assessment (e.g. Return for Y/A 2024/2025 is due on November 30, 2025).\n   - Can be filed electronically via the IRD RAMIS portal.\n\nPenalties for Non-Compliance:\n- Late filing of return (Section 159): Penalty of LKR 50,000 plus LKR 10,000 for each month of default (max LKR 400,000) or 5% of tax payable.\n- Late payment of tax (Section 179): 1.5% interest per month on any outstanding tax balance."
+  },
+  {
+    "id": "sl_tax_banking_fc_rules",
+    "title": "Foreign Currency Banking Accounts (BFCA/PFCA) for Freelancers",
+    "act": "Central Bank of Sri Lanka (CBSL) Foreign Exchange Act No. 12 of 2017",
+    "section": "Directions on Inward Remittances and Foreign Currency Accounts",
+    "category": "Banking & Foreign Exchange",
+    "keywords": ["bank", "bfca", "pfca", "cbsl", "central bank", "convert", "account", "commercial bank", "wire", "swift"],
+    "summary": "Freelancers earning in foreign currency can maintain a Business Foreign Currency Account (BFCA) or Personal Foreign Currency Account (PFCA) in commercial banks to manage international payments.",
+    "content": "Under Central Bank of Sri Lanka (CBSL) regulations:\n1. Freelancers and export service providers can open and maintain a Business Foreign Currency Account (BFCA) or Personal Foreign Currency Account (PFCA) at any licensed commercial bank in Sri Lanka (e.g. Commercial Bank, Sampath Bank, HNB, Nations Trust, HSBC).\n2. Permitted Credits: Inward remittances from overseas clients, freelance platforms (Upwork, Fiverr), and wire transfers received in foreign currency.\n3. Permitted Debits: Payments for overseas business software subscriptions (AWS, GitHub, Figma), foreign equipment purchases, travel allowances, or conversion to LKR.\n4. Proof of Remittance: Always request and download 'Inward Remittance Credit Advices' or bank confirmation slips. These are crucial evidence during any IRD audit to establish that income was foreign export proceeds eligible for tax concessions."
+  }
+]

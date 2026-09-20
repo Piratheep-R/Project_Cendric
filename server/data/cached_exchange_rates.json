@@ -1,0 +1,13 @@
+{
+  "rates": {
+    "USD": 1,
+    "LKR": 331.272976,
+    "EUR": 0.871291,
+    "GBP": 0.747943,
+    "INR": 95.940282,
+    "AUD": 1.404923,
+    "CAD": 1.399127
+  },
+  "lastUpdated": "2026-09-20T17:37:49.507Z",
+  "source": "Open Exchange Rates API (open.er-api.com)"
+}

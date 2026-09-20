@@ -1,0 +1,18 @@
+{
+  "name": "Cendric - AI Personal Finance Assistant",
+  "short_name": "Cendric",
+  "description": "AI-powered personal finance assistant for freelancers. Track expenses, scan receipts, and get smart spending insights.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f2ea",
+  "theme_color": "#6d5ae6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

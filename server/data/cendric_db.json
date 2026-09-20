@@ -1,0 +1,351 @@
+{
+  "users": [
+    {
+      "_id": "6b9833bc44af3f1c9b5ccee8",
+      "fullName": "Piratheep Raj",
+      "email": "piratheep@example.com",
+      "password": "$2a$10$cqDMZVG94bw0CO5Ush2q6edy3y4Lp2vDMCRdDhSsmCW2QcurBY/q6",
+      "currencyPreference": "LKR",
+      "createdAt": "2026-09-20T07:35:11.713Z"
+    },
+    {
+      "_id": "4cd75b34685891633f217c38",
+      "fullName": "prasath",
+      "email": "prasath@gmail.com",
+      "password": "$2a$10$vnUSgdLZ.eEPPYIZW4jI6.sMdzvYVneouV7bIdvRSFMkYgqssE5My",
+      "currencyPreference": "LKR",
+      "createdAt": "2026-09-20T07:39:22.781Z"
+    }
+  ],
+  "transactions": [
+    {
+      "_id": "c6506111007fe38735214c58",
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "type": "income",
+      "amount": 120000,
+      "category": "Salary",
+      "date": "2026-09-15",
+      "description": "Freelance Web Project",
+      "source": "manual",
+      "createdAt": "2026-09-20T07:35:25.003Z",
+      "baseAmountUSD": 362.2390254978118
+    },
+    {
+      "_id": "57704daee1bd6bda03b5fddc",
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "type": "expense",
+      "amount": 25000,
+      "category": "Food & Dining",
+      "date": "2026-09-18",
+      "description": "Monthly Groceries",
+      "source": "manual",
+      "createdAt": "2026-09-20T07:35:25.011Z",
+      "baseAmountUSD": 75.46646364537746
+    },
+    {
+      "_id": "fe84040526d571a059facf47",
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "type": "income",
+      "amount": 5000,
+      "category": "Salary",
+      "date": "2026-09-20",
+      "description": "Test Bulk Client Inward",
+      "source": "bank_csv_import",
+      "createdAt": "2026-09-20T09:40:38.639Z",
+      "baseAmountUSD": 15.093292729075491
+    },
+    {
+      "_id": "936d72c1a2f0c18881600eb6",
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "type": "expense",
+      "amount": 4850,
+      "category": "Food & Dining",
+      "date": "2026-09-18",
+      "description": "Keells Supermarket Rajagiriya",
+      "source": "bank_csv_import",
+      "createdAt": "2026-09-20T09:46:21.623Z",
+      "baseAmountUSD": 14.640493947203225
+    },
+    {
+      "_id": "32e58e9014520e53b8ff18f2",
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "type": "income",
+      "amount": 165000,
+      "category": "Freelance",
+      "date": "2026-09-19",
+      "description": "Upwork Global Inc Inward Wire",
+      "source": "bank_csv_import",
+      "createdAt": "2026-09-20T09:46:21.623Z",
+      "baseAmountUSD": 498.0786600594912
+    },
+    {
+      "_id": "3565479b2ce8d7ca0115596a",
+      "userId": "4cd75b34685891633f217c38",
+      "type": "expense",
+      "amount": 4429121,
+      "baseAmountUSD": 13370.002794330583,
+      "category": "Bills & Utilities",
+      "date": "2026-09-20",
+      "description": "Electricity Bill",
+      "source": "manual",
+      "createdAt": "2026-09-20T15:54:53.954Z"
+    },
+    {
+      "_id": "89b874a11ab60c4fc8c40846",
+      "userId": "4cd75b34685891633f217c38",
+      "type": "income",
+      "amount": 44291206,
+      "baseAmountUSD": 133700.02794330585,
+      "category": "Salary",
+      "date": "2026-09-20",
+      "description": "Salary",
+      "source": "manual",
+      "createdAt": "2026-09-20T15:55:17.371Z"
+    }
+  ],
+  "chats": [
+    {
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "sessionId": "c01a04b8390763c2",
+      "messages": [
+        {
+          "role": "user",
+          "content": "How much did I spend on Food & Dining?"
+        },
+        {
+          "role": "assistant",
+          "content": "📊 You have spent **LKR 25,000** on **Food & Dining**."
+        },
+        {
+          "role": "user",
+          "content": "Do I have to pay tax on Upwork USD earnings in Sri Lanka?"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Tax Treatment of IT, Software & Freelance Export Services**\n\nUnder the Third Schedule of the Inland Revenue Act No. 24 of 2017 and government export incentives, earnings derived by resident individuals from providing Information Technology (IT) and enabled services (including software engineering, web development, graphic design, UI/UX, BPO, and digital consulting) to persons outside Sri Lanka are granted beneficial tax status, provided:\n1. The service is provided to a recipient outside Sri Lanka and utilized abroad.\n2. The payments are received in convertible foreign currency (e.g., USD, EUR, GBP, AUD).\n3. The foreign funds are remitted to Sri Lanka through authorized commercial banking channels (into a Business Foreign Currency Account - BFCA or Personal Foreign Currency Account - PFCA).\n\nFreelancers working through platforms like Upwork, Fiverr, Deel, or direct overseas clients must retain bank inward remittance credit advices, invoices, and client contracts to establish that funds represent IT export income.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 (Third Schedule) & Ministry of Finance Directives* (Third Schedule (Exempt Amounts) & Foreign Currency Export Provisions)\n\n**Your Current Cendric Balance:** You have **Rs. 120,000** in recorded earnings and **Rs. 25,000** in expenses."
+        },
+        {
+          "role": "user",
+          "content": "Calculate my tax on LKR 3000000"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Sri Lankan Personal Income Tax (PIT) Calculation**\n\nBased on the **Inland Revenue Act No. 24 of 2017 (as amended)**:\n\n• **Gross Freelance Income:** LKR 3,000,000\n• **Allowable Deductions (Section 11):** -LKR 25,000\n• **Assessable Income:** LKR 2,975,000\n• **Tax-Free Personal Relief:** -LKR 1,200,000 (LKR 100,000/month)\n• **Taxable Income:** LKR 1,775,000\n\n### 📊 Progressive Slab Breakdown:\n• **6% on first LKR 500,000:** LKR 500,000 @ 6% = **LKR 30,000**\n• **12% on next LKR 500,000:** LKR 500,000 @ 12% = **LKR 60,000**\n• **18% on next LKR 500,000:** LKR 500,000 @ 18% = **LKR 90,000**\n• **24% on next LKR 500,000:** LKR 275,000 @ 24% = **LKR 66,000**\n\n**Total Estimated Annual Tax Payable:** **LKR 246,000**\n• **Effective Tax Rate:** 8.2%\n• **Quarterly Advance Payment:** ~LKR 61,500 / quarter\n\n> 💡 **Tip:** If your income is from **IT & Software export services** received in foreign currency (USD/EUR) through commercial bank inward remittances, ensure you retain bank credit advices to substantiate foreign export treatment under the Third Schedule."
+        },
+        {
+          "role": "user",
+          "content": "What is the current dollar exchange rate today in Sri Lanka?"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Tax Treatment of IT, Software & Freelance Export Services**\n\nUnder the Third Schedule of the Inland Revenue Act No. 24 of 2017 and government export incentives, earnings derived by resident individuals from providing Information Technology (IT) and enabled services (including software engineering, web development, graphic design, UI/UX, BPO, and digital consulting) to persons outside Sri Lanka are granted beneficial tax status, provided:\n1. The service is provided to a recipient outside Sri Lanka and utilized abroad.\n2. The payments are received in convertible foreign currency (e.g., USD, EUR, GBP, AUD).\n3. The foreign funds are remitted to Sri Lanka through authorized commercial banking channels (into a Business Foreign Currency Account - BFCA or Personal Foreign Currency Account - PFCA).\n\nFreelancers working through platforms like Upwork, Fiverr, Deel, or direct overseas clients must retain bank inward remittance credit advices, invoices, and client contracts to establish that funds represent IT export income.\n\n### 📌 Related Regulation: Sri Lankan Personal Income Tax (PIT) Brackets & Slabs\nTax-free personal relief is LKR 1,200,000 per year (LKR 100,000/month). Income above relief is taxed in progressive LKR 500,000 slabs starting from 6% up to 36%.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 (Third Schedule) & Ministry of Finance Directives* (Third Schedule (Exempt Amounts) & Foreign Currency Export Provisions)\n• 📜 *Inland Revenue Act No. 24 of 2017 (First & Third Schedules, as amended)* (Section 4, Section 5, and First Schedule)\n"
+        },
+        {
+          "role": "user",
+          "content": "Do I pay tax on Upwork USD earnings in Sri Lanka?"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Tax Treatment of IT, Software & Freelance Export Services**\n\nUnder the Third Schedule of the Inland Revenue Act No. 24 of 2017 and government export incentives, earnings derived by resident individuals from providing Information Technology (IT) and enabled services (including software engineering, web development, graphic design, UI/UX, BPO, and digital consulting) to persons outside Sri Lanka are granted beneficial tax status, provided:\n1. The service is provided to a recipient outside Sri Lanka and utilized abroad.\n2. The payments are received in convertible foreign currency (e.g., USD, EUR, GBP, AUD).\n3. The foreign funds are remitted to Sri Lanka through authorized commercial banking channels (into a Business Foreign Currency Account - BFCA or Personal Foreign Currency Account - PFCA).\n\nFreelancers working through platforms like Upwork, Fiverr, Deel, or direct overseas clients must retain bank inward remittance credit advices, invoices, and client contracts to establish that funds represent IT export income.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 (Third Schedule) & Ministry of Finance Directives* (Third Schedule (Exempt Amounts) & Foreign Currency Export Provisions)\n\n**Your Current Cendric Balance:** You have **LKR 120,000** in recorded earnings and **LKR 25,000** in expenses."
+        }
+      ]
+    },
+    {
+      "userId": "4cd75b34685891633f217c38",
+      "sessionId": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": "hi"
+        },
+        {
+          "role": "assistant",
+          "content": "👋 Hello prasath! I'm **Cendric**, your finance co-pilot. You currently have **0** recorded transactions with a net balance of **USD 0**.\n\nHow can I help you manage your finances today?"
+        },
+        {
+          "role": "user",
+          "content": "How much have I earned vs spent this whieek?"
+        },
+        {
+          "role": "assistant",
+          "content": "📊 **Spending Summary:**\n\n• **Total Expenses:** USD 0 (0 transactions)\n• **Total Income:** USD 0\n• **Net Balance:** USD 0"
+        },
+        {
+          "role": "user",
+          "content": "Give me 3 tips to optimize freelance software costs."
+        },
+        {
+          "role": "assistant",
+          "content": "💡 **Cendric Pro Financial Tips for Freelancers:**\n\n1. **The 50/30/20 Guideline**: Strive to allocate 50% to essentials, 30% to wants, and 20% to savings/investments.\n2. **Emergency Cushion**: With freelance income variability, aim for a 3–6 month living expense reserve.\n3. **Tax Provision**: Automatically set aside 20–25% of every incoming client invoice into a separate tax holding bucket.\n4. **Receipt Logging**: Use our receipt scanner regularly to capture deductible business expenses!"
+        },
+        {
+          "role": "user",
+          "content": "Do I pay tax on Upwork USD earnings in Sri Lanka?"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Tax Treatment of IT, Software & Freelance Export Services**\n\nUnder the Third Schedule of the Inland Revenue Act No. 24 of 2017 and government export incentives, earnings derived by resident individuals from providing Information Technology (IT) and enabled services (including software engineering, web development, graphic design, UI/UX, BPO, and digital consulting) to persons outside Sri Lanka are granted beneficial tax status, provided:\n1. The service is provided to a recipient outside Sri Lanka and utilized abroad.\n2. The payments are received in convertible foreign currency (e.g., USD, EUR, GBP, AUD).\n3. The foreign funds are remitted to Sri Lanka through authorized commercial banking channels (into a Business Foreign Currency Account - BFCA or Personal Foreign Currency Account - PFCA).\n\nFreelancers working through platforms like Upwork, Fiverr, Deel, or direct overseas clients must retain bank inward remittance credit advices, invoices, and client contracts to establish that funds represent IT export income.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 (Third Schedule) & Ministry of Finance Directives* (Third Schedule (Exempt Amounts) & Foreign Currency Export Provisions)\n"
+        },
+        {
+          "role": "user",
+          "content": "Calculate my Sri Lankan tax on LKR 2.4M"
+        },
+        {
+          "role": "assistant",
+          "content": "I analyzed your finances:\n\n• **Net Balance:** USD 0\n• **Total Income:** USD 0 across 0 invoices\n• **Total Expenses:** USD 0 across 0 purchases\n\nYou can ask me specific questions like *\"How much did I spend on Food?\"*, *\"Calculate my income tax\"*, *\"Do I pay tax on Upwork USD?\"*, or upload receipts to auto-extract expenses!"
+        },
+        {
+          "role": "user",
+          "content": "Calculate my Sri Lankan tax on LKR 2.4M"
+        },
+        {
+          "role": "assistant",
+          "content": "I analyzed your finances:\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 across 1 invoices\n• **Total Expenses:** LKR 4,429,121 across 1 purchases\n\nYou can ask me specific questions like *\"How much did I spend on Food?\"*, *\"Calculate my income tax\"*, *\"Do I pay tax on Upwork USD?\"*, or upload receipts to auto-extract expenses!"
+        },
+        {
+          "role": "user",
+          "content": "how much i have to pay as tax with my income"
+        },
+        {
+          "role": "assistant",
+          "content": "I analyzed your finances:\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 across 1 invoices\n• **Total Expenses:** LKR 4,429,121 across 1 purchases\n\nYou can ask me specific questions like *\"How much did I spend on Food?\"*, *\"Calculate my income tax\"*, *\"Do I pay tax on Upwork USD?\"*, or upload receipts to auto-extract expenses!"
+        },
+        {
+          "role": "user",
+          "content": "What freelance expenses can I deduct?"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Allowable Business Expense Deductions for Freelancers**\n\nUnder Section 11 of the Inland Revenue Act, expenses incurred wholly and exclusively in the production of income from self-employment or freelance business are fully deductible from gross revenue before calculating taxable profit:\n1. Software Subscriptions & Cloud Tools: GitHub, Figma, AWS, Vercel, Google Workspace, Adobe Creative Cloud, JetBrains, ChatGPT Plus, antivirus, domain registrations.\n2. Telecommunications & Internet: Home broadband, 4G/5G mobile data, and phone bills (apportioned to business usage, typically 70% to 80%).\n3. Capital Allowance / Depreciation (Section 16): Information technology equipment (laptops, PCs, monitors, UPS, webcams) can be depreciated over 4 years at 25% per year (or over 3 years at 33.3% per year).\n4. Workspace & Utilities: Coworking space desk fees (Likuid, Hatch, Regus) or a dedicated home office portion of electricity and rent.\n5. Professional Development: Online courses (Coursera, Udemy), technical books, certification fees directly relevant to your freelance trade.\n6. Bank & Payment Gateway Fees: Bank charges on foreign wire transfers, Wise fees, Stripe fees, and PayPal withdrawal fees.\n\nAll deductions require proof: invoices, digital receipts, and bank statements must be maintained for 5 years.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017* (Section 11 (General Principles of Deductions) & Section 16 (Capital Allowances))\n"
+        },
+        {
+          "role": "user",
+          "content": "Calculate my APIT on LKR 3,600,000 income"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Sri Lankan Personal Income Tax (PIT) Calculation**\n\nBased on the **Inland Revenue Act No. 24 of 2017 (as amended)**:\n\n• **Gross Freelance Income:** LKR 3,600,000\n• **Allowable Deductions (Section 11):** -LKR 1,440,000\n• **Assessable Income:** LKR 2,160,000\n• **Tax-Free Personal Relief:** -LKR 1,200,000 (LKR 100,000/month)\n• **Taxable Income:** LKR 960,000\n\n### 📊 Progressive Slab Breakdown:\n• **6% on first LKR 500,000:** LKR 500,000 @ 6% = **LKR 30,000**\n• **12% on next LKR 500,000:** LKR 460,000 @ 12% = **LKR 55,200**\n\n**Total Estimated Annual Tax Payable:** **LKR 85,200**\n• **Effective Tax Rate:** 2.4%\n• **Quarterly Advance Payment:** ~LKR 21,300 / quarter\n\n> 💡 **Tip:** If your income is from **IT & Software export services** received in foreign currency (USD/EUR) through commercial bank inward remittances, ensure you retain bank credit advices to substantiate foreign export treatment under the Third Schedule."
+        },
+        {
+          "role": "user",
+          "content": "Do I pay tax on Upwork USD in Sri Lanka?"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Tax Treatment of IT, Software & Freelance Export Services**\n\nUnder the Third Schedule of the Inland Revenue Act No. 24 of 2017 and government export incentives, earnings derived by resident individuals from providing Information Technology (IT) and enabled services (including software engineering, web development, graphic design, UI/UX, BPO, and digital consulting) to persons outside Sri Lanka are granted beneficial tax status, provided:\n1. The service is provided to a recipient outside Sri Lanka and utilized abroad.\n2. The payments are received in convertible foreign currency (e.g., USD, EUR, GBP, AUD).\n3. The foreign funds are remitted to Sri Lanka through authorized commercial banking channels (into a Business Foreign Currency Account - BFCA or Personal Foreign Currency Account - PFCA).\n\nFreelancers working through platforms like Upwork, Fiverr, Deel, or direct overseas clients must retain bank inward remittance credit advices, invoices, and client contracts to establish that funds represent IT export income.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 (Third Schedule) & Ministry of Finance Directives* (Third Schedule (Exempt Amounts) & Foreign Currency Export Provisions)\n\n**Your Current Cendric Balance:** You have **LKR 44,291,206** in recorded earnings and **LKR 4,429,121** in expenses."
+        },
+        {
+          "role": "user",
+          "content": "How do I get a TIN number?"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Mandatory Taxpayer Identification Number (TIN) Requirement**\n\nFrom January 1, 2024, obtaining a Taxpayer Identification Number (TIN) is mandatory for all Sri Lankan residents who reach 18 years of age, or who earn gross income exceeding LKR 1,200,000 per year.\nA TIN is required by law for:\n- Opening a current or fixed deposit bank account in Sri Lanka\n- Registering or transferring motor vehicles\n- Registering title to land or property\n- Obtaining building plan approvals and local business registrations\n\nImportant: Registering for a TIN DOES NOT automatically make you liable to pay tax. You only pay income tax if your taxable net earnings exceed the LKR 1,200,000 threshold.\nRegistration is free online via the Inland Revenue Department RAMIS e-Services portal (eservices.ird.gov.lk). Failure to register can carry a penalty of up to LKR 50,000 under Section 177.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 & IRD Gazette Notice* (Section 102 & Public Notice PN/TIN/2023-01)\n"
+        },
+        {
+          "role": "user",
+          "content": "what about me, do i have to pay tax"
+        },
+        {
+          "role": "assistant",
+          "content": "💼 **Your Financial Position:**\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 (1 transactions)\n• **Total Expenses:** LKR 4,429,121 (1 transactions)\n\n🎉 You are operating at a **positive cash flow!**"
+        },
+        {
+          "role": "user",
+          "content": "how much do i have to pay for tax"
+        },
+        {
+          "role": "assistant",
+          "content": "💼 **Your Financial Position:**\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 (1 transactions)\n• **Total Expenses:** LKR 4,429,121 (1 transactions)\n\n🎉 You are operating at a **positive cash flow!**"
+        },
+        {
+          "role": "user",
+          "content": "how much do i have to pay for tax"
+        },
+        {
+          "role": "assistant",
+          "content": "🇱🇰 **Sri Lankan Personal Income Tax (PIT) Calculation**\n\nBased on the **Inland Revenue Act No. 24 of 2017 (as amended)**:\n\n• **Gross Freelance Income:** LKR 44,291,206\n• **Allowable Deductions (Section 11):** -LKR 4,429,121\n• **Assessable Income:** LKR 39,862,085\n• **Tax-Free Personal Relief:** -LKR 1,200,000 (LKR 100,000/month)\n• **Taxable Income:** LKR 38,662,085\n\n### 📊 Progressive Slab Breakdown:\n• **6% on first LKR 500,000:** LKR 500,000 @ 6% = **LKR 30,000**\n• **12% on next LKR 500,000:** LKR 500,000 @ 12% = **LKR 60,000**\n• **18% on next LKR 500,000:** LKR 500,000 @ 18% = **LKR 90,000**\n• **24% on next LKR 500,000:** LKR 500,000 @ 24% = **LKR 120,000**\n• **30% on next LKR 500,000:** LKR 500,000 @ 30% = **LKR 150,000**\n• **36% on remaining balance:** LKR 36,162,085 @ 36% = **LKR 13,018,351**\n\n**Total Estimated Annual Tax Payable:** **LKR 13,468,351**\n• **Effective Tax Rate:** 30.4%\n• **Quarterly Advance Payment:** ~LKR 3,367,088 / quarter\n\n> 💡 **Tip:** If your income is from **IT & Software export services** received in foreign currency (USD/EUR) through commercial bank inward remittances, ensure you retain bank credit advices to substantiate foreign export treatment under the Third Schedule."
+        },
+        {
+          "role": "user",
+          "content": "clear chat"
+        },
+        {
+          "role": "assistant",
+          "content": "I analyzed your finances:\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 across 1 invoices\n• **Total Expenses:** LKR 4,429,121 across 1 purchases\n\nYou can ask me specific questions like *\"How much did I spend on Food?\"*, *\"Calculate my income tax\"*, *\"Do I pay tax on Upwork USD?\"*, or upload receipts to auto-extract expenses!"
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "4cd75b34685891633f217c38": {
+      "monthlyLimit": 50000,
+      "alertsEnabled": true,
+      "updatedAt": "2026-09-20T08:43:02.808Z",
+      "baseLimitUSD": 150.93292729075492
+    },
+    "6b9833bc44af3f1c9b5ccee8": {
+      "monthlyLimit": 66255,
+      "baseLimitUSD": 200,
+      "alertsEnabled": true,
+      "updatedAt": "2026-09-20T08:48:21.246Z"
+    }
+  },
+  "subscriptions": [
+    {
+      "_id": "b2c525d4f0d3027a",
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "name": "GitHub Pro",
+      "amount": 4,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-01",
+      "category": "Software & Tools",
+      "createdAt": "2026-09-20T08:16:30.882Z",
+      "baseAmountUSD": 0.013333333333333334
+    },
+    {
+      "_id": "03f7d4491d20a2fd",
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "name": "Figma Professional",
+      "amount": 17,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-05",
+      "category": "Design",
+      "createdAt": "2026-09-20T08:16:30.882Z",
+      "baseAmountUSD": 0.05
+    },
+    {
+      "_id": "2df93dec74f0f360",
+      "userId": "6b9833bc44af3f1c9b5ccee8",
+      "name": "ChatGPT Plus",
+      "amount": 22,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-12",
+      "category": "AI Tools",
+      "createdAt": "2026-09-20T08:16:30.882Z",
+      "baseAmountUSD": 0.06666666666666667
+    },
+    {
+      "_id": "2bd6034f354d58fe",
+      "userId": "4cd75b34685891633f217c38",
+      "name": "Figma Professional",
+      "amount": 15,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-05",
+      "category": "Design",
+      "createdAt": "2026-09-20T08:17:24.850Z",
+      "baseAmountUSD": 0.04527987818722647
+    },
+    {
+      "_id": "08c101c25bef74d5",
+      "userId": "4cd75b34685891633f217c38",
+      "name": "ChatGPT Plus",
+      "amount": 20,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-12",
+      "category": "AI Tools",
+      "createdAt": "2026-09-20T08:17:24.850Z",
+      "baseAmountUSD": 0.06037317091630196
+    }
+  ]
+}
