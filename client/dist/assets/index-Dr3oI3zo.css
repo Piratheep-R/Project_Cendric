@@ -3812,5 +3812,263 @@ aside > div:last-child {
   color: #0f172a;
 }
 
+/* ========================================================
+   LIGHT MODE: ULTRA-PREMIUM BLURRY & GLASSY SYSTEM
+   ======================================================== */
+
+/* 1. Root & Surface Variables for Modals */
+:root,
+[data-theme="light"] {
+  --bg-surface: rgba(255, 255, 255, 0.82) !important;
+  --modal-overlay-bg: rgba(245, 242, 235, 0.45) !important;
+  --glass-card-bg: rgba(255, 255, 255, 0.74) !important;
+  --glass-card-hover-bg: rgba(255, 255, 255, 0.9) !important;
+  --glass-inner-bg: rgba(255, 255, 255, 0.55) !important;
+  --glass-border: rgba(255, 255, 255, 0.9) !important;
+  --glass-border-subtle: rgba(226, 219, 206, 0.7) !important;
+}
+
+[data-theme="dark"] {
+  --bg-surface: rgba(18, 24, 39, 0.88) !important;
+  --modal-overlay-bg: rgba(7, 10, 19, 0.72) !important;
+}
+
+/* 2. Living Ambient Glowing Backdrop for Light Mode */
+[data-theme="light"] body,
+:root:not([data-theme="dark"]) body {
+  background-color: #f6f3eb !important;
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(109, 90, 230, 0.14) 0px, transparent 55%),
+    radial-gradient(at 85% 12%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
+    radial-gradient(at 75% 85%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+    radial-gradient(at 15% 80%, rgba(236, 72, 153, 0.08) 0px, transparent 55%),
+    radial-gradient(at 50% 50%, rgba(59, 130, 246, 0.06) 0px, transparent 65%) !important;
+  background-attachment: fixed !important;
+}
+
+[data-theme="light"] body::before,
+:root:not([data-theme="dark"]) body::before {
+  content: "" !important;
+  position: fixed !important;
+  top: 0% !important;
+  left: 20% !important;
+  width: 650px !important;
+  height: 650px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(109, 90, 230, 0.15) 0%, rgba(109, 90, 230, 0) 70%) !important;
+  filter: blur(80px) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+[data-theme="light"] body::after,
+:root:not([data-theme="dark"]) body::after {
+  content: "" !important;
+  position: fixed !important;
+  bottom: 0% !important;
+  right: 12% !important;
+  width: 700px !important;
+  height: 700px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.14) 0%, rgba(245, 158, 11, 0.09) 45%, transparent 70%) !important;
+  filter: blur(90px) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* 3. Modal Overlay: Frosted Glass with Maximum Blur */
+[data-theme="light"] .cendric-modal-overlay,
+:root:not([data-theme="dark"]) .cendric-modal-overlay {
+  background: rgba(245, 242, 235, 0.45) !important;
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+}
+
+/* 4. Modal Dialog: Translucent Crystal Frosted Glass Container */
+[data-theme="light"] .cendric-modal-dialog,
+:root:not([data-theme="dark"]) .cendric-modal-dialog {
+  background: rgba(255, 255, 255, 0.76) !important;
+  backdrop-filter: blur(40px) saturate(220%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(220%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 24px 64px -8px rgba(60, 50, 40, 0.14),
+              0 10px 24px -4px rgba(60, 50, 40, 0.08),
+              inset 0 1.5px 2px 0 rgba(255, 255, 255, 1),
+              inset 0 -1.5px 2px 0 rgba(226, 219, 206, 0.4) !important;
+}
+
+/* 5. Modal Header */
+[data-theme="light"] .cendric-modal-header,
+:root:not([data-theme="dark"]) .cendric-modal-header {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(226, 219, 206, 0.65) !important;
+}
+
+[data-theme="light"] .cendric-modal-body,
+:root:not([data-theme="dark"]) .cendric-modal-body {
+  background: transparent !important;
+}
+
+/* 6. Sub-Cards inside Modal */
+[data-theme="light"] .cendric-tax-type-card,
+:root:not([data-theme="dark"]) .cendric-tax-type-card {
+  background: rgba(255, 255, 255, 0.58) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(226, 219, 206, 0.8) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 8px rgba(60, 50, 40, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.95) !important;
+}
+
+[data-theme="light"] .cendric-tax-type-card:hover,
+:root:not([data-theme="dark"]) .cendric-tax-type-card:hover {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(109, 90, 230, 0.4) !important;
+  transform: translateY(-1px);
+}
+
+[data-theme="light"] .cendric-tax-type-card.active,
+:root:not([data-theme="dark"]) .cendric-tax-type-card.active {
+  background: rgba(109, 90, 230, 0.08) !important;
+  border: 1.5px solid #6d5ae6 !important;
+  box-shadow: 0 4px 16px rgba(109, 90, 230, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.95) !important;
+}
+
+/* 7. Modal Inputs & Selects */
+[data-theme="light"] .cendric-modal-dialog input[type="number"],
+[data-theme="light"] .cendric-modal-dialog input[type="text"],
+[data-theme="light"] .cendric-modal-dialog input[type="date"],
+[data-theme="light"] .cendric-modal-dialog select,
+[data-theme="light"] .cendric-modal-dialog textarea,
+:root:not([data-theme="dark"]) .cendric-modal-dialog input[type="number"],
+:root:not([data-theme="dark"]) .cendric-modal-dialog input[type="text"],
+:root:not([data-theme="dark"]) .cendric-modal-dialog input[type="date"],
+:root:not([data-theme="dark"]) .cendric-modal-dialog select,
+:root:not([data-theme="dark"]) .cendric-modal-dialog textarea {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1.5px solid rgba(226, 219, 206, 0.85) !important;
+  border-radius: 10px !important;
+  color: #1e293b !important;
+  box-shadow: inset 0 1px 2px rgba(60, 50, 40, 0.04) !important;
+}
+
+[data-theme="light"] .cendric-modal-dialog input:focus,
+[data-theme="light"] .cendric-modal-dialog select:focus,
+:root:not([data-theme="dark"]) .cendric-modal-dialog input:focus,
+:root:not([data-theme="dark"]) .cendric-modal-dialog select:focus {
+  background: #ffffff !important;
+  border-color: #6d5ae6 !important;
+  box-shadow: 0 0 0 3px rgba(109, 90, 230, 0.15) !important;
+}
+
+/* 8. Results Card in Tax Modal */
+[data-theme="light"] #cendric-tax-result-card,
+:root:not([data-theme="dark"]) #cendric-tax-result-card {
+  background: rgba(255, 255, 255, 0.74) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.38) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.95) !important;
+}
+
+[data-theme="light"] #cendric-tax-result-card div[style*="border-radius: 8px"],
+:root:not([data-theme="dark"]) #cendric-tax-result-card div[style*="border-radius: 8px"] {
+  background: rgba(16, 185, 129, 0.08) !important;
+  border: 1px solid rgba(16, 185, 129, 0.22) !important;
+  border-radius: 10px !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* 9. Modal Buttons & Close */
+[data-theme="light"] .cendric-modal-close-btn,
+:root:not([data-theme="dark"]) .cendric-modal-close-btn {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #64748b !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="light"] .cendric-modal-close-btn:hover,
+:root:not([data-theme="dark"]) .cendric-modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.12) !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+  color: #ef4444 !important;
+}
+
+[data-theme="light"] #cendric-tax-done-btn,
+:root:not([data-theme="dark"]) #cendric-tax-done-btn {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid #d5cec2 !important;
+  color: #1e293b !important;
+  box-shadow: 0 2px 8px rgba(60, 50, 40, 0.04) !important;
+}
+
+[data-theme="light"] #cendric-tax-done-btn:hover,
+:root:not([data-theme="dark"]) #cendric-tax-done-btn:hover {
+  background: #f4f0e6 !important;
+}
+
+[data-theme="light"] #cendric-tax-ask-chat-btn,
+:root:not([data-theme="dark"]) #cendric-tax-ask-chat-btn {
+  background: rgba(109, 90, 230, 0.12) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(109, 90, 230, 0.28) !important;
+  color: #5b49d4 !important;
+  box-shadow: 0 2px 10px rgba(109, 90, 230, 0.08) !important;
+}
+
+[data-theme="light"] #cendric-tax-ask-chat-btn:hover,
+:root:not([data-theme="dark"]) #cendric-tax-ask-chat-btn:hover {
+  background: rgba(109, 90, 230, 0.2) !important;
+}
+
+/* 10. Command Palette, Invoices, OCR in Light Mode */
+[data-theme="light"] .cendric-palette-modal,
+:root:not([data-theme="dark"]) .cendric-palette-modal {
+  background: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(36px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 24px 64px -8px rgba(60, 50, 40, 0.14), inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
+}
+
+[data-theme="light"] .cendric-palette-overlay,
+:root:not([data-theme="dark"]) .cendric-palette-overlay {
+  background: rgba(245, 242, 235, 0.48) !important;
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+}
+
+[data-theme="light"] .cendric-dropzone,
+:root:not([data-theme="dark"]) .cendric-dropzone {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 2px dashed rgba(226, 219, 206, 0.9) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+/* 11. General Frosted Glass Cards across all pages */
+[data-theme="light"] .cendric-glass-card,
+[data-theme="light"] main div[style*="border-radius: 20px"],
+:root:not([data-theme="dark"]) .cendric-glass-card,
+:root:not([data-theme="dark"]) main div[style*="border-radius: 20px"] {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.88) !important;
+  box-shadow: 0 8px 32px 0 rgba(60, 50, 40, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
 
 
