@@ -2810,21 +2810,34 @@
       }
     }
 
-    // 1. Upgrade left brand panel (pills, badges, trust indicators)
+    // 1. Upgrade left brand panel (pills, badges, trust indicators, and 3D hero image)
     const leftCol = document.querySelector('.cendric-auth-brand-panel');
     if (leftCol) {
       const brandCenter = leftCol.querySelector('.relative.z-10.text-center');
-      if (brandCenter && !document.getElementById('cendric-auth-hero-badge')) {
-        const badge = document.createElement('div');
-        badge.id = 'cendric-auth-hero-badge';
-        badge.className = 'cendric-hero-badge';
-        badge.innerHTML = `
-          <span class="cendric-badge-pulse"></span>
-          <span>INTELLIGENT WEALTH & EXPENSE OS</span>
-        `;
-        const logoBox = brandCenter.querySelector('.w-20.h-20');
-        if (logoBox) {
-          brandCenter.insertBefore(badge, logoBox);
+      if (brandCenter) {
+        if (!document.getElementById('cendric-auth-hero-badge')) {
+          const badge = document.createElement('div');
+          badge.id = 'cendric-auth-hero-badge';
+          badge.className = 'cendric-hero-badge';
+          badge.innerHTML = `
+            <span class="cendric-badge-pulse"></span>
+            <span>INTELLIGENT WEALTH & EXPENSE OS</span>
+          `;
+          brandCenter.insertBefore(badge, brandCenter.firstChild);
+        }
+
+        // Insert 3D generated hero illustration
+        if (!document.getElementById('cendric-hero-img-box')) {
+          const imgBox = document.createElement('div');
+          imgBox.id = 'cendric-hero-img-box';
+          imgBox.className = 'cendric-hero-img-box';
+          imgBox.innerHTML = `
+            <img src="/assets/cendric-auth-hero.jpg" alt="Cendric AI Finance Assistant" class="cendric-hero-img" />
+          `;
+          const h1El = brandCenter.querySelector('h1');
+          if (h1El) {
+            brandCenter.insertBefore(imgBox, h1El);
+          }
         }
       }
 
@@ -2834,7 +2847,7 @@
         pillsContainer.setAttribute('data-cendric-upgraded', 'true');
         pillsContainer.innerHTML = `
           <div class="cendric-feature-card">
-            <div class="cendric-fcard-icon" style="background: rgba(109, 90, 230, 0.2); color: #a78bfa; border: 1px solid rgba(109,90,230,0.35);">
+            <div class="cendric-fcard-icon" style="background: rgba(109, 90, 230, 0.12); color: #6d5ae6; border: 1px solid rgba(109,90,230,0.25);">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
             </div>
             <div class="cendric-fcard-body">
@@ -2844,7 +2857,7 @@
           </div>
 
           <div class="cendric-feature-card">
-            <div class="cendric-fcard-icon" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border: 1px solid rgba(14,165,233,0.35);">
+            <div class="cendric-fcard-icon" style="background: rgba(14, 165, 233, 0.12); color: #0284c7; border: 1px solid rgba(14,165,233,0.25);">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"/><path d="M20 7V4h-3"/><path d="M4 17v3h3"/><path d="M20 17v3h-3"/><rect width="10" height="8" x="7" y="8" rx="1"/><path d="M10 12h4"/></svg>
             </div>
             <div class="cendric-fcard-body">
@@ -2854,7 +2867,7 @@
           </div>
 
           <div class="cendric-feature-card">
-            <div class="cendric-fcard-icon" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.35);">
+            <div class="cendric-fcard-icon" style="background: rgba(16, 185, 129, 0.12); color: #059669; border: 1px solid rgba(16,185,129,0.25);">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
             </div>
             <div class="cendric-fcard-body">
@@ -2876,12 +2889,12 @@
             </div>
             <div class="cendric-sec-dot">•</div>
             <div class="cendric-sec-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               <span>Zero-Knowledge</span>
             </div>
             <div class="cendric-sec-dot">•</div>
             <div class="cendric-sec-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6d5ae6" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
               <span>Gemini AI</span>
             </div>
           `;
@@ -2898,16 +2911,51 @@
       }
 
       const isRegister = !!document.getElementById('fullName');
+      let headerBar = document.getElementById('cendric-card-header-bar');
+      if (!headerBar) {
+        headerBar = document.createElement('div');
+        headerBar.id = 'cendric-card-header-bar';
+        headerBar.className = 'cendric-card-header-bar';
+        formCard.insertBefore(headerBar, formCard.firstChild);
+      }
+
       let badge = document.getElementById('cendric-form-badge');
       if (!badge) {
         badge = document.createElement('div');
         badge.id = 'cendric-form-badge';
         badge.className = 'cendric-form-top-badge';
-        formCard.insertBefore(badge, formCard.firstChild);
+        headerBar.appendChild(badge);
       }
       badge.innerHTML = isRegister
-        ? '<span>🚀</span> CREATE YOUR FREE ACCOUNT'
-        : '<span>✨</span> WELCOME TO CENDRIC';
+        ? '<span>🚀</span> CREATE ACCOUNT'
+        : '<span>✨</span> WELCOME';
+
+      // Theme toggle button
+      let themeBtn = document.getElementById('cendric-auth-theme-toggle');
+      if (!themeBtn) {
+        themeBtn = document.createElement('button');
+        themeBtn.id = 'cendric-auth-theme-toggle';
+        themeBtn.className = 'cendric-auth-theme-btn';
+        themeBtn.type = 'button';
+        themeBtn.title = 'Switch Light / Dark Theme';
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        themeBtn.innerHTML = isDark
+          ? '<span>☀️</span><span>Light</span>'
+          : '<span>🌙</span><span>Dark</span>';
+        themeBtn.addEventListener('click', () => {
+          const currentlyDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          if (currentlyDark) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('cendric_theme', 'light');
+            themeBtn.innerHTML = '<span>🌙</span><span>Dark</span>';
+          } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('cendric_theme', 'dark');
+            themeBtn.innerHTML = '<span>☀️</span><span>Light</span>';
+          }
+        });
+        headerBar.appendChild(themeBtn);
+      }
 
       // Demo quick fill pill
       if (!document.getElementById('cendric-demo-helper')) {
@@ -3022,8 +3070,10 @@
       if (!url.includes('/login')) {
         document.body.classList.remove('cendric-auth-active');
         document.getElementById('cendric-form-badge')?.remove();
+        document.getElementById('cendric-card-header-bar')?.remove();
         document.getElementById('cendric-demo-helper')?.remove();
         document.getElementById('cendric-auth-hero-badge')?.remove();
+        document.getElementById('cendric-hero-img-box')?.remove();
         document.getElementById('cendric-auth-security-strip')?.remove();
       }
     }
@@ -3073,8 +3123,10 @@
     if (!url.includes('/login')) {
       document.body.classList.remove('cendric-auth-active');
       document.getElementById('cendric-form-badge')?.remove();
+      document.getElementById('cendric-card-header-bar')?.remove();
       document.getElementById('cendric-demo-helper')?.remove();
       document.getElementById('cendric-auth-hero-badge')?.remove();
+      document.getElementById('cendric-hero-img-box')?.remove();
       document.getElementById('cendric-auth-security-strip')?.remove();
     }
     scheduleCheckAndEnhance();
