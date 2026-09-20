@@ -2800,7 +2800,7 @@
         <!-- Top Announcement Banner -->
         <div class="cendric-pay-banner">
           <span class="cendric-pay-banner-pill">NEW</span>
-          <span>Cendric Conference 2024: Open opportunities and challenges for the global financial industry</span>
+          <span>Cendric AI 2.0: Automated tax forecasting, instant receipt scanning & multi-currency freelance tracking</span>
           <button type="button" class="cendric-pay-banner-close" onclick="this.parentElement.remove()">✕</button>
         </div>
 
@@ -2811,11 +2811,11 @@
             <span class="cendric-nav-brand">Cendric</span>
           </div>
           <div class="cendric-nav-links">
-            <span>Solutions ▾</span>
-            <span>Industries ▾</span>
-            <span>Pricing</span>
-            <span>Resources</span>
-            <span>Company</span>
+            <span>Features ▾</span>
+            <span>Multi-Currency</span>
+            <span>Tax Estimator</span>
+            <span>Receipt OCR</span>
+            <span>AI Assistant</span>
           </div>
           <div class="cendric-nav-right">
             <button type="button" class="cendric-nav-login" id="pay-nav-login-btn">Log In</button>
@@ -2828,12 +2828,12 @@
           <!-- Left Column -->
           <div class="cendric-pay-left">
             <h1 class="cendric-pay-headline">
-              A Revolutionary and<br>
-              Reliable Solution for<br>
-              <span class="cendric-pay-highlight">Global Finance</span>
+              Intelligent Finance &<br>
+              Tax Assistant for<br>
+              <span class="cendric-pay-highlight">Modern Freelancers</span>
             </h1>
             <p class="cendric-pay-sub">
-              We provide sustainable and open global financial solutions throughout the world.
+              Manage income from international clients, track business expenses, automate tax deductions, and receive real-time financial insights powered by AI.
             </p>
 
             <!-- Form Container Slot -->
@@ -2858,7 +2858,7 @@
               </div>
               <div class="cendric-trust-info">
                 <div class="cendric-pay-stars">★★★★★</div>
-                <div class="cendric-pay-trust-label">Trusted by 2K+ Customers</div>
+                <div class="cendric-pay-trust-label">Trusted by 2K+ Freelancers & Creators</div>
               </div>
             </div>
           </div>
@@ -2866,29 +2866,29 @@
           <!-- Right Column -->
           <div class="cendric-pay-right">
             <div class="cendric-pay-mint-shape"></div>
-            <img src="/assets/cendric-hero-person.jpg" alt="Global Finance" class="cendric-pay-person-img" />
+            <img src="/assets/cendric-hero-person.jpg" alt="Freelance Finance" class="cendric-pay-person-img" />
 
             <!-- Floating Card 1: Multi-Currency -->
             <div class="cendric-float-card cendric-card-currencies">
-              <div class="cendric-curr-header">8+ currencies in all countries</div>
+              <div class="cendric-curr-header">Multi-Currency Global Income</div>
               <div class="cendric-curr-grid">
-                <div class="cendric-curr-badge"><span>🇮🇩</span> IDR</div>
                 <div class="cendric-curr-badge"><span>🇺🇸</span> USD</div>
-                <div class="cendric-curr-badge"><span>🇦🇺</span> AUD</div>
                 <div class="cendric-curr-badge"><span>🇪🇺</span> EUR</div>
+                <div class="cendric-curr-badge"><span>🇬🇧</span> GBP</div>
+                <div class="cendric-curr-badge"><span>🇦🇺</span> AUD</div>
               </div>
             </div>
 
             <!-- Floating Card 2: Total Balance -->
             <div class="cendric-float-card cendric-card-balance">
               <div class="cendric-bal-header">
-                <span class="cendric-bal-label">Total Balance</span>
-                <span class="cendric-bal-link">All Accounts</span>
+                <span class="cendric-bal-label">Freelance Net Income</span>
+                <span class="cendric-bal-link">This Quarter</span>
               </div>
-              <div class="cendric-bal-amt">$637,435.00</div>
+              <div class="cendric-bal-amt">$14,850.00</div>
               <div class="cendric-bal-meta">
-                <span>Account Type: Credit Card</span>
-                <span>Cendric</span>
+                <span>Tax Saved: $3,712.50</span>
+                <span>Cendric Vault</span>
               </div>
             </div>
 
@@ -2896,11 +2896,11 @@
             <div class="cendric-float-card cendric-card-debit">
               <div class="cendric-debit-top">
                 <div class="cendric-debit-chip"></div>
-                <div class="cendric-debit-brand">DEBIT</div>
+                <div class="cendric-debit-brand">FREELANCE PRO</div>
               </div>
               <div class="cendric-debit-num">2466 4982 7710 3607</div>
               <div class="cendric-debit-foot">
-                <span>CENDRIC WORLD</span>
+                <span>CENDRIC PLATINUM</span>
                 <div class="cendric-debit-circles">
                   <span class="cendric-debit-c1"></span>
                   <span class="cendric-debit-c2"></span>
