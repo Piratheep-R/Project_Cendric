@@ -2747,6 +2747,195 @@
   }
 
   // ----------------------------------------------------
+  // Auth (SignIn / Register) Page Enhancement
+  // ----------------------------------------------------
+  function triggerDemoFill() {
+    const emailInput = document.getElementById('email');
+    const passInput = document.getElementById('password');
+    if (emailInput && passInput) {
+      const setNativeValue = (element, value) => {
+        const valueSetter = Object.getOwnPropertyDescriptor(element, 'value')?.set;
+        const prototype = Object.getPrototypeOf(element);
+        const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value')?.set;
+        if (prototypeValueSetter && valueSetter !== prototypeValueSetter) {
+          prototypeValueSetter.call(element, value);
+        } else if (valueSetter) {
+          valueSetter.call(element, value);
+        } else {
+          element.value = value;
+        }
+        element.dispatchEvent(new Event('input', { bubbles: true }));
+        element.dispatchEvent(new Event('change', { bubbles: true }));
+      };
+
+      setNativeValue(emailInput, 'piratheep@example.com');
+      setNativeValue(passInput, 'password123');
+      showToast('Demo credentials filled! Click "Sign In"', 'success');
+    }
+  }
+
+  function enhanceAuthPage() {
+    const emailInput = document.getElementById('email');
+    const passInput = document.getElementById('password');
+    const toggleBtn = document.getElementById('toggle-auth-mode');
+    
+    if (!emailInput || !passInput || !toggleBtn) {
+      if (document.body.classList.contains('cendric-auth-active')) {
+        document.body.classList.remove('cendric-auth-active');
+      }
+      return;
+    }
+
+    if (!document.body.classList.contains('cendric-auth-active')) {
+      document.body.classList.add('cendric-auth-active');
+    }
+
+    const authContainer = emailInput.closest('.min-h-screen.flex');
+    if (authContainer) {
+      if (!authContainer.classList.contains('cendric-auth-wrapper')) {
+        authContainer.classList.add('cendric-auth-wrapper');
+      }
+      const leftCol = authContainer.querySelector('.hidden.md\\:flex');
+      if (leftCol && !leftCol.classList.contains('cendric-auth-brand-panel')) {
+        leftCol.classList.add('cendric-auth-brand-panel');
+      }
+      const rightCol = authContainer.querySelector('.flex-1.flex.items-center.justify-center');
+      if (rightCol) {
+        if (!rightCol.classList.contains('cendric-auth-form-panel')) {
+          rightCol.classList.add('cendric-auth-form-panel');
+        }
+        if (rightCol.style.background !== 'transparent') {
+          rightCol.style.setProperty('background', 'transparent', 'important');
+        }
+      }
+    }
+
+    // 1. Upgrade left brand panel (pills, badges, trust indicators)
+    const leftCol = document.querySelector('.cendric-auth-brand-panel');
+    if (leftCol) {
+      const brandCenter = leftCol.querySelector('.relative.z-10.text-center');
+      if (brandCenter && !document.getElementById('cendric-auth-hero-badge')) {
+        const badge = document.createElement('div');
+        badge.id = 'cendric-auth-hero-badge';
+        badge.className = 'cendric-hero-badge';
+        badge.innerHTML = `
+          <span class="cendric-badge-pulse"></span>
+          <span>INTELLIGENT WEALTH & EXPENSE OS</span>
+        `;
+        const logoBox = brandCenter.querySelector('.w-20.h-20');
+        if (logoBox) {
+          brandCenter.insertBefore(badge, logoBox);
+        }
+      }
+
+      // Replace broken ?? pills with high-contrast, informative feature cards
+      const pillsContainer = leftCol.querySelector('.mt-12.space-y-4');
+      if (pillsContainer && pillsContainer.getAttribute('data-cendric-upgraded') !== 'true') {
+        pillsContainer.setAttribute('data-cendric-upgraded', 'true');
+        pillsContainer.innerHTML = `
+          <div class="cendric-feature-card">
+            <div class="cendric-fcard-icon" style="background: rgba(109, 90, 230, 0.2); color: #a78bfa; border: 1px solid rgba(109,90,230,0.35);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+            </div>
+            <div class="cendric-fcard-body">
+              <div class="cendric-fcard-title">AI Spending Intelligence</div>
+              <div class="cendric-fcard-desc">Real-time categorization & predictive budget burn-rate alerts</div>
+            </div>
+          </div>
+
+          <div class="cendric-feature-card">
+            <div class="cendric-fcard-icon" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border: 1px solid rgba(14,165,233,0.35);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"/><path d="M20 7V4h-3"/><path d="M4 17v3h3"/><path d="M20 17v3h-3"/><rect width="10" height="8" x="7" y="8" rx="1"/><path d="M10 12h4"/></svg>
+            </div>
+            <div class="cendric-fcard-body">
+              <div class="cendric-fcard-title">Receipt & Invoice Vision</div>
+              <div class="cendric-fcard-desc">Instant OCR extraction powered by Gemini Multimodal AI</div>
+            </div>
+          </div>
+
+          <div class="cendric-feature-card">
+            <div class="cendric-fcard-icon" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.35);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+            </div>
+            <div class="cendric-fcard-body">
+              <div class="cendric-fcard-title">Multi-Currency & Tax Reports</div>
+              <div class="cendric-fcard-desc">Live foreign exchange rates & Sri Lanka PIT compliance</div>
+            </div>
+          </div>
+        `;
+
+        // Add trust and security badges underneath
+        if (!document.getElementById('cendric-auth-security-strip')) {
+          const strip = document.createElement('div');
+          strip.id = 'cendric-auth-security-strip';
+          strip.className = 'cendric-auth-security-strip';
+          strip.innerHTML = `
+            <div class="cendric-sec-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>256-Bit SSL</span>
+            </div>
+            <div class="cendric-sec-dot">•</div>
+            <div class="cendric-sec-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Zero-Knowledge</span>
+            </div>
+            <div class="cendric-sec-dot">•</div>
+            <div class="cendric-sec-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Gemini AI</span>
+            </div>
+          `;
+          pillsContainer.parentNode.appendChild(strip);
+        }
+      }
+    }
+
+    // 2. Enhance Form Card
+    const formCard = document.querySelector('.w-full.max-w-md');
+    if (formCard) {
+      if (!formCard.classList.contains('cendric-auth-card')) {
+        formCard.classList.add('cendric-auth-card');
+      }
+
+      const isRegister = !!document.getElementById('fullName');
+      let badge = document.getElementById('cendric-form-badge');
+      if (!badge) {
+        badge = document.createElement('div');
+        badge.id = 'cendric-form-badge';
+        badge.className = 'cendric-form-top-badge';
+        formCard.insertBefore(badge, formCard.firstChild);
+      }
+      badge.innerHTML = isRegister
+        ? '<span>🚀</span> CREATE YOUR FREE ACCOUNT'
+        : '<span>✨</span> WELCOME TO CENDRIC';
+
+      // Demo quick fill pill
+      if (!document.getElementById('cendric-demo-helper')) {
+        const helper = document.createElement('div');
+        helper.id = 'cendric-demo-helper';
+        helper.className = 'cendric-demo-helper-box';
+        helper.innerHTML = `
+          <div class="cendric-demo-pill" title="Click to auto-fill test credentials">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Auto-fill Demo Credentials</span>
+          </div>
+        `;
+        helper.addEventListener('click', () => {
+          const currentIsRegister = !!document.getElementById('fullName');
+          if (currentIsRegister) {
+            const currentToggle = document.getElementById('toggle-auth-mode');
+            if (currentToggle) currentToggle.click();
+            setTimeout(() => triggerDemoFill(), 120);
+          } else {
+            triggerDemoFill();
+          }
+        });
+        formCard.appendChild(helper);
+      }
+    }
+  }
+
+  // ----------------------------------------------------
   // Safe Debounced Enhancement Orchestrator
   // ----------------------------------------------------
   let isEnhancing = false;
@@ -2756,6 +2945,7 @@
     if (isEnhancing) return;
     isEnhancing = true;
     try {
+      enhanceAuthPage();
       enhanceNavTooltips();
       await enhanceTransactionsPage();
       enhanceChatPage();
@@ -2829,6 +3019,13 @@
         document.getElementById('cendric-currency-conversion-banner')?.remove();
         document.getElementById('cendric-live-rates-bar')?.remove();
       }
+      if (!url.includes('/login')) {
+        document.body.classList.remove('cendric-auth-active');
+        document.getElementById('cendric-form-badge')?.remove();
+        document.getElementById('cendric-demo-helper')?.remove();
+        document.getElementById('cendric-auth-hero-badge')?.remove();
+        document.getElementById('cendric-auth-security-strip')?.remove();
+      }
     }
     scheduleCheckAndEnhance();
   }).observe(document.body, { childList: true, subtree: true });
@@ -2872,6 +3069,13 @@
     if (!url.includes('/settings')) {
       document.getElementById('cendric-currency-conversion-banner')?.remove();
       document.getElementById('cendric-live-rates-bar')?.remove();
+    }
+    if (!url.includes('/login')) {
+      document.body.classList.remove('cendric-auth-active');
+      document.getElementById('cendric-form-badge')?.remove();
+      document.getElementById('cendric-demo-helper')?.remove();
+      document.getElementById('cendric-auth-hero-badge')?.remove();
+      document.getElementById('cendric-auth-security-strip')?.remove();
     }
     scheduleCheckAndEnhance();
   }
