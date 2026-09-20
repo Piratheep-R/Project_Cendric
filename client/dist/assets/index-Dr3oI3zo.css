@@ -2496,600 +2496,621 @@ table {
 }
 
 /* ========================================================
-   CENDRIC LIGHT MODE AUTH & REGISTER REDESIGN
+   CENDRIC PAYOOBEL-STYLE CLEAN LIGHT FINTECH HERO & AUTH
    ======================================================== */
 
-/* Auth Layout Backdrop - Warm Luminous Ivory */
-.cendric-auth-wrapper,
-body.cendric-auth-active,
-.min-h-screen.flex:has(#email):has(#password) {
-  min-height: 100vh !important;
-  background-color: #f8f6f0 !important;
-  background-image: 
-    radial-gradient(at 12% 15%, rgba(109, 90, 230, 0.10) 0px, transparent 50%),
-    radial-gradient(at 88% 18%, rgba(14, 165, 233, 0.09) 0px, transparent 45%),
-    radial-gradient(at 50% 90%, rgba(16, 185, 129, 0.08) 0px, transparent 55%),
-    radial-gradient(at 85% 85%, rgba(245, 158, 11, 0.08) 0px, transparent 50%) !important;
-  background-attachment: fixed !important;
+body.cendric-auth-active {
+  background-color: #f1f3f5 !important;
+  color: #111827 !important;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  position: relative !important;
+  min-height: 100vh !important;
   overflow-x: hidden !important;
-  color: #1e293b !important;
 }
 
-/* Left Branding Panel */
-.cendric-auth-brand-panel,
-.min-h-screen.flex:has(#email) > div.hidden.md\:flex {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(248, 246, 240, 0.92) 100%) !important;
-  backdrop-filter: blur(28px) saturate(160%) !important;
-  border-right: 1px solid rgba(226, 219, 206, 0.85) !important;
-  position: relative !important;
-  z-index: 1 !important;
-  box-shadow: 4px 0 24px rgba(60, 50, 40, 0.03) !important;
-}
-
-/* Ambient Glow behind Hero Image */
-.cendric-auth-brand-panel::before {
-  content: '' !important;
-  position: absolute !important;
-  top: 25% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 480px !important;
-  height: 480px !important;
-  background: radial-gradient(circle, rgba(109, 90, 230, 0.15) 0%, rgba(124, 110, 245, 0.06) 45%, transparent 70%) !important;
-  filter: blur(40px) !important;
-  pointer-events: none !important;
-  animation: cendricOrbPulse 8s ease-in-out infinite alternate !important;
-}
-
-@keyframes cendricOrbPulse {
-  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
-  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
-}
-
-/* Hero Badge */
-.cendric-hero-badge {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  padding: 6px 14px !important;
-  background: rgba(109, 90, 230, 0.08) !important;
-  border: 1px solid rgba(109, 90, 230, 0.22) !important;
-  border-radius: 9999px !important;
-  font-size: 10.5px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.14em !important;
-  color: #6d5ae6 !important;
-  margin-bottom: 16px !important;
-  text-transform: uppercase !important;
-  box-shadow: 0 2px 10px rgba(109, 90, 230, 0.08) !important;
-}
-
-.cendric-badge-pulse {
-  width: 7px !important;
-  height: 7px !important;
-  border-radius: 50% !important;
-  background: #10b981 !important;
-  box-shadow: 0 0 8px #10b981 !important;
-  animation: pulse-dot 1.8s infinite !important;
-}
-
-/* 3D Hero Illustration Container */
-.cendric-hero-img-box {
-  margin: 0 auto 16px auto !important;
-  width: 220px !important;
-  height: 148px !important;
-  position: relative !important;
-  border-radius: 18px !important;
-  padding: 3px !important;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(226, 219, 206, 0.65)) !important;
-  box-shadow: 
-    0 16px 36px -8px rgba(109, 90, 230, 0.22),
-    0 2px 8px rgba(0, 0, 0, 0.04) !important;
-  animation: cendricFloat 6s ease-in-out infinite !important;
-}
-
-@keyframes cendricFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-7px); }
-}
-
-.cendric-hero-img {
+/* Outer Wrapper */
+#cendric-pay-container {
   width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  border-radius: 15px !important;
-  display: block !important;
-}
-
-/* Hide the old small wallet box when hero illustration is present */
-.cendric-auth-brand-panel .w-20.h-20 {
-  display: none !important;
-}
-
-/* Brand Title */
-.cendric-auth-brand-panel h1 {
-  font-size: 2.35rem !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.16em !important;
-  color: #1e1b4b !important;
-  background: linear-gradient(135deg, #1e1b4b 30%, #4338ca 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  margin-bottom: 2px !important;
-}
-
-/* Subtitle */
-.cendric-auth-brand-panel p[style*="letter-spacing"] {
-  color: #64748b !important;
-  letter-spacing: 0.28em !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
-}
-
-/* Upgraded Feature Cards */
-.cendric-feature-card {
+  min-height: 100vh !important;
+  background-color: #f1f3f5 !important;
   display: flex !important;
-  align-items: flex-start !important;
-  gap: 14px !important;
-  background: rgba(255, 255, 255, 0.88) !important;
-  backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(226, 219, 206, 0.85) !important;
-  border-radius: 16px !important;
-  padding: 13px 16px !important;
-  text-align: left !important;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  flex-direction: column !important;
   position: relative !important;
-  overflow: hidden !important;
-  box-shadow: 0 4px 14px rgba(60, 50, 40, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+  z-index: 10 !important;
 }
 
-.cendric-feature-card:hover {
-  background: #ffffff !important;
-  border-color: rgba(109, 90, 230, 0.4) !important;
-  transform: translateX(5px) !important;
-  box-shadow: 0 8px 24px rgba(109, 90, 230, 0.12) !important;
-}
-
-.cendric-fcard-icon {
-  width: 38px !important;
-  height: 38px !important;
-  border-radius: 10px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  flex-shrink: 0 !important;
-}
-
-.cendric-fcard-body {
-  flex: 1 !important;
-}
-
-.cendric-fcard-title {
-  font-size: 13.5px !important;
-  font-weight: 700 !important;
-  color: #1e293b !important;
-  letter-spacing: 0.01em !important;
-  margin-bottom: 2px !important;
-}
-
-.cendric-fcard-desc {
-  font-size: 11.5px !important;
-  color: #64748b !important;
-  line-height: 1.45 !important;
-}
-
-.cendric-auth-security-strip {
+/* Announcement Banner */
+.cendric-pay-banner {
+  background: #18181b !important;
+  color: #f3f4f6 !important;
+  font-size: 12.5px !important;
+  padding: 8px 24px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 12px !important;
-  margin-top: 22px !important;
-  font-size: 11.5px !important;
-  color: #64748b !important;
-}
-
-.cendric-sec-item {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  font-weight: 500 !important;
-}
-
-.cendric-sec-dot {
-  color: #cbd5e1 !important;
-}
-
-/* Right Form Panel (override inline style="background: #fff") */
-.cendric-auth-form-panel,
-.min-h-screen.flex:has(#email) > div.flex-1.flex.items-center.justify-center {
-  background: transparent !important;
   position: relative !important;
-  z-index: 1 !important;
+  z-index: 50 !important;
+  text-align: center !important;
 }
 
-/* Auth Card on Right */
-.cendric-auth-card,
-.min-h-screen.flex:has(#email) .w-full.max-w-md {
-  background: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(28px) saturate(180%) !important;
-  border: 1px solid rgba(226, 219, 206, 0.9) !important;
-  box-shadow: 
-    0 24px 50px -12px rgba(60, 50, 40, 0.1),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
-  border-radius: 24px !important;
-  padding: 38px 36px !important;
-  position: relative !important;
-  overflow: hidden !important;
+.cendric-pay-banner-pill {
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.05em !important;
 }
 
-/* Top Shimmer Gradient Border on Card */
-.cendric-auth-card::before,
-.min-h-screen.flex:has(#email) .w-full.max-w-md::before {
-  content: '' !important;
+.cendric-pay-banner-close {
   position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 3px !important;
-  background: linear-gradient(90deg, transparent, #6d5ae6 25%, #a78bfa 50%, #38bdf8 75%, transparent) !important;
+  right: 20px !important;
+  background: none !important;
+  border: none !important;
+  color: #9ca3af !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
 }
 
-/* Card Header Flex with Mode Switcher */
-.cendric-card-header-bar {
+/* Navbar */
+.cendric-pay-nav {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  margin-bottom: 12px !important;
-}
-
-/* Form Top Badge */
-.cendric-form-top-badge {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.08em !important;
-  color: #6d5ae6 !important;
-  text-transform: uppercase !important;
-  padding: 4px 10px !important;
-  background: rgba(109, 90, 230, 0.08) !important;
-  border-radius: 6px !important;
-  border: 1px solid rgba(109, 90, 230, 0.2) !important;
-}
-
-/* Theme Toggle Button on Card */
-.cendric-auth-theme-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 4px 10px !important;
-  border-radius: 8px !important;
-  border: 1px solid rgba(226, 219, 206, 0.8) !important;
-  background: rgba(248, 250, 252, 0.9) !important;
-  color: #64748b !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-}
-
-.cendric-auth-theme-btn:hover {
-  background: #ffffff !important;
-  border-color: #6d5ae6 !important;
-  color: #6d5ae6 !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 2px 8px rgba(109, 90, 230, 0.12) !important;
-}
-
-/* Form Title (h2) */
-.cendric-auth-card h2,
-.min-h-screen.flex:has(#email) .w-full.max-w-md h2 {
-  font-size: 28px !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.02em !important;
-  color: #0f172a !important;
-  margin-bottom: 6px !important;
-}
-
-/* Form Subtitle */
-.cendric-auth-card p.text-sm.mb-8,
-.min-h-screen.flex:has(#email) .w-full.max-w-md p.text-sm.mb-8 {
-  color: #64748b !important;
-  font-size: 14px !important;
-  margin-bottom: 22px !important;
-}
-
-/* Input Labels */
-.cendric-auth-card label,
-.min-h-screen.flex:has(#email) .w-full.max-w-md label {
-  color: #334155 !important;
-  font-size: 12.5px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.02em !important;
-  margin-bottom: 7px !important;
-  display: block !important;
-}
-
-/* Inputs */
-.cendric-auth-card input,
-.min-h-screen.flex:has(#email) input#fullName,
-.min-h-screen.flex:has(#email) input#email,
-.min-h-screen.flex:has(#email) input#password {
+  padding: 20px 60px !important;
+  max-width: 1360px !important;
+  margin: 0 auto !important;
   width: 100% !important;
-  background: rgba(248, 250, 252, 0.95) !important;
-  border: 1.5px solid #e2e8f0 !important;
-  border-radius: 12px !important;
-  font-size: 14.5px !important;
-  color: #0f172a !important;
-  padding: 13px 16px !important;
-  outline: none !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) inset !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  font-family: inherit !important;
 }
 
-.cendric-auth-card input::placeholder,
-.min-h-screen.flex:has(#email) input::placeholder {
-  color: #94a3b8 !important;
-  opacity: 0.8 !important;
-}
-
-/* Custom Input Icons via SVG background */
-.min-h-screen.flex:has(#email) input#email {
-  padding-left: 42px !important;
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%2364748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>') !important;
-  background-repeat: no-repeat !important;
-  background-position: 14px center !important;
-}
-
-.min-h-screen.flex:has(#email) input#password {
-  padding-left: 42px !important;
-  padding-right: 42px !important;
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%2364748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>') !important;
-  background-repeat: no-repeat !important;
-  background-position: 14px center !important;
-}
-
-.min-h-screen.flex:has(#email) input#fullName {
-  padding-left: 42px !important;
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%2364748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>') !important;
-  background-repeat: no-repeat !important;
-  background-position: 14px center !important;
-}
-
-/* Input Focus States */
-.cendric-auth-card input:focus,
-.min-h-screen.flex:has(#email) input:focus {
-  border-color: #6d5ae6 !important;
-  background-color: #ffffff !important;
-  box-shadow: 
-    0 0 0 4px rgba(109, 90, 230, 0.15),
-    0 2px 8px rgba(109, 90, 230, 0.08) !important;
-}
-
-/* Password Visibility Toggle Button */
-.min-h-screen.flex:has(#email) input#password + button {
-  color: #64748b !important;
-  transition: color 0.2s, transform 0.15s !important;
-  right: 14px !important;
-}
-
-.min-h-screen.flex:has(#email) input#password + button:hover {
-  color: #6d5ae6 !important;
-  transform: translateY(-50%) scale(1.15) !important;
-}
-
-/* Submit Button (#auth-submit-btn) */
-#auth-submit-btn,
-.min-h-screen.flex:has(#email) button[type="submit"] {
-  width: 100% !important;
-  background: linear-gradient(135deg, #6d5ae6 0%, #7c6ef5 50%, #5845d8 100%) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-radius: 12px !important;
-  padding: 14px 20px !important;
-  font-size: 15px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.02em !important;
-  box-shadow: 0 8px 24px -4px rgba(109, 90, 230, 0.45) !important;
-  cursor: pointer !important;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  margin-top: 10px !important;
-}
-
-#auth-submit-btn:hover:not(:disabled),
-.min-h-screen.flex:has(#email) button[type="submit"]:hover:not(:disabled) {
-  background: linear-gradient(135deg, #7c6ef5 0%, #8b7af8 50%, #6d5ae6 100%) !important;
-  box-shadow: 0 12px 30px -4px rgba(109, 90, 230, 0.6) !important;
-  transform: translateY(-2px) !important;
-}
-
-#auth-submit-btn:active:not(:disabled),
-.min-h-screen.flex:has(#email) button[type="submit"]:active:not(:disabled) {
-  transform: translateY(0px) scale(0.99) !important;
-  box-shadow: 0 4px 12px rgba(109, 90, 230, 0.3) !important;
-}
-
-#auth-submit-btn:disabled,
-.min-h-screen.flex:has(#email) button[type="submit"]:disabled {
-  opacity: 0.6 !important;
-  cursor: not-allowed !important;
-  transform: none !important;
-}
-
-/* Error Banner */
-.min-h-screen.flex:has(#email) .w-full.max-w-md > div[style*="background"] {
-  background: #fef2f2 !important;
-  border: 1px solid #fecaca !important;
-  border-radius: 12px !important;
-  color: #dc2626 !important;
-  font-weight: 500 !important;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08) !important;
+.cendric-nav-left {
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
+  cursor: pointer !important;
 }
 
-/* Auth Mode Toggle Link */
-.min-h-screen.flex:has(#email) p.text-center.text-sm.mt-6 {
-  color: #64748b !important;
+.cendric-nav-logo-mark {
+  width: 32px !important;
+  height: 32px !important;
+  background: #111827 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 18px !important;
+}
+
+.cendric-nav-brand {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.cendric-nav-links {
+  display: flex !important;
+  align-items: center !important;
+  gap: 32px !important;
   font-size: 14px !important;
-  margin-top: 24px !important;
+  font-weight: 500 !important;
+  color: #4b5563 !important;
 }
 
-#toggle-auth-mode,
-.min-h-screen.flex:has(#email) #toggle-auth-mode {
-  color: #6d5ae6 !important;
+.cendric-nav-links span {
+  cursor: pointer !important;
+  transition: color 0.15s !important;
+}
+
+.cendric-nav-links span:hover {
+  color: #111827 !important;
+}
+
+.cendric-nav-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+.cendric-nav-login {
+  background: none !important;
+  border: none !important;
+  color: #374151 !important;
+  font-size: 14px !important;
   font-weight: 600 !important;
+  cursor: pointer !important;
+  padding: 8px 14px !important;
+  border-radius: 6px !important;
+  transition: color 0.15s !important;
+}
+
+.cendric-nav-login:hover {
+  color: #111827 !important;
+}
+
+.cendric-nav-cta {
+  background: #115e59 !important;
+  color: #ffffff !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  padding: 9px 20px !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: background 0.2s !important;
+}
+
+.cendric-nav-cta:hover {
+  background: #0d5c58 !important;
+}
+
+/* Payoobel Hero Container */
+.cendric-pay-hero {
+  display: grid !important;
+  grid-template-columns: 1.05fr 0.95fr !important;
+  max-width: 1360px !important;
+  margin: 0 auto !important;
+  padding: 30px 60px 60px !important;
+  gap: 40px !important;
+  align-items: center !important;
+  width: 100% !important;
+  flex: 1 !important;
+}
+
+/* Left Hero Column */
+.cendric-pay-left {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  padding-right: 20px !important;
+}
+
+.cendric-pay-headline {
+  font-size: 52px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  color: #111827 !important;
+  letter-spacing: -0.03em !important;
+  margin-bottom: 20px !important;
+}
+
+.cendric-pay-highlight {
+  color: #374151 !important;
+  font-weight: 800 !important;
+}
+
+.cendric-pay-sub {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: #6b7280 !important;
+  max-width: 480px !important;
+  margin-bottom: 24px !important;
+}
+
+/* Form Container inside Left Column */
+.cendric-pay-form-wrap {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03) !important;
+  border-radius: 16px !important;
+  padding: 22px 26px !important;
+  max-width: 480px !important;
+  margin-bottom: 22px !important;
+}
+
+/* Auth Switch Tabs */
+.cendric-pay-tabs {
+  display: flex !important;
+  background: #f3f4f6 !important;
+  padding: 4px !important;
+  border-radius: 8px !important;
+  margin-bottom: 18px !important;
+  gap: 4px !important;
+}
+
+.cendric-pay-tab {
+  flex: 1 !important;
+  padding: 8px 14px !important;
+  border-radius: 6px !important;
+  border: none !important;
   background: transparent !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #6b7280 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  text-align: center !important;
+}
+
+.cendric-pay-tab.active {
+  background: #ffffff !important;
+  color: #111827 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Form Inputs */
+.cendric-pay-form-wrap input {
+  width: 100% !important;
+  background: #ffffff !important;
+  border: 1.5px solid #d1d5db !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 14px !important;
+  color: #111827 !important;
+  outline: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.cendric-pay-form-wrap input:focus {
+  border-color: #115e59 !important;
+  box-shadow: 0 0 0 3px rgba(17, 94, 89, 0.15) !important;
+}
+
+.cendric-pay-form-wrap label {
+  display: block !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #374151 !important;
+  margin-bottom: 5px !important;
+}
+
+/* Submit & Demo Buttons Row */
+.cendric-pay-btn-row {
+  display: flex !important;
+  gap: 12px !important;
+  margin-top: 16px !important;
+}
+
+#auth-submit-btn,
+.cendric-pay-submit-btn {
+  flex: 1 !important;
+  background: #115e59 !important;
+  color: #ffffff !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  padding: 12px 20px !important;
+  border-radius: 8px !important;
   border: none !important;
   cursor: pointer !important;
-  padding: 4px 8px !important;
-  border-radius: 6px !important;
-  transition: all 0.2s !important;
-  text-decoration: underline !important;
-  text-underline-offset: 4px !important;
-}
-
-#toggle-auth-mode:hover,
-.min-h-screen.flex:has(#email) #toggle-auth-mode:hover {
-  color: #4f46e5 !important;
-  background: rgba(109, 90, 230, 0.08) !important;
-}
-
-/* Demo Credentials Helper Pill */
-.cendric-demo-helper-box {
-  margin-top: 20px !important;
   display: flex !important;
+  align-items: center !important;
   justify-content: center !important;
+  gap: 8px !important;
+  transition: background 0.2s, transform 0.1s !important;
+  margin-top: 0 !important;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.25) !important;
 }
 
-.cendric-demo-pill {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 7px 16px !important;
-  background: rgba(109, 90, 230, 0.08) !important;
-  border: 1px solid rgba(109, 90, 230, 0.22) !important;
-  border-radius: 9999px !important;
-  font-size: 11.5px !important;
-  color: #5b49d4 !important;
+#auth-submit-btn:hover:not(:disabled),
+.cendric-pay-submit-btn:hover:not(:disabled) {
+  background: #0d5c58 !important;
+  transform: translateY(-1px) !important;
+}
+
+.cendric-pay-demo-btn {
+  background: #e5e7eb !important;
+  color: #1f2937 !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  padding: 12px 18px !important;
+  border-radius: 8px !important;
+  border: none !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: background 0.2s !important;
+  white-space: nowrap !important;
+}
+
+.cendric-pay-demo-btn:hover {
+  background: #d1d5db !important;
+}
+
+/* Social Proof Row */
+.cendric-pay-trust {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.cendric-avatar-stack {
+  display: flex !important;
+}
+
+.cendric-pay-avatar {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  border: 2px solid #f1f3f5 !important;
+  margin-left: -10px !important;
+  object-fit: cover !important;
+  background: #cbd5e1 !important;
+}
+
+.cendric-pay-avatar:first-child {
+  margin-left: 0 !important;
+}
+
+.cendric-trust-info {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.cendric-pay-stars {
+  color: #f59e0b !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  margin-bottom: 3px !important;
+  letter-spacing: 2px !important;
+}
+
+.cendric-pay-trust-label {
+  font-size: 12px !important;
+  color: #6b7280 !important;
   font-weight: 500 !important;
 }
 
-.cendric-demo-pill:hover {
-  background: rgba(109, 90, 230, 0.16) !important;
-  border-color: rgba(109, 90, 230, 0.45) !important;
-  color: #4338ca !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(109, 90, 230, 0.15) !important;
+/* Right Hero Visual Column */
+.cendric-pay-right {
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 540px !important;
 }
 
-/* Mobile Brand Header */
-.min-h-screen.flex:has(#email) .md\:hidden {
-  background: rgba(255, 255, 255, 0.92) !important;
+/* Background Soft Mint Curved Shape */
+.cendric-pay-mint-shape {
+  position: absolute !important;
+  width: 380px !important;
+  height: 480px !important;
+  background: #d1fae5 !important;
+  border-radius: 40px !important;
+  transform: rotate(-6deg) !important;
+  z-index: 1 !important;
+  opacity: 0.7 !important;
+}
+
+/* Main Person Image */
+.cendric-pay-person-img {
+  width: 100% !important;
+  max-width: 440px !important;
+  height: auto !important;
+  border-radius: 28px !important;
+  position: relative !important;
+  z-index: 2 !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Floating Cards Common */
+.cendric-float-card {
+  position: absolute !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  z-index: 10 !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Card 1: Multi-Currency (Top-Right) */
+.cendric-card-currencies {
+  top: 10% !important;
+  right: -10px !important;
   padding: 12px 16px !important;
-  border-radius: 16px !important;
-  border: 1px solid rgba(226, 219, 206, 0.8) !important;
-  box-shadow: 0 4px 12px rgba(60, 50, 40, 0.05) !important;
+  width: 185px !important;
+  animation: floatSubtle1 5s ease-in-out infinite alternate !important;
 }
 
-.min-h-screen.flex:has(#email) .md\:hidden p[style*="var(--sidebar-bg)"] {
-  color: #0f172a !important;
+.cendric-curr-header {
+  font-size: 10.5px !important;
+  color: #6b7280 !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
 }
 
-/* ========================================================
-   DARK MODE OVERRIDES (WHEN TOGGLED)
-   ======================================================== */
-[data-theme="dark"] .cendric-auth-wrapper,
-[data-theme="dark"] body.cendric-auth-active,
-[data-theme="dark"] .min-h-screen.flex:has(#email):has(#password) {
-  background: #080b14 !important;
-  background-image: 
-    radial-gradient(at 15% 15%, rgba(109, 90, 230, 0.25) 0px, transparent 50%),
-    radial-gradient(at 85% 20%, rgba(14, 165, 233, 0.18) 0px, transparent 45%),
-    radial-gradient(at 50% 85%, rgba(16, 185, 129, 0.12) 0px, transparent 55%),
-    radial-gradient(at 85% 85%, rgba(109, 90, 230, 0.2) 0px, transparent 50%) !important;
-  color: #f8fafc !important;
+.cendric-curr-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 6px !important;
 }
 
-[data-theme="dark"] .cendric-auth-brand-panel,
-[data-theme="dark"] .min-h-screen.flex:has(#email) > div.hidden.md\:flex {
-  background: rgba(11, 15, 26, 0.72) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+.cendric-curr-badge {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  background: #f9fafb !important;
+  border: 1px solid #f3f4f6 !important;
+  border-radius: 6px !important;
+  padding: 4px 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #374151 !important;
 }
 
-[data-theme="dark"] .cendric-hero-img-box {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(109, 90, 230, 0.25)) !important;
-  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 0 30px rgba(109, 90, 230, 0.3) !important;
+/* Card 2: Total Balance (Middle-Left) */
+.cendric-card-balance {
+  bottom: 22% !important;
+  left: -25px !important;
+  padding: 14px 18px !important;
+  width: 220px !important;
+  animation: floatSubtle2 6s ease-in-out infinite alternate !important;
 }
 
-[data-theme="dark"] .cendric-auth-brand-panel h1 {
-  background: linear-gradient(180deg, #ffffff 30%, #c4b5fd 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
+.cendric-bal-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 4px !important;
 }
 
-[data-theme="dark"] .cendric-auth-brand-panel p[style*="letter-spacing"] {
-  color: #94a3b8 !important;
+.cendric-bal-label {
+  font-size: 10.5px !important;
+  color: #6b7280 !important;
+  font-weight: 600 !important;
 }
 
-[data-theme="dark"] .cendric-feature-card {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+.cendric-bal-link {
+  font-size: 9.5px !important;
+  color: #115e59 !important;
+  font-weight: 600 !important;
 }
 
-[data-theme="dark"] .cendric-fcard-title {
+.cendric-bal-amt {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
+  margin-bottom: 6px !important;
+}
+
+.cendric-bal-meta {
+  font-size: 10px !important;
+  color: #9ca3af !important;
+  border-top: 1px solid #f3f4f6 !important;
+  padding-top: 6px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+/* Card 3: Emerald Debit Card (Bottom-Right) */
+.cendric-card-debit {
+  bottom: 4% !important;
+  right: 15px !important;
+  width: 175px !important;
+  height: 105px !important;
+  background: linear-gradient(135deg, #115e59 0%, #0d5c58 100%) !important;
   color: #ffffff !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  transform: rotate(-7deg) !important;
+  box-shadow: 0 16px 32px -8px rgba(17, 94, 89, 0.45) !important;
+  animation: floatSubtle3 7s ease-in-out infinite alternate !important;
 }
 
-[data-theme="dark"] .cendric-fcard-desc {
-  color: #94a3b8 !important;
+.cendric-debit-top {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
 }
 
-[data-theme="dark"] .cendric-auth-card,
-[data-theme="dark"] .min-h-screen.flex:has(#email) .w-full.max-w-md {
-  background: rgba(14, 18, 30, 0.82) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
+.cendric-debit-chip {
+  width: 22px !important;
+  height: 16px !important;
+  background: #fbbf24 !important;
+  border-radius: 3px !important;
 }
 
-[data-theme="dark"] .cendric-auth-theme-btn {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  color: #cbd5e1 !important;
+.cendric-debit-brand {
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
-[data-theme="dark"] .cendric-auth-card h2,
-[data-theme="dark"] .min-h-screen.flex:has(#email) .w-full.max-w-md h2 {
-  color: #f8fafc !important;
+.cendric-debit-num {
+  font-family: monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
-[data-theme="dark"] .cendric-auth-card label,
-[data-theme="dark"] .min-h-screen.flex:has(#email) .w-full.max-w-md label {
-  color: #cbd5e1 !important;
+.cendric-debit-foot {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 8.5px !important;
+  letter-spacing: 0.5px !important;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
-[data-theme="dark"] .cendric-auth-card input,
-[data-theme="dark"] .min-h-screen.flex:has(#email) input#fullName,
-[data-theme="dark"] .min-h-screen.flex:has(#email) input#email,
-[data-theme="dark"] .min-h-screen.flex:has(#email) input#password {
-  background: rgba(18, 24, 38, 0.85) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  color: #f8fafc !important;
+.cendric-debit-circles {
+  display: flex !important;
 }
 
-[data-theme="dark"] .cendric-auth-card input:focus,
-[data-theme="dark"] .min-h-screen.flex:has(#email) input:focus {
-  background: rgba(22, 29, 48, 0.95) !important;
-  border-color: #8b5cf6 !important;
-  box-shadow: 0 0 0 4px rgba(109, 90, 230, 0.25) !important;
+.cendric-debit-c1,
+.cendric-debit-c2 {
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
 }
+
+.cendric-debit-c1 {
+  background: #ef4444 !important;
+  opacity: 0.85 !important;
+}
+
+.cendric-debit-c2 {
+  background: #f59e0b !important;
+  opacity: 0.85 !important;
+  margin-left: -6px !important;
+}
+
+@keyframes floatSubtle1 {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+@keyframes floatSubtle2 {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(8px); }
+}
+
+@keyframes floatSubtle3 {
+  0% { transform: rotate(-7deg) translateY(0); }
+  100% { transform: rotate(-5deg) translateY(-6px); }
+}
+
+/* Hide original raw React layout container elements */
+.cendric-auth-active .min-h-screen.flex > div.hidden.md\:flex {
+  display: none !important;
+}
+
+.cendric-auth-active .min-h-screen.flex > div.flex-1.flex.items-center.justify-center {
+  background: transparent !important;
+  padding: 0 !important;
+  flex: none !important;
+  width: 100% !important;
+}
+
+.cendric-auth-active .min-h-screen.flex {
+  display: block !important;
+  min-height: auto !important;
+  background: transparent !important;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 960px) {
+  .cendric-pay-nav {
+    padding: 16px 24px !important;
+  }
+  .cendric-nav-links {
+    display: none !important;
+  }
+  .cendric-pay-hero {
+    grid-template-columns: 1fr !important;
+    padding: 24px 24px 48px !important;
+    gap: 40px !important;
+  }
+  .cendric-pay-headline {
+    font-size: 38px !important;
+  }
+  .cendric-pay-left {
+    padding-right: 0 !important;
+  }
+  .cendric-pay-right {
+    margin-top: 10px !important;
+    min-height: auto !important;
+  }
+  .cendric-card-currencies {
+    right: 10px !important;
+  }
+  .cendric-card-balance {
+    left: 10px !important;
+  }
+}
+
 

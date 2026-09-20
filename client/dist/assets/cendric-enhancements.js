@@ -2782,6 +2782,7 @@
     if (!emailInput || !passInput || !toggleBtn) {
       if (document.body.classList.contains('cendric-auth-active')) {
         document.body.classList.remove('cendric-auth-active');
+        document.getElementById('cendric-pay-container')?.remove();
       }
       return;
     }
@@ -2790,196 +2791,199 @@
       document.body.classList.add('cendric-auth-active');
     }
 
-    const authContainer = emailInput.closest('.min-h-screen.flex');
-    if (authContainer) {
-      if (!authContainer.classList.contains('cendric-auth-wrapper')) {
-        authContainer.classList.add('cendric-auth-wrapper');
-      }
-      const leftCol = authContainer.querySelector('.hidden.md\\:flex');
-      if (leftCol && !leftCol.classList.contains('cendric-auth-brand-panel')) {
-        leftCol.classList.add('cendric-auth-brand-panel');
-      }
-      const rightCol = authContainer.querySelector('.flex-1.flex.items-center.justify-center');
-      if (rightCol) {
-        if (!rightCol.classList.contains('cendric-auth-form-panel')) {
-          rightCol.classList.add('cendric-auth-form-panel');
+    // 1. Create or ensure Payoobel container exists
+    let payContainer = document.getElementById('cendric-pay-container');
+    if (!payContainer) {
+      payContainer = document.createElement('div');
+      payContainer.id = 'cendric-pay-container';
+      payContainer.innerHTML = `
+        <!-- Top Announcement Banner -->
+        <div class="cendric-pay-banner">
+          <span class="cendric-pay-banner-pill">NEW</span>
+          <span>Payoobel Conference 2024: Open opportunities and challenges for the global financial industry</span>
+          <button type="button" class="cendric-pay-banner-close" onclick="this.parentElement.remove()">✕</button>
+        </div>
+
+        <!-- Top Navigation -->
+        <nav class="cendric-pay-nav">
+          <div class="cendric-nav-left">
+            <div class="cendric-nav-logo-mark">P</div>
+            <span class="cendric-nav-brand">Payoobel</span>
+          </div>
+          <div class="cendric-nav-links">
+            <span>Solutions ▾</span>
+            <span>Industries ▾</span>
+            <span>Pricing</span>
+            <span>Resources</span>
+            <span>Company</span>
+          </div>
+          <div class="cendric-nav-right">
+            <button type="button" class="cendric-nav-login" id="pay-nav-login-btn">Log In</button>
+            <button type="button" class="cendric-nav-cta" id="pay-nav-cta-btn">Get Started</button>
+          </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="cendric-pay-hero">
+          <!-- Left Column -->
+          <div class="cendric-pay-left">
+            <h1 class="cendric-pay-headline">
+              A Revolutionary and<br>
+              Reliable Solution for<br>
+              <span class="cendric-pay-highlight">Global Finance</span>
+            </h1>
+            <p class="cendric-pay-sub">
+              We provide sustainable and open global financial solutions throughout the world.
+            </p>
+
+            <!-- Form Container Slot -->
+            <div class="cendric-pay-form-wrap" id="cendric-pay-form-slot">
+              <div class="cendric-pay-tabs">
+                <button type="button" class="cendric-pay-tab active" id="pay-tab-signin">Sign In</button>
+                <button type="button" class="cendric-pay-tab" id="pay-tab-register">Create Account</button>
+              </div>
+              <div id="cendric-form-mount"></div>
+              <div class="cendric-pay-btn-row">
+                <button type="button" class="cendric-pay-demo-btn" id="pay-demo-fill-btn">⚡ View Live Demo</button>
+              </div>
+            </div>
+
+            <!-- Social Proof Row -->
+            <div class="cendric-pay-trust">
+              <div class="cendric-avatar-stack">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces" class="cendric-pay-avatar" alt="Avatar 1" />
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces" class="cendric-pay-avatar" alt="Avatar 2" />
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces" class="cendric-pay-avatar" alt="Avatar 3" />
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=faces" class="cendric-pay-avatar" alt="Avatar 4" />
+              </div>
+              <div class="cendric-trust-info">
+                <div class="cendric-pay-stars">★★★★★</div>
+                <div class="cendric-pay-trust-label">Trusted by 2K+ Customers</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="cendric-pay-right">
+            <div class="cendric-pay-mint-shape"></div>
+            <img src="/assets/cendric-hero-person.jpg" alt="Global Finance" class="cendric-pay-person-img" />
+
+            <!-- Floating Card 1: Multi-Currency -->
+            <div class="cendric-float-card cendric-card-currencies">
+              <div class="cendric-curr-header">8+ currencies in all countries</div>
+              <div class="cendric-curr-grid">
+                <div class="cendric-curr-badge"><span>🇮🇩</span> IDR</div>
+                <div class="cendric-curr-badge"><span>🇺🇸</span> USD</div>
+                <div class="cendric-curr-badge"><span>🇦🇺</span> AUD</div>
+                <div class="cendric-curr-badge"><span>🇪🇺</span> EUR</div>
+              </div>
+            </div>
+
+            <!-- Floating Card 2: Total Balance -->
+            <div class="cendric-float-card cendric-card-balance">
+              <div class="cendric-bal-header">
+                <span class="cendric-bal-label">Total Balance</span>
+                <span class="cendric-bal-link">All Accounts</span>
+              </div>
+              <div class="cendric-bal-amt">$637,435.00</div>
+              <div class="cendric-bal-meta">
+                <span>Account Type: Credit Card</span>
+                <span>Payoobel</span>
+              </div>
+            </div>
+
+            <!-- Floating Card 3: Emerald Debit Card -->
+            <div class="cendric-float-card cendric-card-debit">
+              <div class="cendric-debit-top">
+                <div class="cendric-debit-chip"></div>
+                <div class="cendric-debit-brand">DEBIT</div>
+              </div>
+              <div class="cendric-debit-num">2466 4982 7710 3607</div>
+              <div class="cendric-debit-foot">
+                <span>PAYOOBEL WORLD</span>
+                <div class="cendric-debit-circles">
+                  <span class="cendric-debit-c1"></span>
+                  <span class="cendric-debit-c2"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Insert at the top of document.body
+      document.body.insertBefore(payContainer, document.body.firstChild);
+
+      // Event listeners for tabs and navbar buttons
+      document.getElementById('pay-tab-signin')?.addEventListener('click', () => {
+        const isReg = !!document.getElementById('fullName');
+        if (isReg) {
+          const t = document.getElementById('toggle-auth-mode');
+          if (t) t.click();
         }
-        if (rightCol.style.background !== 'transparent') {
-          rightCol.style.setProperty('background', 'transparent', 'important');
+      });
+
+      document.getElementById('pay-tab-register')?.addEventListener('click', () => {
+        const isReg = !!document.getElementById('fullName');
+        if (!isReg) {
+          const t = document.getElementById('toggle-auth-mode');
+          if (t) t.click();
         }
+      });
+
+      document.getElementById('pay-nav-login-btn')?.addEventListener('click', () => {
+        const isReg = !!document.getElementById('fullName');
+        if (isReg) {
+          const t = document.getElementById('toggle-auth-mode');
+          if (t) t.click();
+        }
+      });
+
+      document.getElementById('pay-nav-cta-btn')?.addEventListener('click', () => {
+        const isReg = !!document.getElementById('fullName');
+        if (!isReg) {
+          const t = document.getElementById('toggle-auth-mode');
+          if (t) t.click();
+        }
+      });
+
+      document.getElementById('pay-demo-fill-btn')?.addEventListener('click', () => {
+        const isReg = !!document.getElementById('fullName');
+        if (isReg) {
+          const t = document.getElementById('toggle-auth-mode');
+          if (t) t.click();
+          setTimeout(triggerDemoFill, 120);
+        } else {
+          triggerDemoFill();
+        }
+      });
+    }
+
+    // Move the active React form into #cendric-form-mount
+    const formMount = document.getElementById('cendric-form-mount');
+    const originalForm = document.querySelector('.min-h-screen.flex form');
+    if (formMount && originalForm && !formMount.contains(originalForm)) {
+      formMount.appendChild(originalForm);
+    }
+
+    // Synchronize active tab
+    const isRegister = !!document.getElementById('fullName');
+    const tabSignin = document.getElementById('pay-tab-signin');
+    const tabRegister = document.getElementById('pay-tab-register');
+    if (tabSignin && tabRegister) {
+      if (isRegister) {
+        tabSignin.classList.remove('active');
+        tabRegister.classList.add('active');
+      } else {
+        tabSignin.classList.add('active');
+        tabRegister.classList.remove('active');
       }
     }
 
-    // 1. Upgrade left brand panel (pills, badges, trust indicators, and 3D hero image)
-    const leftCol = document.querySelector('.cendric-auth-brand-panel');
-    if (leftCol) {
-      const brandCenter = leftCol.querySelector('.relative.z-10.text-center');
-      if (brandCenter) {
-        if (!document.getElementById('cendric-auth-hero-badge')) {
-          const badge = document.createElement('div');
-          badge.id = 'cendric-auth-hero-badge';
-          badge.className = 'cendric-hero-badge';
-          badge.innerHTML = `
-            <span class="cendric-badge-pulse"></span>
-            <span>INTELLIGENT WEALTH & EXPENSE OS</span>
-          `;
-          brandCenter.insertBefore(badge, brandCenter.firstChild);
-        }
-
-        // Insert 3D generated hero illustration
-        if (!document.getElementById('cendric-hero-img-box')) {
-          const imgBox = document.createElement('div');
-          imgBox.id = 'cendric-hero-img-box';
-          imgBox.className = 'cendric-hero-img-box';
-          imgBox.innerHTML = `
-            <img src="/assets/cendric-auth-hero.jpg" alt="Cendric AI Finance Assistant" class="cendric-hero-img" />
-          `;
-          const h1El = brandCenter.querySelector('h1');
-          if (h1El) {
-            brandCenter.insertBefore(imgBox, h1El);
-          }
-        }
-      }
-
-      // Replace broken ?? pills with high-contrast, informative feature cards
-      const pillsContainer = leftCol.querySelector('.mt-12.space-y-4');
-      if (pillsContainer && pillsContainer.getAttribute('data-cendric-upgraded') !== 'true') {
-        pillsContainer.setAttribute('data-cendric-upgraded', 'true');
-        pillsContainer.innerHTML = `
-          <div class="cendric-feature-card">
-            <div class="cendric-fcard-icon" style="background: rgba(109, 90, 230, 0.12); color: #6d5ae6; border: 1px solid rgba(109,90,230,0.25);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
-            </div>
-            <div class="cendric-fcard-body">
-              <div class="cendric-fcard-title">AI Spending Intelligence</div>
-              <div class="cendric-fcard-desc">Real-time categorization & predictive budget burn-rate alerts</div>
-            </div>
-          </div>
-
-          <div class="cendric-feature-card">
-            <div class="cendric-fcard-icon" style="background: rgba(14, 165, 233, 0.12); color: #0284c7; border: 1px solid rgba(14,165,233,0.25);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"/><path d="M20 7V4h-3"/><path d="M4 17v3h3"/><path d="M20 17v3h-3"/><rect width="10" height="8" x="7" y="8" rx="1"/><path d="M10 12h4"/></svg>
-            </div>
-            <div class="cendric-fcard-body">
-              <div class="cendric-fcard-title">Receipt & Invoice Vision</div>
-              <div class="cendric-fcard-desc">Instant OCR extraction powered by Gemini Multimodal AI</div>
-            </div>
-          </div>
-
-          <div class="cendric-feature-card">
-            <div class="cendric-fcard-icon" style="background: rgba(16, 185, 129, 0.12); color: #059669; border: 1px solid rgba(16,185,129,0.25);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-            </div>
-            <div class="cendric-fcard-body">
-              <div class="cendric-fcard-title">Multi-Currency & Tax Reports</div>
-              <div class="cendric-fcard-desc">Live foreign exchange rates & Sri Lanka PIT compliance</div>
-            </div>
-          </div>
-        `;
-
-        // Add trust and security badges underneath
-        if (!document.getElementById('cendric-auth-security-strip')) {
-          const strip = document.createElement('div');
-          strip.id = 'cendric-auth-security-strip';
-          strip.className = 'cendric-auth-security-strip';
-          strip.innerHTML = `
-            <div class="cendric-sec-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>256-Bit SSL</span>
-            </div>
-            <div class="cendric-sec-dot">•</div>
-            <div class="cendric-sec-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span>Zero-Knowledge</span>
-            </div>
-            <div class="cendric-sec-dot">•</div>
-            <div class="cendric-sec-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6d5ae6" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              <span>Gemini AI</span>
-            </div>
-          `;
-          pillsContainer.parentNode.appendChild(strip);
-        }
-      }
-    }
-
-    // 2. Enhance Form Card
-    const formCard = document.querySelector('.w-full.max-w-md');
-    if (formCard) {
-      if (!formCard.classList.contains('cendric-auth-card')) {
-        formCard.classList.add('cendric-auth-card');
-      }
-
-      const isRegister = !!document.getElementById('fullName');
-      let headerBar = document.getElementById('cendric-card-header-bar');
-      if (!headerBar) {
-        headerBar = document.createElement('div');
-        headerBar.id = 'cendric-card-header-bar';
-        headerBar.className = 'cendric-card-header-bar';
-        formCard.insertBefore(headerBar, formCard.firstChild);
-      }
-
-      let badge = document.getElementById('cendric-form-badge');
-      if (!badge) {
-        badge = document.createElement('div');
-        badge.id = 'cendric-form-badge';
-        badge.className = 'cendric-form-top-badge';
-        headerBar.appendChild(badge);
-      }
-      badge.innerHTML = isRegister
-        ? '<span>🚀</span> CREATE ACCOUNT'
-        : '<span>✨</span> WELCOME';
-
-      // Theme toggle button
-      let themeBtn = document.getElementById('cendric-auth-theme-toggle');
-      if (!themeBtn) {
-        themeBtn = document.createElement('button');
-        themeBtn.id = 'cendric-auth-theme-toggle';
-        themeBtn.className = 'cendric-auth-theme-btn';
-        themeBtn.type = 'button';
-        themeBtn.title = 'Switch Light / Dark Theme';
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        themeBtn.innerHTML = isDark
-          ? '<span>☀️</span><span>Light</span>'
-          : '<span>🌙</span><span>Dark</span>';
-        themeBtn.addEventListener('click', () => {
-          const currentlyDark = document.documentElement.getAttribute('data-theme') === 'dark';
-          if (currentlyDark) {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('cendric_theme', 'light');
-            themeBtn.innerHTML = '<span>🌙</span><span>Dark</span>';
-          } else {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('cendric_theme', 'dark');
-            themeBtn.innerHTML = '<span>☀️</span><span>Light</span>';
-          }
-        });
-        headerBar.appendChild(themeBtn);
-      }
-
-      // Demo quick fill pill
-      if (!document.getElementById('cendric-demo-helper')) {
-        const helper = document.createElement('div');
-        helper.id = 'cendric-demo-helper';
-        helper.className = 'cendric-demo-helper-box';
-        helper.innerHTML = `
-          <div class="cendric-demo-pill" title="Click to auto-fill test credentials">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            <span>Auto-fill Demo Credentials</span>
-          </div>
-        `;
-        helper.addEventListener('click', () => {
-          const currentIsRegister = !!document.getElementById('fullName');
-          if (currentIsRegister) {
-            const currentToggle = document.getElementById('toggle-auth-mode');
-            if (currentToggle) currentToggle.click();
-            setTimeout(() => triggerDemoFill(), 120);
-          } else {
-            triggerDemoFill();
-          }
-        });
-        formCard.appendChild(helper);
-      }
+    // Hide original React headings and wrappers
+    const rawCard = document.querySelector('.min-h-screen.flex .w-full.max-w-md');
+    if (rawCard) {
+      rawCard.style.display = 'none';
     }
   }
 
