@@ -2507,6 +2507,10 @@ body.cendric-auth-active {
   overflow-x: hidden !important;
 }
 
+body.cendric-auth-active #root {
+  display: none !important;
+}
+
 /* Outer Wrapper */
 #cendric-pay-container {
   width: 100% !important;

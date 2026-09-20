@@ -2749,37 +2749,154 @@
   // ----------------------------------------------------
   // Auth (SignIn / Register) Page Enhancement
   // ----------------------------------------------------
-  function triggerDemoFill() {
-    const emailInput = document.getElementById('email');
-    const passInput = document.getElementById('password');
-    if (emailInput && passInput) {
-      const setNativeValue = (element, value) => {
-        const valueSetter = Object.getOwnPropertyDescriptor(element, 'value')?.set;
-        const prototype = Object.getPrototypeOf(element);
-        const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value')?.set;
-        if (prototypeValueSetter && valueSetter !== prototypeValueSetter) {
-          prototypeValueSetter.call(element, value);
-        } else if (valueSetter) {
-          valueSetter.call(element, value);
-        } else {
-          element.value = value;
-        }
-        element.dispatchEvent(new Event('input', { bubbles: true }));
-        element.dispatchEvent(new Event('change', { bubbles: true }));
-      };
+  // ----------------------------------------------------
+  // Direct High-Reliability Auth Engine
+  // ----------------------------------------------------
+  let isSubmittingAuth = false;
 
-      setNativeValue(emailInput, 'piratheep@example.com');
-      setNativeValue(passInput, 'password123');
-      showToast('Demo credentials filled! Click "Sign In"', 'success');
+  async function handleDirectAuthSubmit(e) {
+    if (e) e.preventDefault();
+    if (isSubmittingAuth) return;
+
+    const tabRegister = document.getElementById('pay-tab-register');
+    const isRegister = tabRegister && tabRegister.classList.contains('active');
+    const emailInput = document.getElementById('cendric-auth-email');
+    const passInput = document.getElementById('cendric-auth-password');
+    const nameInput = document.getElementById('cendric-auth-name');
+    const submitBtn = document.getElementById('cendric-pay-submit-btn');
+    const alertBox = document.getElementById('cendric-auth-alert');
+
+    const email = emailInput?.value?.trim() || '';
+    const password = passInput?.value || '';
+    const fullName = nameInput?.value?.trim() || '';
+
+    if (alertBox) {
+      alertBox.style.display = 'none';
+      alertBox.textContent = '';
+    }
+
+    if (!email || !password) {
+      if (alertBox) {
+        alertBox.textContent = 'Please enter both your email and password.';
+        alertBox.style.display = 'block';
+      }
+      showToast('Please enter both email and password.', 'warning');
+      return;
+    }
+
+    if (isRegister && !fullName) {
+      if (alertBox) {
+        alertBox.textContent = 'Please enter your full name to create an account.';
+        alertBox.style.display = 'block';
+      }
+      showToast('Please enter your full name.', 'warning');
+      return;
+    }
+
+    isSubmittingAuth = true;
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Please wait...</span>';
+    }
+
+    try {
+      const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
+      const payload = isRegister ? { fullName, email, password } : { email, password };
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        const msg = data.message || (isRegister ? 'Registration failed. Try again.' : 'Invalid email or password.');
+        if (alertBox) {
+          alertBox.textContent = msg;
+          alertBox.style.display = 'block';
+        }
+        showToast(msg, 'error');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+        }
+        isSubmittingAuth = false;
+        return;
+      }
+
+      // Store credentials in localStorage for Cendric AuthContext
+      localStorage.setItem('cendric_token', data.token);
+      localStorage.setItem('cendric_user', JSON.stringify(data.user));
+
+      showToast(isRegister ? 'Account created! Welcome to Cendric.' : 'Signed in successfully! Redirecting...', 'success');
+
+      // Clean up custom Payoobel DOM & class
+      document.getElementById('cendric-pay-container')?.remove();
+      document.body.classList.remove('cendric-auth-active');
+
+      // Navigate to chat
+      window.location.href = '/chat';
+    } catch (err) {
+      console.error('[Cendric Auth Error]', err);
+      const netMsg = 'Connection error. Please check your network and try again.';
+      if (alertBox) {
+        alertBox.textContent = netMsg;
+        alertBox.style.display = 'block';
+      }
+      showToast(netMsg, 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
+      }
+      isSubmittingAuth = false;
+    }
+  }
+
+  function setAuthMode(isReg) {
+    const tabSignin = document.getElementById('pay-tab-signin');
+    const tabRegister = document.getElementById('pay-tab-register');
+    const nameGroup = document.getElementById('cendric-group-name');
+    const submitBtn = document.getElementById('cendric-pay-submit-btn');
+    const alertBox = document.getElementById('cendric-auth-alert');
+    if (alertBox) {
+      alertBox.style.display = 'none';
+      alertBox.textContent = '';
+    }
+
+    if (isReg) {
+      tabSignin?.classList.remove('active');
+      tabRegister?.classList.add('active');
+      if (nameGroup) nameGroup.style.display = 'block';
+      if (submitBtn) submitBtn.innerHTML = '<span>Create Account Now →</span>';
+    } else {
+      tabSignin?.classList.add('active');
+      tabRegister?.classList.remove('active');
+      if (nameGroup) nameGroup.style.display = 'none';
+      if (submitBtn) submitBtn.innerHTML = '<span>Sign In Now →</span>';
+    }
+  }
+
+  function triggerDemoFill() {
+    setAuthMode(false);
+    const emailInput = document.getElementById('cendric-auth-email');
+    const passInput = document.getElementById('cendric-auth-password');
+    if (emailInput && passInput) {
+      emailInput.value = 'piratheep@example.com';
+      passInput.value = 'password123';
+      showToast('Demo credentials entered! Signing in...', 'info');
+      setTimeout(() => {
+        handleDirectAuthSubmit();
+      }, 350);
     }
   }
 
   function enhanceAuthPage() {
-    const emailInput = document.getElementById('email');
-    const passInput = document.getElementById('password');
-    const toggleBtn = document.getElementById('toggle-auth-mode');
-    
-    if (!emailInput || !passInput || !toggleBtn) {
+    const isAuthRoute = window.location.pathname === '/login' || window.location.pathname === '/register';
+    const hasExistingToken = !!localStorage.getItem('cendric_token');
+    const reactAuthFound = !!document.getElementById('toggle-auth-mode');
+
+    if (hasExistingToken || (!isAuthRoute && !reactAuthFound)) {
       if (document.body.classList.contains('cendric-auth-active')) {
         document.body.classList.remove('cendric-auth-active');
         document.getElementById('cendric-pay-container')?.remove();
@@ -2791,7 +2908,6 @@
       document.body.classList.add('cendric-auth-active');
     }
 
-    // 1. Create or ensure Payoobel container exists
     let payContainer = document.getElementById('cendric-pay-container');
     if (!payContainer) {
       payContainer = document.createElement('div');
@@ -2842,10 +2958,43 @@
                 <button type="button" class="cendric-pay-tab active" id="pay-tab-signin">Sign In</button>
                 <button type="button" class="cendric-pay-tab" id="pay-tab-register">Create Account</button>
               </div>
-              <div id="cendric-form-mount"></div>
-              <div class="cendric-pay-btn-row">
-                <button type="button" class="cendric-pay-demo-btn" id="pay-demo-fill-btn">⚡ View Live Demo</button>
-              </div>
+
+              <!-- Live alert box for invalid credentials or errors -->
+              <div id="cendric-auth-alert" style="display:none; background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; border-radius:8px; padding:10px 14px; font-size:13px; margin-bottom:14px; font-weight:500;"></div>
+
+              <form id="cendric-auth-form" style="display:flex; flex-direction:column; gap:14px;">
+                <!-- Full Name (Shown only in Create Account mode) -->
+                <div id="cendric-group-name" style="display:none;">
+                  <label for="cendric-auth-name">Full Name</label>
+                  <input type="text" id="cendric-auth-name" placeholder="Piratheep Raj" autocomplete="name" />
+                </div>
+
+                <!-- Email Address -->
+                <div>
+                  <label for="cendric-auth-email">Email Address</label>
+                  <input type="email" id="cendric-auth-email" placeholder="piratheep@example.com" autocomplete="email" required />
+                </div>
+
+                <!-- Password -->
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                    <label for="cendric-auth-password" style="margin-bottom:0;">Password</label>
+                    <span style="font-size:12px; color:#115e59; font-weight:500; cursor:pointer;" id="cendric-pw-hint">Demo: password123</span>
+                  </div>
+                  <div style="position:relative;">
+                    <input type="password" id="cendric-auth-password" placeholder="••••••••" autocomplete="current-password" required style="padding-right:40px;" />
+                    <button type="button" id="cendric-pw-toggle" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:#6b7280; cursor:pointer; font-size:14px; line-height:1;" title="Show/Hide Password">👁️</button>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="cendric-pay-btn-row">
+                  <button type="submit" class="cendric-pay-submit-btn" id="cendric-pay-submit-btn">
+                    <span>Sign In Now →</span>
+                  </button>
+                  <button type="button" class="cendric-pay-demo-btn" id="pay-demo-fill-btn">⚡ Live Demo</button>
+                </div>
+              </form>
             </div>
 
             <!-- Social Proof Row -->
@@ -2911,79 +3060,27 @@
         </div>
       `;
 
-      // Insert at the top of document.body
       document.body.insertBefore(payContainer, document.body.firstChild);
 
-      // Event listeners for tabs and navbar buttons
-      document.getElementById('pay-tab-signin')?.addEventListener('click', () => {
-        const isReg = !!document.getElementById('fullName');
-        if (isReg) {
-          const t = document.getElementById('toggle-auth-mode');
-          if (t) t.click();
-        }
+      // Event listeners for tabs & buttons
+      document.getElementById('pay-tab-signin')?.addEventListener('click', () => setAuthMode(false));
+      document.getElementById('pay-tab-register')?.addEventListener('click', () => setAuthMode(true));
+      document.getElementById('pay-nav-login-btn')?.addEventListener('click', () => setAuthMode(false));
+      document.getElementById('pay-nav-cta-btn')?.addEventListener('click', () => setAuthMode(true));
+      document.getElementById('pay-demo-fill-btn')?.addEventListener('click', triggerDemoFill);
+      document.getElementById('cendric-pw-hint')?.addEventListener('click', triggerDemoFill);
+
+      // Show/Hide password toggle
+      document.getElementById('cendric-pw-toggle')?.addEventListener('click', () => {
+        const pw = document.getElementById('cendric-auth-password');
+        if (pw) pw.type = pw.type === 'password' ? 'text' : 'password';
       });
 
-      document.getElementById('pay-tab-register')?.addEventListener('click', () => {
-        const isReg = !!document.getElementById('fullName');
-        if (!isReg) {
-          const t = document.getElementById('toggle-auth-mode');
-          if (t) t.click();
-        }
+      // Direct form submit handler
+      document.getElementById('cendric-auth-form')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        handleDirectAuthSubmit(e);
       });
-
-      document.getElementById('pay-nav-login-btn')?.addEventListener('click', () => {
-        const isReg = !!document.getElementById('fullName');
-        if (isReg) {
-          const t = document.getElementById('toggle-auth-mode');
-          if (t) t.click();
-        }
-      });
-
-      document.getElementById('pay-nav-cta-btn')?.addEventListener('click', () => {
-        const isReg = !!document.getElementById('fullName');
-        if (!isReg) {
-          const t = document.getElementById('toggle-auth-mode');
-          if (t) t.click();
-        }
-      });
-
-      document.getElementById('pay-demo-fill-btn')?.addEventListener('click', () => {
-        const isReg = !!document.getElementById('fullName');
-        if (isReg) {
-          const t = document.getElementById('toggle-auth-mode');
-          if (t) t.click();
-          setTimeout(triggerDemoFill, 120);
-        } else {
-          triggerDemoFill();
-        }
-      });
-    }
-
-    // Move the active React form into #cendric-form-mount
-    const formMount = document.getElementById('cendric-form-mount');
-    const originalForm = document.querySelector('.min-h-screen.flex form');
-    if (formMount && originalForm && !formMount.contains(originalForm)) {
-      formMount.appendChild(originalForm);
-    }
-
-    // Synchronize active tab
-    const isRegister = !!document.getElementById('fullName');
-    const tabSignin = document.getElementById('pay-tab-signin');
-    const tabRegister = document.getElementById('pay-tab-register');
-    if (tabSignin && tabRegister) {
-      if (isRegister) {
-        tabSignin.classList.remove('active');
-        tabRegister.classList.add('active');
-      } else {
-        tabSignin.classList.add('active');
-        tabRegister.classList.remove('active');
-      }
-    }
-
-    // Hide original React headings and wrappers
-    const rawCard = document.querySelector('.min-h-screen.flex .w-full.max-w-md');
-    if (rawCard) {
-      rawCard.style.display = 'none';
     }
   }
 
