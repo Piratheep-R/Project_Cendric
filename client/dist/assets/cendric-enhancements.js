@@ -2800,15 +2800,15 @@
         <!-- Top Announcement Banner -->
         <div class="cendric-pay-banner">
           <span class="cendric-pay-banner-pill">NEW</span>
-          <span>Payoobel Conference 2024: Open opportunities and challenges for the global financial industry</span>
+          <span>Cendric Conference 2024: Open opportunities and challenges for the global financial industry</span>
           <button type="button" class="cendric-pay-banner-close" onclick="this.parentElement.remove()">✕</button>
         </div>
 
         <!-- Top Navigation -->
         <nav class="cendric-pay-nav">
           <div class="cendric-nav-left">
-            <div class="cendric-nav-logo-mark">P</div>
-            <span class="cendric-nav-brand">Payoobel</span>
+            <div class="cendric-nav-logo-mark">C</div>
+            <span class="cendric-nav-brand">Cendric</span>
           </div>
           <div class="cendric-nav-links">
             <span>Solutions ▾</span>
@@ -2888,7 +2888,7 @@
               <div class="cendric-bal-amt">$637,435.00</div>
               <div class="cendric-bal-meta">
                 <span>Account Type: Credit Card</span>
-                <span>Payoobel</span>
+                <span>Cendric</span>
               </div>
             </div>
 
@@ -2900,7 +2900,7 @@
               </div>
               <div class="cendric-debit-num">2466 4982 7710 3607</div>
               <div class="cendric-debit-foot">
-                <span>PAYOOBEL WORLD</span>
+                <span>CENDRIC WORLD</span>
                 <div class="cendric-debit-circles">
                   <span class="cendric-debit-c1"></span>
                   <span class="cendric-debit-c2"></span>
