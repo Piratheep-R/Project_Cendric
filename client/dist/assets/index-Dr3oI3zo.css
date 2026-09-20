@@ -3816,9 +3816,10 @@ aside > div:last-child {
    LIGHT MODE: ULTRA-PREMIUM BLURRY & GLASSY SYSTEM
    ======================================================== */
 
-/* 1. Root & Surface Variables for Modals */
-:root,
-[data-theme="light"] {
+/* 1. Root & Surface Variables for Modals & Glass */
+[data-theme="light"],
+html[data-theme="light"],
+:root:not([data-theme="dark"]) {
   --bg-surface: rgba(255, 255, 255, 0.82) !important;
   --modal-overlay-bg: rgba(245, 242, 235, 0.45) !important;
   --glass-card-bg: rgba(255, 255, 255, 0.74) !important;
@@ -3826,11 +3827,34 @@ aside > div:last-child {
   --glass-inner-bg: rgba(255, 255, 255, 0.55) !important;
   --glass-border: rgba(255, 255, 255, 0.9) !important;
   --glass-border-subtle: rgba(226, 219, 206, 0.7) !important;
+  --glass-shadow: 0 8px 32px 0 rgba(60, 50, 40, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9) !important;
+  --glass-inner-shadow: 0 2px 8px 0 rgba(60, 50, 40, 0.03) !important;
+  --card-bg: var(--glass-card-bg) !important;
+  --border: #e2dbce !important;
+  --text-primary: #24211e !important;
+  --text-muted: #726b62 !important;
 }
 
-[data-theme="dark"] {
+[data-theme="dark"],
+html[data-theme="dark"],
+:root[data-theme="dark"] {
   --bg-surface: rgba(18, 24, 39, 0.88) !important;
   --modal-overlay-bg: rgba(7, 10, 19, 0.72) !important;
+  --glass-card-bg: rgba(18, 24, 39, 0.80) !important;
+  --glass-card-hover-bg: rgba(26, 35, 56, 0.88) !important;
+  --glass-inner-bg: rgba(255, 255, 255, 0.04) !important;
+  --glass-border: rgba(255, 255, 255, 0.09) !important;
+  --glass-border-subtle: rgba(255, 255, 255, 0.06) !important;
+  --glass-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
+  --glass-inner-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.25) !important;
+  --card-bg: rgba(18, 24, 39, 0.80) !important;
+  --card-hover-bg: rgba(26, 35, 56, 0.88) !important;
+  --border: #1e263d !important;
+  --border-focus: #3b4b75 !important;
+  --text-primary: #f8fafc !important;
+  --text-muted: #94a3b8 !important;
+  --input-bg: rgba(18, 24, 39, 0.75) !important;
+  --chat-assistant-bg: rgba(22, 30, 49, 0.8) !important;
 }
 
 /* 2. Living Ambient Glowing Backdrop for Light Mode */
@@ -4070,6 +4094,41 @@ aside > div:last-child {
   box-shadow: 0 8px 32px 0 rgba(60, 50, 40, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
 }
 
+[data-theme="dark"] .cendric-glass-card,
+[data-theme="dark"] main div[style*="border-radius: 20px"],
+[data-theme="dark"] main div[style*="border-radius: 16px"],
+[data-theme="dark"] main div[style*="720px"] > div,
+[data-theme="dark"] main div[style*="640px"] > div,
+[data-theme="dark"] #cendric-analytics-card,
+[data-theme="dark"] #cendric-subs-card {
+  background: rgba(18, 24, 39, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .cendric-glass-card h1,
+[data-theme="dark"] .cendric-glass-card h2,
+[data-theme="dark"] .cendric-glass-card h3,
+[data-theme="dark"] main div[style*="border-radius: 20px"] h1,
+[data-theme="dark"] main div[style*="border-radius: 20px"] h2,
+[data-theme="dark"] main div[style*="border-radius: 20px"] h3,
+[data-theme="dark"] main div[style*="720px"] h1,
+[data-theme="dark"] main div[style*="720px"] h2,
+[data-theme="dark"] main div[style*="640px"] h1,
+[data-theme="dark"] main div[style*="640px"] h2 {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .cendric-glass-card p,
+[data-theme="dark"] main div[style*="border-radius: 20px"] p,
+[data-theme="dark"] main div[style*="720px"] p,
+[data-theme="dark"] main div[style*="640px"] p {
+  color: #94a3b8 !important;
+}
+
 /* ========================================================
    COMPREHENSIVE MULTI-PAGE DARK & LIGHT THEME ENGINE
    ======================================================== */
@@ -4277,14 +4336,63 @@ div[style*="zIndex: 999"] select {
 }
 
 /* 5. Settings Page Currency Cards */
+[data-theme="dark"] .hover\:border-indigo-400,
+[data-theme="dark"] [class*="hover:border-indigo-400"],
 [data-theme="dark"] main div[style*="720px"] div[style*="border-radius: 14px"] {
   background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
 }
 
-[data-theme="dark"] main div[style*="720px"] div[style*="border-radius: 14px"][style*="2px solid"] {
-  background: rgba(109, 90, 230, 0.2) !important;
+[data-theme="dark"] .hover\:border-indigo-400:hover,
+[data-theme="dark"] [class*="hover:border-indigo-400"]:hover,
+[data-theme="dark"] main div[style*="720px"] div[style*="border-radius: 14px"]:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
   border-color: var(--accent) !important;
+  transform: translateY(-1.5px) !important;
+}
+
+[data-theme="dark"] .hover\:border-indigo-400[style*="var(--accent-light)"],
+[data-theme="dark"] .hover\:border-indigo-400[style*="2px solid"],
+[data-theme="dark"] [class*="hover:border-indigo-400"][style*="var(--accent-light)"],
+[data-theme="dark"] [class*="hover:border-indigo-400"][style*="2px solid"],
+[data-theme="dark"] main div[style*="720px"] div[style*="border-radius: 14px"][style*="2px solid"] {
+  background: rgba(109, 90, 230, 0.22) !important;
+  border: 1.5px solid var(--accent) !important;
+  box-shadow: 0 4px 20px rgba(109, 90, 230, 0.3) !important;
+}
+
+[data-theme="dark"] .hover\:border-indigo-400 span:first-child,
+[data-theme="dark"] [class*="hover:border-indigo-400"] span:first-child,
+[data-theme="dark"] main div[style*="720px"] div[style*="border-radius: 14px"] span:first-child {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .hover\:border-indigo-400[style*="var(--accent-light)"] span:first-child,
+[data-theme="dark"] .hover\:border-indigo-400[style*="2px solid"] span:first-child,
+[data-theme="dark"] [class*="hover:border-indigo-400"][style*="var(--accent-light)"] span:first-child,
+[data-theme="dark"] [class*="hover:border-indigo-400"][style*="2px solid"] span:first-child {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .hover\:border-indigo-400 p:first-child,
+[data-theme="dark"] [class*="hover:border-indigo-400"] p:first-child,
+[data-theme="dark"] main div[style*="720px"] div[style*="border-radius: 14px"] p:first-child {
+  color: #f8fafc !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .hover\:border-indigo-400 p:last-child,
+[data-theme="dark"] [class*="hover:border-indigo-400"] p:last-child,
+[data-theme="dark"] main div[style*="720px"] div[style*="border-radius: 14px"] p:last-child {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .cendric-rate-hint {
+  color: #34d399 !important;
 }
 
 [data-theme="light"] main div[style*="720px"] div[style*="border-radius: 14px"],
@@ -4298,6 +4406,143 @@ div[style*="zIndex: 999"] select {
 :root:not([data-theme="dark"]) main div[style*="720px"] div[style*="border-radius: 14px"][style*="2px solid"] {
   background: rgba(109, 90, 230, 0.1) !important;
   border-color: var(--accent) !important;
+}
+
+/* 5b. Transactions Page Dark Mode Enhancements */
+/* Stat metric cards in Dark Mode */
+[data-theme="dark"] main .grid-cols-3 > div,
+[data-theme="dark"] div[style*="border-radius: 16px"] {
+  background: rgba(18, 24, 39, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="dark"] main .grid-cols-3 > div p[style*="var(--text-muted)"],
+[data-theme="dark"] div[style*="border-radius: 16px"] p:first-child {
+  color: #94a3b8 !important;
+}
+
+/* Secondary toolbar action buttons */
+[data-theme="dark"] .cendric-glass-action-btn,
+[data-theme="dark"] #cendric-action-bar-row button,
+[data-theme="dark"] .cendric-action-pill {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .cendric-glass-action-btn:hover,
+[data-theme="dark"] #cendric-action-bar-row button:hover,
+[data-theme="dark"] .cendric-action-pill:hover {
+  background: rgba(109, 90, 230, 0.22) !important;
+  border-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+/* Category Spending Donut Card & Monthly Budget Card */
+[data-theme="dark"] #cendric-analytics-card {
+  background: rgba(18, 24, 39, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="dark"] #cendric-analytics-card h2 {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] #cendric-analytics-card p {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .cendric-currency-pill {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .cendric-currency-pill strong {
+  color: #a78bfa !important;
+}
+
+[data-theme="dark"] .cendric-chart-column,
+[data-theme="dark"] .cendric-budget-column {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+[data-theme="dark"] .cendric-donut-label {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .cendric-donut-curr,
+[data-theme="dark"] .cendric-donut-val {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .cendric-donut-count {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .cendric-legend-item {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme="dark"] .cendric-legend-name {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .cendric-legend-pct {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .cendric-legend-amount {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .cendric-budget-header span {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .cendric-pill-btn {
+  background: rgba(109, 90, 230, 0.2) !important;
+  border: 1px solid rgba(109, 90, 230, 0.35) !important;
+  color: #a78bfa !important;
+}
+
+[data-theme="dark"] .cendric-tax-tip-box {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-left-color: #6d5ae6 !important;
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .cendric-tax-tip-box strong {
+  color: #e2e8f0 !important;
+}
+
+/* 5c. Chat Assistant Dark Mode Enhancements */
+[data-theme="dark"] main > div[style*="height: 100vh"] > div:first-child {
+  background: rgba(18, 24, 39, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] main > div[style*="height: 100vh"] > div:last-child {
+  background: rgba(18, 24, 39, 0.85) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] main > div[style*="height: 100vh"] > div:last-child > div:first-child {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .flex.animate-fade-in[style*="flex-start"] > div:last-child,
+[data-theme="dark"] div[style*="padding: 14px 18px"][style*="border-radius: 18px"],
+[data-theme="dark"] div[style*="max-width: 80%"][style*="border-radius: 18px"] {
+  background: rgba(26, 35, 56, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #f8fafc !important;
 }
 
 /* 6. Auth Page Dark Mode Adaptation */
