@@ -5,8 +5,20 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "install:server": "cd server && npm install",
     "build": "cd server && npm install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.1",
+    "multer": "^1.4.5-lts.1"
   },
   "keywords": ["finance", "tax", "rag", "ai", "sri-lanka"],
   "author": "Piratheep-R",
