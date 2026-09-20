@@ -730,11 +730,11 @@
         <div class="cendric-chat-header-actions">
           <button class="cc-header-btn cc-btn-new" id="cc-new-chat-btn" title="Start a fresh conversation">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            <span>+ New Chat</span>
+            <span>New Chat</span>
           </button>
           <button class="cc-header-btn cc-btn-clear" id="cc-clear-btn" title="Clear conversation history">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-            <span>Clear Chat</span>
+            <span>Clear</span>
           </button>
         </div>
       </div>

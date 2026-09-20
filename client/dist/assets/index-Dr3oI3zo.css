@@ -2110,7 +2110,9 @@ table {
 
 .cendric-chat-header-actions {
   display: flex !important;
+  align-items: center !important;
   gap: 8px !important;
+  margin-right: 58px !important; /* space for notification bell */
 }
 
 .cc-header-btn {
