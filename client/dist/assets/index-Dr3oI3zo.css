@@ -2115,14 +2115,16 @@ table {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
-  margin-right: 58px !important; /* space for notification bell */
+  margin-right: 220px !important; /* clean spacing for top dock (language pill + notification bell) */
 }
 
 .cc-header-btn {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
-  padding: 6px 13px !important;
+  height: 38px !important;
+  padding: 0 14px !important;
+  box-sizing: border-box !important;
   border-radius: 99px !important;
   font-size: 12.5px !important;
   font-weight: 600 !important;
@@ -4595,17 +4597,19 @@ div[style*="zIndex: 999"] select {
 /* ── 7. Top-Right Header Quick Actions Dock (Language + Notifications) ── */
 .cendric-top-dock {
   position: fixed !important;
-  top: 18px !important;
+  top: 14px !important;
   right: 24px !important;
   z-index: 9998 !important;
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
+  height: 38px !important;
 }
 
 .cendric-header-lang-btn {
-  height: 40px !important;
+  height: 38px !important;
   padding: 0 14px !important;
+  box-sizing: border-box !important;
   border-radius: 99px !important;
   background: var(--card-bg, #ffffff) !important;
   border: 1px solid var(--border, rgba(0, 0, 0, 0.12)) !important;
@@ -4620,6 +4624,8 @@ div[style*="zIndex: 999"] select {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
   user-select: none !important;
   font-family: inherit !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
 }
 [data-theme="dark"] .cendric-header-lang-btn {
   background: rgba(18, 24, 39, 0.88) !important;
@@ -4695,6 +4701,10 @@ div[style*="zIndex: 999"] select {
   position: relative !important;
   top: auto !important;
   right: auto !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
   z-index: auto !important;
 }
 
@@ -4703,6 +4713,49 @@ div[style*="zIndex: 999"] select {
   top: calc(100% + 8px) !important;
   right: 0 !important;
   left: auto !important;
+}
+
+/* Responsive adjustments for top dock & chat header actions */
+@media (max-width: 768px) {
+  .cendric-top-dock {
+    top: 12px !important;
+    right: 12px !important;
+    gap: 6px !important;
+  }
+  .cendric-header-lang-btn {
+    height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 11.5px !important;
+  }
+  .cendric-top-dock .cendric-notif-bell-btn {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  .cendric-chat-header-actions {
+    margin-right: 165px !important;
+    gap: 6px !important;
+  }
+  .cc-header-btn {
+    height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 11.5px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .cendric-chat-header-actions {
+    margin-right: 145px !important;
+    gap: 4px !important;
+  }
+  .cc-header-btn span {
+    display: none !important;
+  }
+  .cc-header-btn {
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
 }
 
 /* Settings Language Cards */
