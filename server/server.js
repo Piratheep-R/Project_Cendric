@@ -669,7 +669,7 @@ app.post('/api/transactions/extract', authenticateToken, upload.single('receipt'
 
     // Try Gemini Vision if a valid API key is present
     const apiKey = process.env.GEMINI_API_KEY;
-    if (apiKey && apiKey.startsWith('AIza')) {
+    if (apiKey && (apiKey.startsWith('AIza') || apiKey.startsWith('AQ.') || apiKey.length > 20)) {
       try {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -749,7 +749,21 @@ Rules:
 // ----------------------------------------------------
 
 // Helper: generate contextual follow-up question suggestions
-function generateFollowUps(question, answer) {
+function generateFollowUps(question, answer, lang = 'en') {
+  if (lang === 'ta') {
+    return [
+      'எனது நிகர இருப்பு என்ன?',
+      'வரி விலக்குகளை எவ்வாறு பெறுவது?',
+      'எனது முக்கிய செலவு வகைகளைக் காட்டு'
+    ];
+  }
+  if (lang === 'si') {
+    return [
+      'මගේ ශුද්ධ ශේෂය කුමක්ද?',
+      'බදු සහන ලබා ගන්නේ කෙසේද?',
+      'මගේ ප්‍රධාන වියදම් කාණ්ඩ පෙන්වන්න'
+    ];
+  }
   const q = (question || '').toLowerCase();
   if (q.includes('balance') || q.includes('net') || q.includes('savings')) {
     return ['What are my biggest expenses?', 'How can I improve my savings?', 'Show spending by category'];
@@ -786,13 +800,14 @@ app.post('/api/chat/stream', authenticateToken, async (req, res) => {
   };
 
   try {
-    const { question, history = [] } = req.body;
+    const { question, history = [], languagePreference } = req.body;
     if (!question?.trim()) {
       sendEvent({ type: 'error', message: 'Please enter a question.' });
       return res.end();
     }
 
     const q = question.trim();
+    const userLang = languagePreference || req.user.languagePreference || 'en';
 
     // Build financial context
     const userTx = db.transactions.filter(t => t.userId === req.user._id);
@@ -831,7 +846,7 @@ app.post('/api/chat/stream', authenticateToken, async (req, res) => {
 
     // --- Try Gemini with real streaming ---
     const apiKey = process.env.GEMINI_API_KEY;
-    if (apiKey && apiKey.startsWith('AIza')) {
+    if (apiKey && (apiKey.startsWith('AIza') || apiKey.startsWith('AQ.') || apiKey.length > 20)) {
       try {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -842,6 +857,13 @@ app.post('/api/chat/stream', authenticateToken, async (req, res) => {
             retrievedLaws.map(d => `[${d.title} – ${d.act} (${d.section})]:\n${d.content}`).join('\n\n') + '\n';
         }
 
+        let langInstruction = '';
+        if (userLang === 'ta') {
+          langInstruction = '\nCRITICAL REQUIREMENT: The user has selected Sri Lankan Tamil (தமிழ்) as interface language. You MUST respond completely and fluently in Sri Lankan Tamil script (தமிழ்) with natural Tamil financial phrasing (வருமானம், செலவுகள், வரி, விலைப்பட்டியல், பட்ஜெட்), unless the user explicitly wrote the question in English.';
+        } else if (userLang === 'si') {
+          langInstruction = '\nCRITICAL REQUIREMENT: The user has selected Sri Lankan Sinhala (සිංහල) as interface language. You MUST respond completely and fluently in Sri Lankan Sinhala script (සිංහල) with natural Sinhala financial phrasing (ආදායම, වියදම්, බදු, ඉන්වොයිසි, අයවැය), unless the user explicitly wrote the question in English.';
+        }
+
         const lr = currencyService.getRates().rates;
         const systemCtx = `You are Cendric, an elite personal finance AI for freelancers and professionals in Sri Lanka.
 User: ${req.user.fullName} | Currency: ${currency}
@@ -850,6 +872,7 @@ Expense categories: ${JSON.stringify(categoryTotals)}
 Recent transactions (last 5): ${JSON.stringify(userTx.slice(-5))}
 ${ragContext}
 Live exchange rates: 1 USD = ${lr.LKR?.toFixed(2)} LKR | 1 EUR = ${(lr.LKR/lr.EUR)?.toFixed(2)} LKR | 1 GBP = ${(lr.LKR/lr.GBP)?.toFixed(2)} LKR
+${langInstruction}
 Respond concisely with markdown formatting. Keep responses under 300 words.`;
 
         // Build conversation history for Gemini
@@ -877,7 +900,7 @@ Respond concisely with markdown formatting. Keep responses under 300 words.`;
           sendEvent({ type: 'token', token });
         }
 
-        sendEvent({ type: 'suggestions', suggestions: generateFollowUps(q, fullText) });
+        sendEvent({ type: 'suggestions', suggestions: generateFollowUps(q, fullText, userLang) });
         sendEvent({ type: 'done' });
         saveToChatHistory(q, fullText);
         return res.end();
@@ -896,54 +919,85 @@ Respond concisely with markdown formatting. Keep responses under 300 words.`;
       if (taxAns) answer = taxAns;
     }
 
-    // 2. Keyword rule-based answers
+    // 2. Multilingual Keyword rule-based answers
     if (!answer) {
-      const qLow = q.toLowerCase();
       const r = currencyService.getRates().rates;
+      const userName = (req.user.fullName || 'User').split(' ')[0];
+      const topCats = Object.entries(categoryTotals).sort((a,b)=>b[1]-a[1]).slice(0,3);
+      const qLow = q.toLowerCase();
 
-      if (qLow.match(/exchange rate|usd.*lkr|currency rate|rates today|dollar.*rate|lkr.*dollar/)) {
-        answer = `💱 **Live Exchange Rates (API Synchronized):**\n\n• **1 USD** = **${r.LKR?.toFixed(2)} LKR**\n• **1 EUR** = **${(r.LKR/r.EUR)?.toFixed(2)} LKR**\n• **1 GBP** = **${(r.LKR/r.GBP)?.toFixed(2)} LKR**\n• **1 INR** = **${(r.LKR/r.INR)?.toFixed(2)} LKR**\n• **1 AUD** = **${(r.LKR/r.AUD)?.toFixed(2)} LKR**\n\n*Source: Open Exchange Rates API · Live*`;
-      } else if (qLow.match(/how much.*spend|how much.*spent|total.*expense|expense.*total|spending/)) {
-        let matchedCat = null;
-        for (const cat of Object.keys(categoryTotals)) {
-          if (qLow.includes(cat.toLowerCase())) { matchedCat = cat; break; }
-        }
-        if (matchedCat) {
-          answer = `📊 You spent **${currency} ${categoryTotals[matchedCat].toLocaleString()}** on **${matchedCat}**.\n\nThat's **${((categoryTotals[matchedCat]/totalExpense)*100).toFixed(1)}%** of your total expenses.`;
+      if (userLang === 'ta') {
+        if (qLow.match(/மாற்று விகிதம்|rate|usd|exchange|டாலர்/)) {
+          answer = `💱 **நேரடி நாணய மாற்று விகிதங்கள் (API நேரலை):**\n\n• **1 USD** = **${r.LKR?.toFixed(2)} LKR**\n• **1 EUR** = **${(r.LKR/r.EUR)?.toFixed(2)} LKR**\n• **1 GBP** = **${(r.LKR/r.GBP)?.toFixed(2)} LKR**\n• **1 INR** = **${(r.LKR/r.INR)?.toFixed(2)} LKR**\n• **1 AUD** = **${(r.LKR/r.AUD)?.toFixed(2)} LKR**\n\n*ஆதாரம்: Open Exchange Rates API · நேரலை*`;
+        } else if (qLow.match(/செலவு|spend|expense|எவ்வளவு.*செலவு/)) {
+          answer = `📊 **உங்கள் செலவு பகுப்பாய்வு:**\n\n• **மொத்த செலவுகள்:** ${currency} ${totalExpense.toLocaleString()} (${userTx.filter(t=>t.type==='expense').length} பரிவர்த்தனைகள்)\n• **மொத்த வருமானம்:** ${currency} ${totalIncome.toLocaleString()}\n• **நிகர இருப்பு:** ${currency} ${netBalance.toLocaleString()}\n\n**முக்கிய செலவு வகைகள்:**\n${topCats.map(([c,v])=>`• ${c}: ${currency} ${v.toLocaleString()}`).join('\n')}`;
+        } else if (qLow.match(/வரி|tax|apit|ird|வருமான வரி/)) {
+          const calc = ragService.calculateSriLankanTax(totalIncome, Math.min(totalIncome * 0.4, totalExpense));
+          answer = `🇱🇰 **உங்கள் வருமானத்திற்கான இலங்கை வரி மதிப்பீடு:**\n\n• **மொத்த வருமானம்:** ${currency} ${totalIncome.toLocaleString()}\n• **அனுமதிக்கப்பட்ட கழிவுகள்:** -${currency} ${calc.allowableDeductions.toLocaleString()}\n• **வரி இல்லாத தனிநபர் சலுகை:** -${currency} 1,200,000\n• **வரிக்குட்பட்ட வருமானம்:** ${currency} ${calc.taxableIncome.toLocaleString()}\n\n${calc.taxableIncome <= 0 ? '🎉 **வரி செலுத்த தேவையில்லை!** உங்கள் வருமானம் LKR 1,200,000 வரம்பிற்குள் உள்ளது.' : `**மதிப்பிடப்பட்ட வரி:** **${currency} ${calc.totalTax.toLocaleString()}** (செயல்திறன் விகிதம்: ${calc.effectiveRate})\n• **காலாண்டு APIT தவணை:** ~${currency} ${Math.round(calc.totalTax / 4).toLocaleString()} / காலாண்டு`}\n\n> 💡 *IT/மென்பொருள் ஏற்றுமதி மூலம் பெறப்படும் வெளிநாட்டு நாணய வருமானம் Inland Revenue Act Schedule 3 இன் கீழ் முழு வரி விலக்கு பெறலாம்.*`;
+        } else if (qLow.match(/இருப்பு|மீதி|balance|சேமிப்பு/)) {
+          answer = `💼 **உங்கள் நிதி நிலைமை:**\n\n• **நிகர இருப்பு:** ${currency} ${netBalance.toLocaleString()}\n• **மொத்த வருமானம்:** ${currency} ${totalIncome.toLocaleString()} (${userTx.filter(t=>t.type==='income').length} பரிவர்த்தனைகள்)\n• **மொத்த செலவுகள்:** ${currency} ${totalExpense.toLocaleString()} (${userTx.filter(t=>t.type==='expense').length} பரிவர்த்தனைகள்)\n\n${netBalance >= 0 ? '🎉 நீங்கள் **நேர்மறை பணப்புழக்கத்தில் (Positive Cash Flow)** உள்ளீர்கள்!' : '⚠️ உங்கள் செலவுகள் வருமானத்தை விட அதிகமாக உள்ளன. கவனமாக திட்டமிடுங்கள்.'}`;
+        } else if (qLow.match(/வணக்கம்|ஹலோ|hello|hi/)) {
+          answer = `👋 வணக்கம் **${userName}**! நான் **Cendric**, உங்கள் AI நிதி ஆலோசகர்.\n\nஉங்களிடம் தற்போது **${userTx.length}** பரிவர்த்தனைகளும், **${currency} ${netBalance.toLocaleString()}** நிகர இருப்பும் உள்ளது.\n\n💬 உங்கள் செலவுகள், இலங்கை வரிச் சட்டங்கள் அல்லது நேரடி மாற்று விகிதங்கள் பற்றி என்னிடம் கேளுங்கள்!`;
         } else {
-          const topCats = Object.entries(categoryTotals).sort((a,b)=>b[1]-a[1]).slice(0,3);
-          answer = `📊 **Your Spending Breakdown:**\n\n• **Total Expenses:** ${currency} ${totalExpense.toLocaleString()} (${userTx.filter(t=>t.type==='expense').length} transactions)\n• **Total Income:** ${currency} ${totalIncome.toLocaleString()}\n• **Net Balance:** ${currency} ${netBalance.toLocaleString()}\n\n**Top Categories:**\n${topCats.map(([c,v])=>`• ${c}: ${currency} ${v.toLocaleString()}`).join('\n')}`;
+          answer = `🤖 **உங்கள் நிதி கண்ணோட்டம்:**\n\n• **நிகர இருப்பு:** ${currency} ${netBalance.toLocaleString()}\n• **மொத்த வருமானம்:** ${currency} ${totalIncome.toLocaleString()} · **மொத்த செலவுகள்:** ${currency} ${totalExpense.toLocaleString()}\n${topCats.length ? `\n**முக்கிய செலவு வகைகள்:**\n${topCats.map(([c,v])=>`• ${c}: ${currency} ${v.toLocaleString()}`).join('\n')}` : ''}\n\n💬 முயற்சிக்கவும்: *"எனது நிகர இருப்பு என்ன?"*, *"இன்றைய USD மாற்று விகிதம் என்ன?"*, அல்லது *"வரி மதிப்பீடு செய்க"*`;
         }
-      } else if (qLow.match(/tax|apit|ird|taxable|deduction|tin\b/)) {
-        // Explicit tax handler fallback in case RAG didn't match a document
-        const calc = ragService.calculateSriLankanTax(totalIncome, Math.min(totalIncome * 0.4, totalExpense));
-        answer = `🇱🇰 **Sri Lankan Tax Assessment for Your Income**\n\n` +
-          `• **Gross Income:** ${currency} ${totalIncome.toLocaleString()}\n` +
-          `• **Allowable Deductions:** -${currency} ${calc.allowableDeductions.toLocaleString()}\n` +
-          `• **Tax-Free Personal Relief:** -${currency} 1,200,000\n` +
-          `• **Taxable Income:** ${currency} ${calc.taxableIncome.toLocaleString()}\n\n` +
-          (calc.taxableIncome <= 0
-            ? `🎉 **Zero Tax Payable!** Your net earnings are below the LKR 1,200,000 relief threshold.`
-            : `**Total Estimated Tax Payable:** **${currency} ${calc.totalTax.toLocaleString()}** (Effective rate: ${calc.effectiveRate})\n` +
-              `• **Quarterly APIT Installment:** ~${currency} ${Math.round(calc.totalTax / 4).toLocaleString()} / quarter\n\n` +
-              `> 💡 *If this is foreign currency income from IT/software export, it may qualify for full exemption under the Third Schedule of the Inland Revenue Act.*`);
-      } else if (!qLow.includes('tax') && qLow.match(/balance|net worth|savings|how much.*have|what.*have/)) {
-        answer = `💼 **Your Financial Position:**\n\n• **Net Balance:** ${currency} ${netBalance.toLocaleString()}\n• **Total Income:** ${currency} ${totalIncome.toLocaleString()} (${userTx.filter(t=>t.type==='income').length} transactions)\n• **Total Expenses:** ${currency} ${totalExpense.toLocaleString()} (${userTx.filter(t=>t.type==='expense').length} transactions)\n\n${netBalance >= 0 ? '🎉 You are operating at a **positive cash flow!**' : '⚠️ Your expenses currently exceed your income. Review discretionary spending.'}`;
-      } else if (qLow.match(/tip|advice|save more|budget|improve|optimize/)) {
-        answer = `💡 **Cendric Pro Tips for Freelancers:**\n\n1. **50/30/20 Rule** — 50% essentials, 30% lifestyle, 20% savings/investments\n2. **Emergency Fund** — Keep 3–6 months of expenses in a liquid savings account\n3. **Tax Provision** — Automatically set aside **20–25%** of every client payment for APIT\n4. **Track Every Receipt** — Use our CSV importer or receipt scanner to log expenses in real-time\n5. **Invoice in USD** — Sri Lanka's Third Schedule exempts IT export income from income tax`;
-      } else if (qLow.match(/hello|hi there|hey|good morning|good evening/)) {
-        answer = `👋 Hello **${req.user.fullName.split(' ')[0]}**! I'm **Cendric**, your AI finance co-pilot.\n\nYou currently have **${userTx.length}** transactions with a net balance of **${currency} ${netBalance.toLocaleString()}**.\n\n💬 Ask me about your expenses, Sri Lankan tax laws, live exchange rates, or invoice management!`;
-      } else if (qLow.match(/income|earn|revenue|invoice|payment|client/)) {
-        const incTx = userTx.filter(t => t.type === 'income');
-        answer = `💰 **Income Summary:**\n\n• **Total Income:** ${currency} ${totalIncome.toLocaleString()}\n• **Transactions:** ${incTx.length} income entries\n• **Average per transaction:** ${currency} ${incTx.length ? (totalIncome/incTx.length).toFixed(0) : 0}\n\nYour net balance after expenses is **${currency} ${netBalance.toLocaleString()}**.`;
+      } else if (userLang === 'si') {
+        if (qLow.match(/විනිමය|rate|usd|exchange|ඩොලර්/)) {
+          answer = `💱 **සජීවී විනිමය අනුපාත (API සජීවී):**\n\n• **1 USD** = **${r.LKR?.toFixed(2)} LKR**\n• **1 EUR** = **${(r.LKR/r.EUR)?.toFixed(2)} LKR**\n• **1 GBP** = **${(r.LKR/r.GBP)?.toFixed(2)} LKR**\n• **1 INR** = **${(r.LKR/r.INR)?.toFixed(2)} LKR**\n• **1 AUD** = **${(r.LKR/r.AUD)?.toFixed(2)} LKR**\n\n*මූලාශ්‍රය: Open Exchange Rates API · සජීවී*`;
+        } else if (qLow.match(/වියදම|spend|expense|කොපමණ.*වියදම්/)) {
+          answer = `📊 **ඔබගේ වියදම් විස්තරය:**\n\n• **මුළු වියදම:** ${currency} ${totalExpense.toLocaleString()} (ගනුදෙනු ${userTx.filter(t=>t.type==='expense').length})\n• **මුළු ආදායම:** ${currency} ${totalIncome.toLocaleString()}\n• **ශුද්ධ ශේෂය:** ${currency} ${netBalance.toLocaleString()}\n\n**ප්‍රධාන වියදම් ප්‍රවර්ග:**\n${topCats.map(([c,v])=>`• ${c}: ${currency} ${v.toLocaleString()}`).join('\n')}`;
+        } else if (qLow.match(/බදු|tax|apit|ird|ආදායම් බදු/)) {
+          const calc = ragService.calculateSriLankanTax(totalIncome, Math.min(totalIncome * 0.4, totalExpense));
+          answer = `🇱🇰 **ඔබගේ ආදායම සඳහා ශ්‍රී ලංකා බදු තක්සේරුව:**\n\n• **මුළු ආදායම:** ${currency} ${totalIncome.toLocaleString()}\n• **අනුමත අඩුකිරීම්:** -${currency} ${calc.allowableDeductions.toLocaleString()}\n• **බදු රහිත සහනය:** -${currency} 1,200,000\n• **බදු අයවිය හැකි ආදායම:** ${currency} ${calc.taxableIncome.toLocaleString()}\n\n${calc.taxableIncome <= 0 ? '🎉 **බදු ගෙවීමට අවශ්‍ය නැත!** ඔබගේ ආදායම LKR 1,200,000 සීමාවට වඩා අඩුය.' : `**ඇස්තමේන්තුගත බද්ද:** **${currency} ${calc.totalTax.toLocaleString()}** (ඵලදායී අනුපාතය: ${calc.effectiveRate})\n• **කාර්තුමය APIT වාරිකය:** ~${currency} ${Math.round(calc.totalTax / 4).toLocaleString()} / කාර්තුව`}\n\n> 💡 *තොරතුරු තාක්ෂණ හෝ මෘදුකාංග අපනයන සේවා ආදායම දේශීය ආදායම් පනත යටතේ සම්පූර්ණ බදු නිදහස් වේ.*`;
+        } else if (qLow.match(/ශේෂය|balance|මුදල්|ඉතිරි/)) {
+          answer = `💼 **ඔබගේ මූල්‍ය තත්ත්වය:**\n\n• **ශුද්ධ ශේෂය:** ${currency} ${netBalance.toLocaleString()}\n• **මුළු ආදායම:** ${currency} ${totalIncome.toLocaleString()} (ගනුදෙනු ${userTx.filter(t=>t.type==='income').length})\n• **මුළු වියදම:** ${currency} ${totalExpense.toLocaleString()} (ගනුදෙනු ${userTx.filter(t=>t.type==='expense').length})\n\n${netBalance >= 0 ? '🎉 ඔබ **ධනාත්මක මුදල් ප්‍රවාහයක (Positive Cash Flow)** සිටී!' : '⚠️ ඔබගේ වියදම් ආදායමට වඩා වැඩිය. කරුණාකර සැලකිලිමත් වන්න.'}`;
+        } else if (qLow.match(/ආයුබෝවන්|hello|hi/)) {
+          answer = `👋 ආයුබෝවන් **${userName}**! මම **Cendric**, ඔබගේ AI මූල්‍ය උපදේශක.\n\nඔබ සතුව මේ වන විට ගනුදෙනු **${userTx.length}** ක් සහ **${currency} ${netBalance.toLocaleString()}** ක ශුද්ධ ශේෂයක් පවතී.\n\n💬 ඔබගේ වියදම්, ශ්‍රී ලංකා බදු නීති හෝ සජීවී විනිමය අනුපාත පිළිබඳව මගෙන් විමසන්න!`;
+        } else {
+          answer = `🤖 **ඔබගේ මූල්‍ය සාරාංශය:**\n\n• **ශුද්ධ ශේෂය:** ${currency} ${netBalance.toLocaleString()}\n• **මුළු ආදායම:** ${currency} ${totalIncome.toLocaleString()} · **මුළු වියදම:** ${currency} ${totalExpense.toLocaleString()}\n${topCats.length ? `\n**ප්‍රධාන වියදම් ප්‍රවර්ග:**\n${topCats.map(([c,v])=>`• ${c}: ${currency} ${v.toLocaleString()}`).join('\n')}` : ''}\n\n💬 උත්සාහ කරන්න: *"මගේ ශුද්ධ ශේෂය කොපමණද?"*, *"අද USD විනිමය අනුපාතය කුමක්ද?"*, හෝ *"ආදායම් බදු ගණනය කරන්න"*`;
+        }
       } else {
-        const topCats = Object.entries(categoryTotals).sort((a,b)=>b[1]-a[1]).slice(0,3);
-        answer = `🤖 Here's a snapshot of your finances:\n\n• **Net Balance:** ${currency} ${netBalance.toLocaleString()}\n• **Income:** ${currency} ${totalIncome.toLocaleString()} · **Expenses:** ${currency} ${totalExpense.toLocaleString()}\n${topCats.length ? `\n**Top expense categories:**\n${topCats.map(([c,v])=>`• ${c}: ${currency} ${v.toLocaleString()}`).join('\n')}` : ''}\n\n💬 Try: *"How much did I spend on Food?"*, *"What's the USD exchange rate?"*, or *"Calculate my income tax"*`;
+        if (qLow.match(/exchange rate|usd.*lkr|currency rate|rates today|dollar.*rate|lkr.*dollar/)) {
+          answer = `💱 **Live Exchange Rates (API Synchronized):**\n\n• **1 USD** = **${r.LKR?.toFixed(2)} LKR**\n• **1 EUR** = **${(r.LKR/r.EUR)?.toFixed(2)} LKR**\n• **1 GBP** = **${(r.LKR/r.GBP)?.toFixed(2)} LKR**\n• **1 INR** = **${(r.LKR/r.INR)?.toFixed(2)} LKR**\n• **1 AUD** = **${(r.LKR/r.AUD)?.toFixed(2)} LKR**\n\n*Source: Open Exchange Rates API · Live*`;
+        } else if (qLow.match(/how much.*spend|how much.*spent|total.*expense|expense.*total|spending/)) {
+          let matchedCat = null;
+          for (const cat of Object.keys(categoryTotals)) {
+            if (qLow.includes(cat.toLowerCase())) { matchedCat = cat; break; }
+          }
+          if (matchedCat) {
+            answer = `📊 You spent **${currency} ${categoryTotals[matchedCat].toLocaleString()}** on **${matchedCat}**.\n\nThat's **${((categoryTotals[matchedCat]/totalExpense)*100).toFixed(1)}%** of your total expenses.`;
+          } else {
+            answer = `📊 **Your Spending Breakdown:**\n\n• **Total Expenses:** ${currency} ${totalExpense.toLocaleString()} (${userTx.filter(t=>t.type==='expense').length} transactions)\n• **Total Income:** ${currency} ${totalIncome.toLocaleString()}\n• **Net Balance:** ${currency} ${netBalance.toLocaleString()}\n\n**Top Categories:**\n${topCats.map(([c,v])=>`• ${c}: ${currency} ${v.toLocaleString()}`).join('\n')}`;
+          }
+        } else if (qLow.match(/tax|apit|ird|taxable|deduction|tin\b/)) {
+          const calc = ragService.calculateSriLankanTax(totalIncome, Math.min(totalIncome * 0.4, totalExpense));
+          answer = `🇱🇰 **Sri Lankan Tax Assessment for Your Income**\n\n` +
+            `• **Gross Income:** ${currency} ${totalIncome.toLocaleString()}\n` +
+            `• **Allowable Deductions:** -${currency} ${calc.allowableDeductions.toLocaleString()}\n` +
+            `• **Tax-Free Personal Relief:** -${currency} 1,200,000\n` +
+            `• **Taxable Income:** ${currency} ${calc.taxableIncome.toLocaleString()}\n\n` +
+            (calc.taxableIncome <= 0
+              ? `🎉 **Zero Tax Payable!** Your net earnings are below the LKR 1,200,000 relief threshold.`
+              : `**Total Estimated Tax Payable:** **${currency} ${calc.totalTax.toLocaleString()}** (Effective rate: ${calc.effectiveRate})\n` +
+                `• **Quarterly APIT Installment:** ~${currency} ${Math.round(calc.totalTax / 4).toLocaleString()} / quarter\n\n` +
+                `> 💡 *If this is foreign currency income from IT/software export, it may qualify for full exemption under the Third Schedule of the Inland Revenue Act.*`);
+        } else if (!qLow.includes('tax') && qLow.match(/balance|net worth|savings|how much.*have|what.*have/)) {
+          answer = `💼 **Your Financial Position:**\n\n• **Net Balance:** ${currency} ${netBalance.toLocaleString()}\n• **Total Income:** ${currency} ${totalIncome.toLocaleString()} (${userTx.filter(t=>t.type==='income').length} transactions)\n• **Total Expenses:** ${currency} ${totalExpense.toLocaleString()} (${userTx.filter(t=>t.type==='expense').length} transactions)\n\n${netBalance >= 0 ? '🎉 You are operating at a **positive cash flow!**' : '⚠️ Your expenses currently exceed your income. Review discretionary spending.'}`;
+        } else if (qLow.match(/tip|advice|save more|budget|improve|optimize/)) {
+          answer = `💡 **Cendric Pro Tips for Freelancers:**\n\n1. **50/30/20 Rule** — 50% essentials, 30% lifestyle, 20% savings/investments\n2. **Emergency Fund** — Keep 3–6 months of expenses in a liquid savings account\n3. **Tax Provision** — Automatically set aside **20–25%** of every client payment for APIT\n4. **Track Every Receipt** — Use our CSV importer or receipt scanner to log expenses in real-time\n5. **Invoice in USD** — Sri Lanka's Third Schedule exempts IT export income from income tax`;
+        } else if (qLow.match(/hello|hi there|hey|good morning|good evening/)) {
+          answer = `👋 Hello **${userName}**! I'm **Cendric**, your AI finance co-pilot.\n\nYou currently have **${userTx.length}** transactions with a net balance of **${currency} ${netBalance.toLocaleString()}**.\n\n💬 Ask me about your expenses, Sri Lankan tax laws, live exchange rates, or invoice management!`;
+        } else if (qLow.match(/income|earn|revenue|invoice|payment|client/)) {
+          const incTx = userTx.filter(t => t.type === 'income');
+          answer = `💰 **Income Summary:**\n\n• **Total Income:** ${currency} ${totalIncome.toLocaleString()}\n• **Transactions:** ${incTx.length} income entries\n• **Average per transaction:** ${currency} ${incTx.length ? (totalIncome/incTx.length).toFixed(0) : 0}\n\nYour net balance after expenses is **${currency} ${netBalance.toLocaleString()}**.`;
+        } else {
+          answer = `🤖 Here's a snapshot of your finances:\n\n• **Net Balance:** ${currency} ${netBalance.toLocaleString()}\n• **Income:** ${currency} ${totalIncome.toLocaleString()} · **Expenses:** ${currency} ${totalExpense.toLocaleString()}\n${topCats.length ? `\n**Top expense categories:**\n${topCats.map(([c,v])=>`• ${c}: ${currency} ${v.toLocaleString()}`).join('\n')}` : ''}\n\n💬 Try: *"How much did I spend on Food?"*, *"What's the USD exchange rate?"*, or *"Calculate my income tax"*`;
+        }
       }
     }
 
     await streamWords(answer);
-    sendEvent({ type: 'suggestions', suggestions: generateFollowUps(q, answer) });
+    sendEvent({ type: 'suggestions', suggestions: generateFollowUps(q, answer, userLang) });
     sendEvent({ type: 'done' });
     saveToChatHistory(q, answer);
     res.end();
@@ -988,13 +1042,14 @@ app.delete('/api/chat/history', authenticateToken, (req, res) => {
 
 app.post('/api/chat/message', authenticateToken, async (req, res) => {
   try {
-    const { question, sessionId = crypto.randomBytes(8).toString('hex') } = req.body;
+    const { question, sessionId = crypto.randomBytes(8).toString('hex'), languagePreference } = req.body;
 
     if (!question || !question.trim()) {
       return res.status(400).json({ message: 'Question cannot be empty.' });
     }
 
     const q = question.trim();
+    const userLang = languagePreference || req.user.languagePreference || 'en';
 
     // Get user's financial context
     const userTx = db.transactions.filter(t => t.userId === req.user._id);
@@ -1016,7 +1071,7 @@ app.post('/api/chat/message', authenticateToken, async (req, res) => {
     const apiKey = process.env.GEMINI_API_KEY;
 
     // Try Gemini if valid key provided
-    if (apiKey && apiKey.startsWith('AIza')) {
+    if (apiKey && (apiKey.startsWith('AIza') || apiKey.startsWith('AQ.') || apiKey.length > 20)) {
       try {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -1042,6 +1097,13 @@ REAL-TIME CURRENCY EXCHANGE RATES (Base: USD):
 If the user asks about exchange rates or converting earnings, use these real-time numbers.
 `;
 
+        let langInstruction = '';
+        if (userLang === 'ta') {
+          langInstruction = '\nCRITICAL REQUIREMENT: The user has selected Sri Lankan Tamil (தமிழ்) as interface language. You MUST respond completely and fluently in Sri Lankan Tamil script (தமிழ்) with natural Tamil financial phrasing (வருமானம், செலவுகள், வரி, விலைப்பட்டியல், பட்ஜெட்), unless the user explicitly wrote the question in English.';
+        } else if (userLang === 'si') {
+          langInstruction = '\nCRITICAL REQUIREMENT: The user has selected Sri Lankan Sinhala (සිංහල) as interface language. You MUST respond completely and fluently in Sri Lankan Sinhala script (සිංහල) with natural Sinhala financial phrasing (ආදායම, වියදම්, බදු, ඉන්වොයිසි, අයවැය), unless the user explicitly wrote the question in English.';
+        }
+
         const prompt = `You are Cendric, an elite personal finance AI assistant for freelancers and professionals in Sri Lanka.
 Current User Context:
 - User Name: ${req.user.fullName}
@@ -1053,6 +1115,7 @@ Current User Context:
 - Recent Transactions: ${JSON.stringify(userTx.slice(0, 5))}
 ${ragContext}
 ${liveRatesContext}
+${langInstruction}
 User Question: "${q}"
 
 Respond helpfully, politely, and concisely with practical numbers, insights, or advice. Format with clean markdown bullet points where appropriate.`;

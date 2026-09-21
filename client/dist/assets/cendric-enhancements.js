@@ -105,52 +105,6 @@
   // Sri Lankan Trilingual Localization Engine (en, ta, si)
   // ----------------------------------------------------
   const I18N = {
-    en: {
-      langName: 'English',
-      nativeName: 'English',
-      flag: '🇬🇧',
-      navChat: 'Chat Assistant',
-      navTransactions: 'Transactions',
-      navProfile: 'Profile',
-      navSettings: 'Settings',
-      navTaxEstimator: 'Tax Estimator',
-      navInvoices: 'Invoices',
-      navReceiptOcr: 'Receipt OCR',
-      navSnapScanBill: 'Snap & Scan Bill',
-      financialTools: 'Financial Tools',
-      preferences: 'Preferences',
-      activeWallet: 'Freelance Wallet',
-      monthlyBudget: 'Monthly Budget',
-      taxSaved: 'Tax Saved',
-      used: 'used',
-      addTransaction: 'Add Transaction',
-      snapScanBill: 'Snap & Scan Bill',
-      importCsv: 'Import Bank CSV',
-      exportCsv: 'Export CSV',
-      totalIncome: 'Total Income',
-      totalExpenses: 'Total Expenses',
-      netBalance: 'Net Balance',
-      billScannerTitle: 'Snap & Scan Bill / Receipt',
-      billScannerSubtitle: 'Instant AI bill & receipt scanner for Sri Lankan freelancers',
-      centerBill: 'Center bill or receipt within viewfinder frame',
-      captureBill: 'Capture Bill',
-      uploadBill: 'Upload Photo',
-      analyzingBill: 'Analyzing bill details with Cendric AI...',
-      billDetails: 'Extracted Bill Details',
-      amount: 'Amount',
-      vendor: 'Vendor / Description',
-      category: 'Category',
-      date: 'Date',
-      type: 'Transaction Type',
-      expense: 'Expense',
-      income: 'Income',
-      saveTransaction: 'Confirm & Save Transaction',
-      retakePhoto: 'Retake Photo',
-      scanSuccess: 'Bill successfully recorded!',
-      langSettingsTitle: 'Language Preference',
-      langSettingsSubtitle: 'Select your preferred interface language for Sri Lanka (English, தமிழ், or සිංහල)',
-      saveLangToast: 'Language updated to'
-    },
     ta: {
       langName: 'Tamil',
       nativeName: 'தமிழ்',
@@ -169,6 +123,8 @@
       monthlyBudget: 'மாதாந்திர பட்ஜெட்',
       taxSaved: 'சேமிக்கப்பட்ட வரி',
       used: 'பயன்படுத்தப்பட்டது',
+      txTitle: 'பரிவர்த்தனைகள்',
+      txSubtitle: 'உங்கள் வருமானம், செலவுகள் மற்றும் விலைப்பட்டியல்களை நிர்வகிக்கவும் கண்காணிக்கவும்',
       addTransaction: 'பரிவர்த்தனை சேர்',
       snapScanBill: 'பில் ஸ்கேன் செய்',
       importCsv: 'வங்கி CSV இறக்குமதி',
@@ -176,6 +132,38 @@
       totalIncome: 'மொத்த வருமானம்',
       totalExpenses: 'மொத்த செலவுகள்',
       netBalance: 'நிகர இருப்பு',
+      filterAll: 'அனைத்தும்',
+      filterIncome: 'வருமானம்',
+      filterExpense: 'செலவு',
+      searchPlaceholder: 'பரிவர்த்தனைகளைத் தேடுங்கள்…',
+      thDate: 'திகதி',
+      thDescription: 'விபரம்',
+      thCategory: 'வகை',
+      thAmount: 'தொகை',
+      thType: 'வகை',
+      thActions: 'செயல்கள்',
+      chatTitle: 'Cendric AI நிதி உதவியாளர்',
+      chatStatus: 'ஆன்லைன் · சூழல் விழிப்புணர்வு',
+      newChat: 'புதிய அரட்டை',
+      clearChat: 'அழி',
+      chatPlaceholder: 'உங்கள் நிதி பற்றி எதையும் கேளுங்கள்…',
+      chatHint: 'அனுப்ப Enter · புதிய வரிக்கு Shift+Enter · 🎤 குரல் உள்ளீடு',
+      voiceTooltip: 'குரல் உள்ளீடு (பேச அழுத்தவும்)',
+      thinking: 'சிந்திக்கிறது…',
+      welcomeTitle: '👋 வணக்கம்! நான் <strong>Cendric</strong>, உங்கள் நேரடி AI நிதி ஆலோசகர்.',
+      welcomeSub: 'உங்கள் பரிவர்த்தனைகள், பட்ஜெட் மற்றும் நேரடி மாற்று விகிதங்கள் எனக்குத் தெரியும். எதையும் கேளுங்கள்!',
+      chipNetBalance: '💼 நிகர இருப்பு',
+      chipSpending: '📊 செலவு பகுப்பாய்வு',
+      chipRates: '💱 மாற்று விகிதங்கள்',
+      chipTaxDeadlines: '📅 வரி காலக்கெடு',
+      chipTips: '💡 நிதி குறிப்புகள்',
+      pillUpwork: '🇱🇰 Upwork வரி',
+      pillApit: '🧮 APIT கணக்கீடு',
+      pillDeductions: '📋 வரி விலக்குகள்',
+      pillTin: '🆔 TIN பதிவு',
+      pillBurnRate: '🔥 செலவு வேகம்',
+      newChatToast: '✨ புதிய அரட்டை அமர்வு தொடங்கியது',
+      clearedChatToast: '🗑️ அரட்டை வரலாறு அழிக்கப்பட்டது',
       billScannerTitle: 'பில் & ரசீது ஸ்கேனர்',
       billScannerSubtitle: 'இலங்கை சுயாதீனர்களுக்கான உடனடி AI பில் & ரசீது ஸ்கேனர்',
       centerBill: 'பில் அல்லது ரசீதை சட்டகத்திற்குள் மையப்படுத்தவும்',
@@ -194,7 +182,7 @@
       retakePhoto: 'மீண்டும் படம் எடு',
       scanSuccess: 'பில் வெற்றிகரமாக பதிவு செய்யப்பட்டது!',
       langSettingsTitle: 'மொழி விருப்பம்',
-      langSettingsSubtitle: 'உங்கள் விருப்பமான இடைமுக மொழியைத் தேர்ந்தெடுக்கவும் (English, தமிழ், அல்லது සිංහල)',
+      langSettingsSubtitle: 'உங்கள் விருப்பமான இடைமுக மொழியைத் தேர்ந்தெடுக்கவும் (தமிழ், සිංහල, அல்லது English)',
       saveLangToast: 'மொழி மாற்றப்பட்டது:'
     },
     si: {
@@ -215,6 +203,8 @@
       monthlyBudget: 'මාසික අයවැය',
       taxSaved: 'ඉතිරි කළ බදු',
       used: 'භාවිතා විය',
+      txTitle: 'ගනුදෙනු',
+      txSubtitle: 'ඔබගේ ආදායම, වියදම් සහ ඉන්වොයිසි කළමනාකරණය සහ නිරීක්ෂණය කරන්න',
       addTransaction: 'ගනුදෙනුවක් එක් කරන්න',
       snapScanBill: 'බිල්පත ස්කෑන් කරන්න',
       importCsv: 'බැංකු CSV ආයාත කරන්න',
@@ -222,6 +212,38 @@
       totalIncome: 'මුළු ආදායම',
       totalExpenses: 'මුළු වියදම',
       netBalance: 'ශුද්ධ ශේෂය',
+      filterAll: 'සියල්ල',
+      filterIncome: 'ආදායම',
+      filterExpense: 'වියදම',
+      searchPlaceholder: 'ගනුදෙනු සොයන්න…',
+      thDate: 'දිනය',
+      thDescription: 'විස්තරය',
+      thCategory: 'ප්‍රවර්ගය',
+      thAmount: 'මුදල',
+      thType: 'වර්ගය',
+      thActions: 'ක්‍රියා',
+      chatTitle: 'Cendric AI මූල්‍ය සහායක',
+      chatStatus: 'සක්‍රියයි · පූර්ණ සන්දර්භය සහිතයි',
+      newChat: 'නව සංවාදය',
+      clearChat: 'මකන්න',
+      chatPlaceholder: 'ඔබගේ මූල්‍ය පිළිබඳ ඕනෑම දෙයක් අසන්න…',
+      chatHint: 'යැවීමට Enter · නව පේළියකට Shift+Enter · 🎤 හඬ ආදානය',
+      voiceTooltip: 'හඬ ආදානය (කතා කිරීමට ඔබන්න)',
+      thinking: 'සිතමින් පවතී…',
+      welcomeTitle: '👋 ආයුබෝවන්! මම <strong>Cendric</strong>, ඔබගේ ක්ෂණික AI මූල්‍ය උපදේශක.',
+      welcomeSub: 'ඔබගේ ගනුදෙනු, අයවැය සහ සජීවී විනිමය අනුපාත මා සතුව ඇත. ඕනෑම දෙයක් අසන්න!',
+      chipNetBalance: '💼 ශුද්ධ ශේෂය',
+      chipSpending: '📊 වියදම් විස්තරය',
+      chipRates: '💱 විනිමය අනුපාත',
+      chipTaxDeadlines: '📅 බදු දිනයන්',
+      chipTips: '💡 මූල්‍ය උපදෙස්',
+      pillUpwork: '🇱🇰 Upwork බදු',
+      pillApit: '🧮 APIT ගණනය',
+      pillDeductions: '📋 බදු සහන',
+      pillTin: '🆔 TIN ලියාපදිංචිය',
+      pillBurnRate: '🔥 වියදම් වේගය',
+      newChatToast: '✨ නව සංවාදයක් ආරම්භ විය',
+      clearedChatToast: '🗑️ සංවාද ඉතිහාසය මකා දමන ලදී',
       billScannerTitle: 'බිල්පත් සහ රිසිට්පත් ස්කෑනරය',
       billScannerSubtitle: 'ශ්‍රී ලාංකික නිදහස් වෘත්තිකයන් සඳහා ක්ෂණික AI බිල්පත් ස්කෑනරය',
       centerBill: 'බිල්පත හෝ රිසිට්පත කැමරා රාමුව මැද තබන්න',
@@ -240,8 +262,88 @@
       retakePhoto: 'නැවත ඡායාරූපය ගන්න',
       scanSuccess: 'බිල්පත සාර්ථකව සටහන් විය!',
       langSettingsTitle: 'භාෂා මනාපය',
-      langSettingsSubtitle: 'ඔබ කැමති අතුරුමුහුණත් භාෂාව තෝරන්න (English, தமிழ், හෝ සිංහල)',
+      langSettingsSubtitle: 'ඔබ කැමති අතුරුමුහුණත් භාෂාව තෝරන්න (தமிழ், සිංහල, හෝ English)',
       saveLangToast: 'භාෂාව යාවත්කාලීන විය:'
+    },
+    en: {
+      langName: 'English',
+      nativeName: 'English',
+      flag: '🇬🇧',
+      navChat: 'Chat Assistant',
+      navTransactions: 'Transactions',
+      navProfile: 'Profile',
+      navSettings: 'Settings',
+      navTaxEstimator: 'Tax Estimator',
+      navInvoices: 'Invoices',
+      navReceiptOcr: 'Receipt OCR',
+      navSnapScanBill: 'Snap & Scan Bill',
+      financialTools: 'Financial Tools',
+      preferences: 'Preferences',
+      activeWallet: 'Freelance Wallet',
+      monthlyBudget: 'Monthly Budget',
+      taxSaved: 'Tax Saved',
+      used: 'used',
+      txTitle: 'Transactions',
+      txSubtitle: 'Manage and track your income, expenses, and invoices',
+      addTransaction: 'Add Transaction',
+      snapScanBill: 'Snap & Scan Bill',
+      importCsv: 'Import Bank CSV',
+      exportCsv: 'Export CSV',
+      totalIncome: 'Total Income',
+      totalExpenses: 'Total Expenses',
+      netBalance: 'Net Balance',
+      filterAll: 'All',
+      filterIncome: 'Income',
+      filterExpense: 'Expense',
+      searchPlaceholder: 'Search transactions…',
+      thDate: 'Date',
+      thDescription: 'Description',
+      thCategory: 'Category',
+      thAmount: 'Amount',
+      thType: 'Type',
+      thActions: 'Actions',
+      chatTitle: 'Cendric AI Finance Assistant',
+      chatStatus: 'Online · Context aware',
+      newChat: 'New Chat',
+      clearChat: 'Clear',
+      chatPlaceholder: 'Ask anything about your finances…',
+      chatHint: 'Enter to send · Shift+Enter for new line · 🎤 for voice',
+      voiceTooltip: 'Voice input (hold to speak)',
+      thinking: 'Thinking…',
+      welcomeTitle: '👋 Hi! I\'m <strong>Cendric</strong>, your real-time finance AI.',
+      welcomeSub: 'I have full context of your transactions, budgets, and live exchange rates. Ask me anything!',
+      chipNetBalance: '💼 Net balance',
+      chipSpending: '📊 Spending breakdown',
+      chipRates: '💱 Exchange rates',
+      chipTaxDeadlines: '📅 Tax deadlines',
+      chipTips: '💡 Finance tips',
+      pillUpwork: '🇱🇰 Upwork tax',
+      pillApit: '🧮 APIT calculator',
+      pillDeductions: '📋 Deductions',
+      pillTin: '🆔 TIN registration',
+      pillBurnRate: '🔥 Burn rate',
+      newChatToast: '✨ Started a new chat session',
+      clearedChatToast: '🗑️ Chat history cleared',
+      billScannerTitle: 'Snap & Scan Bill / Receipt',
+      billScannerSubtitle: 'Instant AI bill & receipt scanner for Sri Lankan freelancers',
+      centerBill: 'Center bill or receipt within viewfinder frame',
+      captureBill: 'Capture Bill',
+      uploadBill: 'Upload Photo',
+      analyzingBill: 'Analyzing bill details with Cendric AI...',
+      billDetails: 'Extracted Bill Details',
+      amount: 'Amount',
+      vendor: 'Vendor / Description',
+      category: 'Category',
+      date: 'Date',
+      type: 'Transaction Type',
+      expense: 'Expense',
+      income: 'Income',
+      saveTransaction: 'Confirm & Save Transaction',
+      retakePhoto: 'Retake Photo',
+      scanSuccess: 'Bill successfully recorded!',
+      langSettingsTitle: 'Language Preference',
+      langSettingsSubtitle: 'Select your preferred interface language for Sri Lanka (Tamil, Sinhala, or English)',
+      saveLangToast: 'Language updated to:'
     }
   };
 
@@ -251,11 +353,11 @@
 
   function t(key) {
     const lang = getCurrentLang();
-    return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key;
+    return (I18N[lang] && I18N[lang][key]) || (I18N.en && I18N.en[key]) || key;
   }
 
   async function setLanguage(lang) {
-    if (!['en', 'ta', 'si'].includes(lang)) return;
+    if (!['ta', 'si', 'en'].includes(lang)) return;
     localStorage.setItem('cendric_lang', lang);
     const user = getUser();
     if (user) {
@@ -280,6 +382,16 @@
 
   function applyLanguage(lang) {
     const l = I18N[lang] || I18N.en;
+
+    // 0. Top Dock Header Language Switcher
+    const headerLangText = document.getElementById('cendric-header-lang-text');
+    if (headerLangText) {
+      headerLangText.textContent = `${l.flag} ${l.nativeName}`;
+    }
+    document.querySelectorAll('.cendric-header-lang-opt').forEach(opt => {
+      if (opt.getAttribute('data-code') === lang) opt.classList.add('active');
+      else opt.classList.remove('active');
+    });
 
     // 1. Sidebar Nav
     const aside = document.querySelector('aside');
@@ -315,15 +427,87 @@
       if (budgetTitle) budgetTitle.textContent = l.monthlyBudget;
       const taxSavedLabel = document.querySelector('.cendric-widget-stat-label');
       if (taxSavedLabel) taxSavedLabel.textContent = l.taxSaved;
+    }
 
-      const langBtnText = document.getElementById('cendric-sidebar-lang-text');
-      if (langBtnText) {
-        langBtnText.textContent = `${l.flag} ${l.nativeName}`;
+    // 2. Chat Assistant Page
+    if (location.pathname.includes('/chat') || location.pathname === '/') {
+      const chatTitle = document.querySelector('.cc-title');
+      if (chatTitle) chatTitle.textContent = l.chatTitle;
+
+      const chatStatus = document.getElementById('cc-status');
+      if (chatStatus && typeof _chatStreaming !== 'undefined' && !_chatStreaming) {
+        chatStatus.innerHTML = `<span class="cc-status-dot"></span> ${l.chatStatus}`;
+      }
+
+      const newChatSpan = document.querySelector('#cc-new-chat-btn span');
+      if (newChatSpan) newChatSpan.textContent = l.newChat;
+
+      const clearSpan = document.querySelector('#cc-clear-btn span');
+      if (clearSpan) clearSpan.textContent = l.clearChat;
+
+      const chatInput = document.getElementById('cc-input');
+      if (chatInput) chatInput.placeholder = l.chatPlaceholder;
+
+      const chatHint = document.querySelector('.cc-input-hint');
+      if (chatHint) chatHint.textContent = l.chatHint;
+
+      const voiceBtn = document.getElementById('cc-voice-btn');
+      if (voiceBtn) voiceBtn.title = l.voiceTooltip;
+
+      // Localize welcome bubble if still shown
+      const welcomeBubble = document.querySelector('#cc-welcome .cc-bubble');
+      if (welcomeBubble) {
+        welcomeBubble.innerHTML = `
+          <p>${l.welcomeTitle}</p>
+          <p style="margin-top:8px; font-size:12.5px; opacity:0.8;">${l.welcomeSub}</p>
+        `;
+      }
+
+      const welcomeChips = document.getElementById('cc-welcome-chips');
+      if (welcomeChips) {
+        const qNet = lang === 'ta' ? 'எனது தற்போதைய நிகர இருப்பு என்ன?' : lang === 'si' ? 'මගේ වත්මන් ශුද්ධ ශේෂය කුමක්ද?' : "What's my current net balance?";
+        const qSpend = lang === 'ta' ? 'எனது முக்கிய செலவு வகைகளைக் காட்டு' : lang === 'si' ? 'මගේ ප්‍රධාන වියදම් ප්‍රවර්ග පෙන්වන්න' : 'Show my top spending categories';
+        const qRates = lang === 'ta' ? 'இன்றைய USD முதல் LKR மாற்று விகிதம் என்ன?' : lang === 'si' ? 'අද USD සිට LKR විනිමය අනුපාතය කුමක්ද?' : "What's the USD to LKR rate today?";
+        const qTax = lang === 'ta' ? 'IRD வரி தாக்கல் செய்வதற்கான காலக்கெடு என்ன?' : lang === 'si' ? 'IRD බදු ගොනු කිරීමේ අවසන් දිනය කුමක්ද?' : 'What are the IRD tax filing deadlines?';
+        const qTips = lang === 'ta' ? 'சுயாதீனர்களுக்கான நிதி ஆலோசனைகளை வழங்கவும்' : lang === 'si' ? 'නිදහස් වෘත්තිකයන් සඳහා මූල්‍ය උපදෙස් ලබා දෙන්න' : 'Give me financial tips for freelancers';
+
+        welcomeChips.innerHTML = `
+          <button class="cc-chip" data-q="${qNet}">${l.chipNetBalance}</button>
+          <button class="cc-chip" data-q="${qSpend}">${l.chipSpending}</button>
+          <button class="cc-chip" data-q="${qRates}">${l.chipRates}</button>
+          <button class="cc-chip" data-q="${qTax}">${l.chipTaxDeadlines}</button>
+          <button class="cc-chip" data-q="${qTips}">${l.chipTips}</button>
+        `;
+        if (typeof _wireChips === 'function') _wireChips(welcomeChips);
+      }
+
+      const promptBar = document.getElementById('cc-prompt-bar');
+      if (promptBar) {
+        const qUpwork = lang === 'ta' ? 'இலங்கையில் Upwork USD வருமானத்திற்கு வரி செலுத்த வேண்டுமா?' : lang === 'si' ? 'ශ්‍රී ලංකාවේ Upwork USD ආදායමට බදු ගෙවිය යුතුද?' : 'Do I pay tax on Upwork USD in Sri Lanka?';
+        const qApit = lang === 'ta' ? 'LKR 3,600,000 வருமானத்திற்கான எனது APIT ஐ கணக்கிடுங்கள்' : lang === 'si' ? 'LKR 3,600,000 ආදායම සඳහා මගේ APIT ගණනය කරන්න' : 'Calculate my APIT on LKR 3,600,000 income';
+        const qDeduct = lang === 'ta' ? 'சுயாதீன தொழிலாளியாக நான் என்னென்ன செலவுகளைக் கழிக்க முடியும்?' : lang === 'si' ? 'නිදහස් වෘත්තිකයෙකු ලෙස මට අඩු කළ හැකි වියදම් මොනවාද?' : 'What freelance expenses can I deduct?';
+        const qTin = lang === 'ta' ? 'TIN எண்ணை எவ்வாறு பதிவு செய்வது?' : lang === 'si' ? 'TIN අංකයක් ලියාපදිංචි කරන්නේ කෙසේද?' : 'How do I register for TIN?';
+        const qBurn = lang === 'ta' ? 'இந்த மாதத்தில் எனது செலவு வேகம் என்ன?' : lang === 'si' ? 'මේ මාසයේ මගේ වියදම් වේගය කොපමණද?' : "What's my burn rate this month?";
+
+        promptBar.innerHTML = `
+          <button class="cc-prompt-pill" data-q="${qUpwork}">${l.pillUpwork}</button>
+          <button class="cc-prompt-pill" data-q="${qApit}">${l.pillApit}</button>
+          <button class="cc-prompt-pill" data-q="${qDeduct}">${l.pillDeductions}</button>
+          <button class="cc-prompt-pill" data-q="${qTin}">${l.pillTin}</button>
+          <button class="cc-prompt-pill" data-q="${qBurn}">${l.pillBurnRate}</button>
+        `;
+        if (typeof _wireChips === 'function') _wireChips(promptBar);
       }
     }
 
-    // 2. Transactions Page
+    // 3. Transactions Page
     if (location.pathname.includes('/transactions')) {
+      const txH1 = document.querySelector('main h1');
+      if (txH1) txH1.textContent = l.txTitle;
+
+      const txSub = document.querySelector('main h1 + p');
+      if (txSub) txSub.textContent = l.txSubtitle;
+
       const addBtn = document.querySelector('#add-transaction-btn') || document.querySelector('.cendric-primary-action-btn');
       if (addBtn) {
         addBtn.innerHTML = `<span>+</span> ${l.addTransaction}`;
@@ -343,17 +527,39 @@
 
       document.querySelectorAll('main p').forEach(p => {
         const text = p.textContent.trim();
-        if (text === 'Total Income' || text === I18N.ta.totalIncome || text === I18N.si.totalIncome) {
+        if (['Total Income', I18N.ta.totalIncome, I18N.si.totalIncome, I18N.en.totalIncome].includes(text)) {
           p.textContent = l.totalIncome;
-        } else if (text === 'Total Expenses' || text === I18N.ta.totalExpenses || text === I18N.si.totalExpenses) {
+        } else if (['Total Expenses', I18N.ta.totalExpenses, I18N.si.totalExpenses, I18N.en.totalExpenses].includes(text)) {
           p.textContent = l.totalExpenses;
-        } else if (text === 'Net Balance' || text === I18N.ta.netBalance || text === I18N.si.netBalance) {
+        } else if (['Net Balance', I18N.ta.netBalance, I18N.si.netBalance, I18N.en.netBalance].includes(text)) {
           p.textContent = l.netBalance;
         }
       });
+
+      // Filter tabs
+      document.querySelectorAll('main button').forEach(btn => {
+        const txt = btn.textContent.trim();
+        if (['All', 'அனைத்தும்', 'සියල්ල'].includes(txt)) btn.textContent = l.filterAll;
+        else if (['Income', 'வருமானம்', 'ආදායම'].includes(txt) && !btn.id?.includes('transaction')) btn.textContent = l.filterIncome;
+        else if (['Expense', 'செலவு', 'වියදම', 'Expenses'].includes(txt) && !btn.id?.includes('transaction') && !btn.closest('.cendric-stat-card')) btn.textContent = l.filterExpense;
+      });
+
+      const searchInput = document.querySelector('main input[placeholder*="Search"], main input[placeholder*="தேடு"], main input[placeholder*="සොය"]');
+      if (searchInput) searchInput.placeholder = l.searchPlaceholder;
+
+      // Table headers
+      document.querySelectorAll('table th').forEach(th => {
+        const txt = th.textContent.trim();
+        if (['Date', 'திகதி', 'දිනය'].includes(txt)) th.textContent = l.thDate;
+        else if (['Description', 'விபரம்', 'විස්තරය'].includes(txt)) th.textContent = l.thDescription;
+        else if (['Category', 'வகை', 'ප්‍රවර්ගය'].includes(txt)) th.textContent = l.thCategory;
+        else if (['Amount', 'தொகை', 'මුදල'].includes(txt)) th.textContent = l.thAmount;
+        else if (['Type', 'வகை', 'වර්ගය'].includes(txt)) th.textContent = l.thType;
+        else if (['Actions', 'செயல்கள்', 'ක්‍රියා'].includes(txt)) th.textContent = l.thActions;
+      });
     }
 
-    // 3. Settings Page
+    // 4. Settings Page
     if (location.pathname.includes('/settings')) {
       const langCardTitle = document.getElementById('cendric-lang-card-title');
       if (langCardTitle) langCardTitle.textContent = l.langSettingsTitle;
@@ -364,8 +570,12 @@
         const code = tile.getAttribute('data-lang');
         if (code === lang) {
           tile.classList.add('active');
+          const chk = tile.querySelector('.cendric-lang-check');
+          if (chk) chk.textContent = '✓';
         } else {
           tile.classList.remove('active');
+          const chk = tile.querySelector('.cendric-lang-check');
+          if (chk) chk.textContent = '';
         }
       });
     }
@@ -992,6 +1202,9 @@
     if (!main) return;
 
     // Build the overlay
+    const curLang = getCurrentLang();
+    const curL = I18N[curLang] || I18N.ta;
+
     const overlay = document.createElement('div');
     overlay.id = 'cendric-chat-overlay';
     overlay.innerHTML = `
@@ -999,20 +1212,20 @@
         <div class="cendric-chat-title-group">
           <div class="cendric-chat-avatar-icon">🤖</div>
           <div>
-            <div class="cendric-chat-name">Cendric AI</div>
+            <div class="cendric-chat-name">${curL.chatTitle}</div>
             <div class="cendric-chat-status" id="cc-status">
-              <span class="cc-status-dot"></span> Online · Real-time streaming
+              <span class="cc-status-dot"></span> ${curL.chatStatus}
             </div>
           </div>
         </div>
         <div class="cendric-chat-header-actions">
           <button class="cc-header-btn cc-btn-new" id="cc-new-chat-btn" title="Start a fresh conversation">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            <span>New Chat</span>
+            <span>${curL.newChat}</span>
           </button>
           <button class="cc-header-btn cc-btn-clear" id="cc-clear-btn" title="Clear conversation history">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-            <span>Clear</span>
+            <span>${curL.clearChat}</span>
           </button>
         </div>
       </div>
@@ -1020,37 +1233,37 @@
       <div class="cendric-chat-messages" id="cc-messages">
         <div class="cc-msg cc-msg-assistant cc-welcome" id="cc-welcome">
           <div class="cc-bubble">
-            <p>👋 Hi! I'm <strong>Cendric</strong>, your real-time finance AI. I have full context of your transactions, budgets, and live exchange rates.</p>
-            <p style="margin-top:8px; font-size:12.5px; opacity:0.8;">Ask me anything — I'll respond word by word as I think.</p>
+            <p>${curL.welcomeTitle}</p>
+            <p style="margin-top:8px; font-size:12.5px; opacity:0.8;">${curL.welcomeSub}</p>
           </div>
           <div class="cc-followups" id="cc-welcome-chips">
-            <button class="cc-chip" data-q="What's my current net balance?">💼 Net balance</button>
-            <button class="cc-chip" data-q="Show my top spending categories">📊 Spending breakdown</button>
-            <button class="cc-chip" data-q="What's the USD to LKR rate today?">💱 Exchange rates</button>
-            <button class="cc-chip" data-q="What are the IRD tax filing deadlines?">📅 Tax deadlines</button>
-            <button class="cc-chip" data-q="Give me financial tips for freelancers">💡 Finance tips</button>
+            <button class="cc-chip" data-q="${curLang === 'ta' ? 'எனது தற்போதைய நிகர இருப்பு என்ன?' : curLang === 'si' ? 'මගේ වත්මන් ශුද්ධ ශේෂය කුමක්ද?' : "What's my current net balance?"}">${curL.chipNetBalance}</button>
+            <button class="cc-chip" data-q="${curLang === 'ta' ? 'எனது முக்கிய செலவு வகைகளைக் காட்டு' : curLang === 'si' ? 'මගේ ප්‍රධාන වියදම් ප්‍රවර්ග පෙන්වන්න' : 'Show my top spending categories'}">${curL.chipSpending}</button>
+            <button class="cc-chip" data-q="${curLang === 'ta' ? 'இன்றைய USD முதல் LKR மாற்று விகிதம் என்ன?' : curLang === 'si' ? 'අද USD සිට LKR විනිමය අනුපාතය කුමක්ද?' : "What's the USD to LKR rate today?"}">${curL.chipRates}</button>
+            <button class="cc-chip" data-q="${curLang === 'ta' ? 'IRD வரி தாக்கல் செய்வதற்கான காலக்கெடு என்ன?' : curLang === 'si' ? 'IRD බදු ගොනු කිරීමේ අවසන් දිනය කුමක්ද?' : 'What are the IRD tax filing deadlines?'}">${curL.chipTaxDeadlines}</button>
+            <button class="cc-chip" data-q="${curLang === 'ta' ? 'சுயாதீனர்களுக்கான நிதி ஆலோசனைகளை வழங்கவும்' : curLang === 'si' ? 'නිදහස් වෘත්තිකයන් සඳහා මූල්‍ය උපදෙස් ලබා දෙන්න' : 'Give me financial tips for freelancers'}">${curL.chipTips}</button>
           </div>
         </div>
       </div>
 
       <div class="cendric-chat-input-area">
         <div class="cc-prompt-chips-bar" id="cc-prompt-bar">
-          <button class="cc-prompt-pill" data-q="Do I pay tax on Upwork USD in Sri Lanka?">🇱🇰 Upwork tax</button>
-          <button class="cc-prompt-pill" data-q="Calculate my APIT on LKR 3,600,000 income">🧮 APIT calculator</button>
-          <button class="cc-prompt-pill" data-q="What freelance expenses can I deduct?">📋 Deductions</button>
-          <button class="cc-prompt-pill" data-q="How do I register for TIN?">🆔 TIN registration</button>
-          <button class="cc-prompt-pill" data-q="What's my burn rate this month?">🔥 Burn rate</button>
+          <button class="cc-prompt-pill" data-q="${curLang === 'ta' ? 'இலங்கையில் Upwork USD வருமானத்திற்கு வரி செலுத்த வேண்டுமா?' : curLang === 'si' ? 'ශ්‍රී ලංකාවේ Upwork USD ආදායමට බදු ගෙවිය යුතුද?' : 'Do I pay tax on Upwork USD in Sri Lanka?'}">${curL.pillUpwork}</button>
+          <button class="cc-prompt-pill" data-q="${curLang === 'ta' ? 'LKR 3,600,000 வருமானத்திற்கான எனது APIT ஐ கணக்கிடுங்கள்' : curLang === 'si' ? 'LKR 3,600,000 ආදායම සඳහා මගේ APIT ගණනය කරන්න' : 'Calculate my APIT on LKR 3,600,000 income'}">${curL.pillApit}</button>
+          <button class="cc-prompt-pill" data-q="${curLang === 'ta' ? 'சுயாதீன தொழிலாளியாக நான் என்னென்ன செலவுகளைக் கழிக்க முடியும்?' : curLang === 'si' ? 'නිදහස් වෘත්තිකයෙකු ලෙස මට අඩු කළ හැකි වියදම් මොනවාද?' : 'What freelance expenses can I deduct?'}">${curL.pillDeductions}</button>
+          <button class="cc-prompt-pill" data-q="${curLang === 'ta' ? 'TIN எண்ணை எவ்வாறு பதிவு செய்வது?' : curLang === 'si' ? 'TIN අංකයක් ලියාපදිංචි කරන්නේ කෙසේද?' : 'How do I register for TIN?'}">${curL.pillTin}</button>
+          <button class="cc-prompt-pill" data-q="${curLang === 'ta' ? 'இந்த மாதத்தில் எனது செலவு வேகம் என்ன?' : curLang === 'si' ? 'මේ මාසයේ මගේ වියදම් වේගය කොපමණද?' : "What's my burn rate this month?"}">${curL.pillBurnRate}</button>
         </div>
         <div class="cc-input-row">
-          <button class="cc-voice-btn" id="cc-voice-btn" title="Voice input (hold to speak)">
+          <button class="cc-voice-btn" id="cc-voice-btn" title="${curL.voiceTooltip}">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           </button>
-          <textarea id="cc-input" placeholder="Ask anything about your finances…" rows="1" maxlength="2000"></textarea>
+          <textarea id="cc-input" placeholder="${curL.chatPlaceholder}" rows="1" maxlength="2000"></textarea>
           <button class="cc-send-btn" id="cc-send-btn" disabled>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </div>
-        <div class="cc-input-hint">Enter to send · Shift+Enter for new line · 🎤 for voice</div>
+        <div class="cc-input-hint">${curL.chatHint}</div>
       </div>
     `;
 
@@ -1107,18 +1320,19 @@
       sessionStorage.removeItem('cendric_chat_hist');
       const msgs = document.getElementById('cc-messages');
       if (!msgs) return;
+      const lang = getCurrentLang();
+      const l = I18N[lang] || I18N.ta;
       msgs.innerHTML = `
         <div class="cc-msg cc-msg-assistant cc-welcome" id="cc-welcome">
           <div class="cc-bubble">
-            <p>${msgText || `👋 Hi! I'm <strong>Cendric</strong>, your real-time finance AI. I have full context of your transactions, budgets, and live exchange rates.`}</p>
-            <p style="margin-top:8px; font-size:12.5px; opacity:0.8;">Ask me anything — I'll respond word by word as I think.</p>
+            <p>${msgText || `${l.welcomeTitle} ${l.welcomeSub}`}</p>
           </div>
           <div class="cc-followups" id="cc-welcome-chips">
-            <button class="cc-chip" data-q="What's my current net balance?">💼 Net balance</button>
-            <button class="cc-chip" data-q="Show my top spending categories">📊 Spending breakdown</button>
-            <button class="cc-chip" data-q="What's the USD to LKR rate today?">💱 Exchange rates</button>
-            <button class="cc-chip" data-q="What are the IRD tax filing deadlines?">📅 Tax deadlines</button>
-            <button class="cc-chip" data-q="Give me financial tips for freelancers">💡 Finance tips</button>
+            <button class="cc-chip" data-q="${lang === 'ta' ? 'எனது தற்போதைய நிகர இருப்பு என்ன?' : lang === 'si' ? 'මගේ වත්මන් ශුද්ධ ශේෂය කුමක්ද?' : "What's my current net balance?"}">${l.chipNetBalance}</button>
+            <button class="cc-chip" data-q="${lang === 'ta' ? 'எனது முக்கிய செலவு வகைகளைக் காட்டு' : lang === 'si' ? 'මගේ ප්‍රධාන වියදම් ප්‍රවර්ග පෙන්වන්න' : 'Show my top spending categories'}">${l.chipSpending}</button>
+            <button class="cc-chip" data-q="${lang === 'ta' ? 'இன்றைய USD முதல் LKR மாற்று விகிதம் என்ன?' : lang === 'si' ? 'අද USD සිට LKR විනිමය අනුපාතය කුමක්ද?' : "What's the USD to LKR rate today?"}">${l.chipRates}</button>
+            <button class="cc-chip" data-q="${lang === 'ta' ? 'IRD வரி தாக்கல் செய்வதற்கான காலக்கெடு என்ன?' : lang === 'si' ? 'IRD බදු ගොනු කිරීමේ අවසන් දිනය කුමක්ද?' : 'What are the IRD tax filing deadlines?'}">${l.chipTaxDeadlines}</button>
+            <button class="cc-chip" data-q="${lang === 'ta' ? 'சுயாதீனர்களுக்கான நிதி ஆலோசனைகளை வழங்கவும்' : lang === 'si' ? 'නිදහස් වෘත්තිකයන් සඳහා මූල්‍ය උපදෙස් ලබා දෙන්න' : 'Give me financial tips for freelancers'}">${l.chipTips}</button>
           </div>
         </div>
       `;
@@ -1133,8 +1347,10 @@
     // + New Chat button: starts a fresh session
     if (newChatBtn) {
       newChatBtn.addEventListener('click', () => {
-        resetToWelcome(`✨ <strong>New conversation started.</strong> How can I assist you with your finances today?`);
-        showToast('✨ Started a new chat session');
+        const lang = getCurrentLang();
+        const l = I18N[lang] || I18N.ta;
+        resetToWelcome(`✨ <strong>${lang === 'ta' ? 'புதிய உரையாடல் தொடங்கியது.' : lang === 'si' ? 'නව සංවාදයක් ආරම්භ විය.' : 'New conversation started.'}</strong>`);
+        showToast(l.newChatToast);
       });
     }
 
@@ -1148,8 +1364,10 @@
             headers: { Authorization: `Bearer ${token}` }
           }).catch(() => {});
         }
-        resetToWelcome(`🗑️ <strong>Chat history cleared.</strong> Ready for your next question!`);
-        showToast('🗑️ Chat history cleared');
+        const lang = getCurrentLang();
+        const l = I18N[lang] || I18N.ta;
+        resetToWelcome(`🗑️ <strong>${l.clearedChatToast}</strong>`);
+        showToast(l.clearedChatToast);
       });
     }
 
@@ -1232,7 +1450,7 @@
 
     // Update status
     const status = document.getElementById('cc-status');
-    if (status) status.innerHTML = '<span class="cc-status-dot cc-status-thinking"></span> Thinking…';
+    if (status) status.innerHTML = `<span class="cc-status-dot cc-status-thinking"></span> ${t('thinking')}`;
 
     // Add user message
     _appendMessage('user', question);
@@ -1257,7 +1475,11 @@
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ question, history: _chatHistory.slice(-12) })
+        body: JSON.stringify({
+          question,
+          languagePreference: getCurrentLang(),
+          history: _chatHistory.slice(-12)
+        })
       });
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -1331,7 +1553,7 @@
     // Reset state
     _chatStreaming = false;
     sendBtn.disabled = false;
-    if (status) status.innerHTML = '<span class="cc-status-dot"></span> Online · Real-time streaming';
+    if (status) status.innerHTML = `<span class="cc-status-dot"></span> ${t('chatStatus')}`;
     input.focus();
   }
 
@@ -1346,7 +1568,8 @@
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = true;
-    recognition.lang = 'en-US';
+    const curL = getCurrentLang();
+    recognition.lang = curL === 'ta' ? 'ta-LK' : curL === 'si' ? 'si-LK' : 'en-US';
     _voiceRecognition = recognition;
 
     let isListening = false;
@@ -2015,77 +2238,9 @@
         nameP.appendChild(proBadge);
       }
 
-      // Language Switcher Button
-      if (!document.getElementById('cendric-sidebar-lang-btn')) {
-        const curLang = getCurrentLang();
-        const curInfo = I18N[curLang] || I18N.en;
-
-        const langBtn = document.createElement('button');
-        langBtn.id = 'cendric-sidebar-lang-btn';
-        langBtn.className = 'cendric-sidebar-lang-btn';
-        langBtn.type = 'button';
-        langBtn.title = 'Change language (English, தமிழ், සිංහල)';
-        langBtn.innerHTML = `
-          <span id="cendric-sidebar-lang-text">${curInfo.flag} ${curInfo.nativeName}</span>
-          <span style="font-size: 8px;">▾</span>
-        `;
-
-        // Language popup menu
-        const langMenu = document.createElement('div');
-        langMenu.id = 'cendric-sidebar-lang-menu';
-        langMenu.className = 'cendric-sidebar-lang-menu';
-        langMenu.style.display = 'none';
-        langMenu.innerHTML = `
-          <div class="cendric-sidebar-lang-opt ${curLang === 'en' ? 'active' : ''}" data-code="en">
-            <span>🇬🇧 English</span>
-            <span>English</span>
-          </div>
-          <div class="cendric-sidebar-lang-opt ${curLang === 'ta' ? 'active' : ''}" data-code="ta">
-            <span>🇱🇰 தமிழ்</span>
-            <span>Tamil</span>
-          </div>
-          <div class="cendric-sidebar-lang-opt ${curLang === 'si' ? 'active' : ''}" data-code="si">
-            <span>🇱🇰 සිංහල</span>
-            <span>Sinhala</span>
-          </div>
-        `;
-        document.body.appendChild(langMenu);
-
-        langBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const isShown = langMenu.style.display === 'flex';
-          if (isShown) {
-            langMenu.style.display = 'none';
-          } else {
-            const rect = langBtn.getBoundingClientRect();
-            langMenu.style.top = `${rect.top - 120}px`;
-            langMenu.style.left = `${rect.left}px`;
-            langMenu.style.display = 'flex';
-          }
-        });
-
-        langMenu.querySelectorAll('.cendric-sidebar-lang-opt').forEach(opt => {
-          opt.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const code = opt.getAttribute('data-code');
-            langMenu.style.display = 'none';
-            langMenu.querySelectorAll('.cendric-sidebar-lang-opt').forEach(o => o.classList.remove('active'));
-            opt.classList.add('active');
-            setLanguage(code);
-          });
-        });
-
-        document.addEventListener('click', () => {
-          if (langMenu) langMenu.style.display = 'none';
-        });
-
-        const logoutBtn = footerEl.querySelector('button[title="Logout"]') || footerEl.querySelector('button');
-        if (logoutBtn) {
-          footerEl.insertBefore(langBtn, logoutBtn);
-        } else {
-          footerEl.appendChild(langBtn);
-        }
-      }
+      // Ensure obsolete floating sidebar language button is cleaned up
+      document.getElementById('cendric-sidebar-lang-btn')?.remove();
+      document.getElementById('cendric-sidebar-lang-menu')?.remove();
 
       // Theme Switcher Toggle Button
       if (!document.getElementById('cendric-sidebar-theme-btn')) {
@@ -2206,21 +2361,11 @@
             🌐
           </div>
           <div>
-            <h2 id="cendric-lang-card-title" style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0;">Language Preference</h2>
-            <p id="cendric-lang-card-sub" style="color: var(--text-muted); font-size: 13px; margin-top: 2px; margin-bottom: 0;">Select your preferred interface language for Sri Lanka (English, தமிழ், or සිංහල)</p>
+            <h2 id="cendric-lang-card-title" style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0;">${curInfo.langSettingsTitle}</h2>
+            <p id="cendric-lang-card-sub" style="color: var(--text-muted); font-size: 13px; margin-top: 2px; margin-bottom: 0;">${curInfo.langSettingsSubtitle}</p>
           </div>
         </div>
         <div class="cendric-lang-grid">
-          <div class="cendric-lang-card ${curLang === 'en' ? 'active' : ''}" data-lang="en">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-size: 22px;">🇬🇧</span>
-              <div>
-                <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);">English</div>
-                <div style="font-size: 11.5px; color: var(--text-muted);">Standard Business English</div>
-              </div>
-            </div>
-            <div class="cendric-lang-check" style="color: var(--accent); font-weight: 800; font-size: 16px;">${curLang === 'en' ? '✓' : ''}</div>
-          </div>
           <div class="cendric-lang-card ${curLang === 'ta' ? 'active' : ''}" data-lang="ta">
             <div style="display: flex; align-items: center; gap: 12px;">
               <span style="font-size: 22px;">🇱🇰</span>
@@ -2240,6 +2385,16 @@
               </div>
             </div>
             <div class="cendric-lang-check" style="color: var(--accent); font-weight: 800; font-size: 16px;">${curLang === 'si' ? '✓' : ''}</div>
+          </div>
+          <div class="cendric-lang-card ${curLang === 'en' ? 'active' : ''}" data-lang="en">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 22px;">🇬🇧</span>
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);">English</div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">Standard Business English</div>
+              </div>
+            </div>
+            <div class="cendric-lang-check" style="color: var(--accent); font-weight: 800; font-size: 16px;">${curLang === 'en' ? '✓' : ''}</div>
           </div>
         </div>
       `;
@@ -3823,11 +3978,96 @@
   }
 
   // ----------------------------------------------------
-  // 11. Proactive Notification Center
+  // 11. Top Header Dock (Language Selector & Notification Center)
   // ----------------------------------------------------
   let cachedNotifications = [];
 
-  function setupNotificationCenter() {
+  function setupTopHeaderDock() {
+    let dock = document.getElementById('cendric-top-dock');
+    if (!dock) {
+      dock = document.createElement('div');
+      dock.id = 'cendric-top-dock';
+      dock.className = 'cendric-top-dock';
+      document.body.appendChild(dock);
+    }
+
+    // Clean up any legacy flying elements
+    document.getElementById('cendric-sidebar-lang-btn')?.remove();
+    document.getElementById('cendric-sidebar-lang-menu')?.remove();
+
+    // 1. Language Dropdown Button & Flyout Menu
+    let langContainer = document.getElementById('cendric-header-lang-container');
+    if (!langContainer) {
+      langContainer = document.createElement('div');
+      langContainer.id = 'cendric-header-lang-container';
+      langContainer.className = 'cendric-header-lang-container';
+
+      const curLang = getCurrentLang();
+      const curInfo = I18N[curLang] || I18N.ta;
+
+      langContainer.innerHTML = `
+        <button id="cendric-header-lang-btn" class="cendric-header-lang-btn" type="button" title="Select Language / மொழியைத் தேர்ந்தெடுக்கவும் / භාෂාව තෝරන්න">
+          <span id="cendric-header-lang-text">${curInfo.flag} ${curInfo.nativeName}</span>
+          <span style="font-size: 9px; opacity: 0.8;">▾</span>
+        </button>
+        <div id="cendric-header-lang-menu" class="cendric-header-lang-menu" style="display: none;">
+          <div class="cendric-header-lang-opt ${curLang === 'ta' ? 'active' : ''}" data-code="ta">
+            <span style="font-weight: 700;">🇱🇰 தமிழ்</span>
+            <span style="font-size: 11px; opacity: 0.7;">Tamil</span>
+          </div>
+          <div class="cendric-header-lang-opt ${curLang === 'si' ? 'active' : ''}" data-code="si">
+            <span style="font-weight: 700;">🇱🇰 සිංහල</span>
+            <span style="font-size: 11px; opacity: 0.7;">Sinhala</span>
+          </div>
+          <div class="cendric-header-lang-opt ${curLang === 'en' ? 'active' : ''}" data-code="en">
+            <span style="font-weight: 700;">🇬🇧 English</span>
+            <span style="font-size: 11px; opacity: 0.7;">English</span>
+          </div>
+        </div>
+      `;
+
+      // Insert before notification bell if bell already exists, or append
+      const bell = document.getElementById('cendric-notif-bell');
+      if (bell && bell.parentElement === dock) {
+        dock.insertBefore(langContainer, bell);
+      } else {
+        dock.appendChild(langContainer);
+      }
+
+      const langBtn = langContainer.querySelector('#cendric-header-lang-btn');
+      const langMenu = langContainer.querySelector('#cendric-header-lang-menu');
+
+      langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = langMenu.style.display === 'flex';
+        langMenu.style.display = isOpen ? 'none' : 'flex';
+        const panel = document.getElementById('cendric-notif-panel');
+        if (panel) panel.style.display = 'none';
+      });
+
+      langMenu.querySelectorAll('.cendric-header-lang-opt').forEach(opt => {
+        opt.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const code = opt.getAttribute('data-code');
+          langMenu.style.display = 'none';
+          langMenu.querySelectorAll('.cendric-header-lang-opt').forEach(o => o.classList.remove('active'));
+          opt.classList.add('active');
+          setLanguage(code);
+        });
+      });
+
+      document.addEventListener('click', () => {
+        if (langMenu) langMenu.style.display = 'none';
+      });
+    }
+
+    // 2. Proactive Notification Center Bell & Flyout
+    setupNotificationCenter(dock);
+  }
+
+  function setupNotificationCenter(parentDock = null) {
+    const dock = parentDock || document.getElementById('cendric-top-dock') || document.body;
+
     if (document.getElementById('cendric-notif-bell')) return;
 
     // Fixed Top-Right Bell
@@ -3843,7 +4083,7 @@
       <span id="cendric-notif-badge" class="cendric-notif-badge" style="display: none;">0</span>
     `;
 
-    document.body.appendChild(bellBtn);
+    dock.appendChild(bellBtn);
 
     // Floating Flyout Panel
     const panel = document.createElement('div');
@@ -3870,10 +4110,12 @@
       </div>
     `;
 
-    document.body.appendChild(panel);
+    dock.appendChild(panel);
 
     bellBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      const langMenu = document.getElementById('cendric-header-lang-menu');
+      if (langMenu) langMenu.style.display = 'none';
       toggleNotificationPanel();
     });
 
@@ -4348,7 +4590,7 @@
       setupInvoiceModal();
       setupCsvImporterModal();
       setupBillScannerModal();
-      setupNotificationCenter();
+      setupTopHeaderDock();
       applyLanguage(getCurrentLang());
     } catch (err) {
       console.warn('[Cendric] Enhancement error:', err);

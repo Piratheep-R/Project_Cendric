@@ -4592,80 +4592,109 @@ div[style*="zIndex: 999"] select {
   color: #cbd5e1 !important;
 }
 
-/* ── 7. Sri Lankan Trilingual Support & Language Switcher Styles ── */
-.cendric-sidebar-footer-actions {
+/* ── 7. Top-Right Header Quick Actions Dock (Language + Notifications) ── */
+.cendric-top-dock {
+  position: fixed !important;
+  top: 18px !important;
+  right: 24px !important;
+  z-index: 9998 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.cendric-header-lang-btn {
+  height: 40px !important;
+  padding: 0 14px !important;
+  border-radius: 99px !important;
+  background: var(--card-bg, #ffffff) !important;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.12)) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  color: var(--text-primary, #1e293b) !important;
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
-}
-
-.cendric-sidebar-lang-btn {
-  background: var(--glass-inner-bg, rgba(255, 255, 255, 0.08)) !important;
-  border: 1px solid var(--border, rgba(255, 255, 255, 0.12)) !important;
-  color: var(--sidebar-text, #cbd5e1) !important;
-  padding: 5px 8px !important;
-  border-radius: 8px !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
   cursor: pointer !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  transition: all 0.2s ease !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
   user-select: none !important;
+  font-family: inherit !important;
 }
-.cendric-sidebar-lang-btn:hover {
-  background: var(--accent-light, rgba(109, 90, 230, 0.2)) !important;
-  color: #ffffff !important;
+[data-theme="dark"] .cendric-header-lang-btn {
+  background: rgba(18, 24, 39, 0.88) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+.cendric-header-lang-btn:hover {
+  transform: translateY(-1px) !important;
   border-color: var(--accent, #6d5ae6) !important;
+  box-shadow: 0 6px 20px rgba(109, 90, 230, 0.2) !important;
 }
 
-.cendric-sidebar-lang-menu {
+.cendric-header-lang-menu {
   position: absolute !important;
-  bottom: 72px !important;
-  left: 16px !important;
-  width: 208px !important;
+  top: calc(100% + 8px) !important;
+  right: 48px !important;
+  width: 200px !important;
+  border-radius: 14px !important;
   background: var(--card-bg, #ffffff) !important;
   border: 1px solid var(--border, rgba(0, 0, 0, 0.1)) !important;
-  border-radius: 12px !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
   padding: 6px !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2) !important;
-  backdrop-filter: blur(16px) !important;
-  z-index: 100 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 3px !important;
+  gap: 4px !important;
+  z-index: 10000 !important;
   animation: cendricModalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
-[data-theme="dark"] .cendric-sidebar-lang-menu {
+[data-theme="dark"] .cendric-header-lang-menu {
   background: rgba(18, 24, 39, 0.95) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6) !important;
 }
 
-.cendric-sidebar-lang-opt {
+.cendric-header-lang-opt {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 8px 10px !important;
-  border-radius: 8px !important;
-  font-size: 12.5px !important;
-  font-weight: 500 !important;
+  padding: 8px 12px !important;
+  border-radius: 9px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
   color: var(--text-primary, #1e293b) !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
 }
-[data-theme="dark"] .cendric-sidebar-lang-opt {
+[data-theme="dark"] .cendric-header-lang-opt {
   color: #e2e8f0 !important;
 }
-.cendric-sidebar-lang-opt:hover {
-  background: var(--accent-light, rgba(109, 90, 230, 0.1)) !important;
+.cendric-header-lang-opt:hover {
+  background: var(--accent-light, rgba(109, 90, 230, 0.12)) !important;
   color: var(--accent, #6d5ae6) !important;
 }
-.cendric-sidebar-lang-opt.active {
-  background: var(--accent-light, rgba(109, 90, 230, 0.15)) !important;
+.cendric-header-lang-opt.active {
+  background: var(--accent-light, rgba(109, 90, 230, 0.18)) !important;
   color: var(--accent, #6d5ae6) !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
+}
+
+/* Make notification bell button work seamlessly in dock */
+.cendric-top-dock .cendric-notif-bell-btn {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  z-index: auto !important;
+}
+
+.cendric-top-dock .cendric-notif-panel {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: auto !important;
 }
 
 /* Settings Language Cards */
