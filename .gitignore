@@ -25,3 +25,8 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Backup and temp files
+*.bak
+*.tmp
+*~

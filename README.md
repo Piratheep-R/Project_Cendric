@@ -4,6 +4,46 @@ Cendric is an AI-powered financial management and real-time tax intelligence pla
 
 ---
 
+## 📁 Repository & Architecture Layout
+
+```
+project-Cendric/
+├── client/                        # Frontend Web Application
+│   ├── dist/                      # Production-ready web assets
+│   │   ├── assets/                # Stylesheets, scripts & branding imagery
+│   │   │   ├── cendric-enhancements.js # Client UI enhancements, charts & modals
+│   │   │   ├── index-Dr3oI3zo.css      # Precision Frosted Glass Design System (Light & Dark)
+│   │   │   └── index-k68ZFBuM.js       # React 19 core application bundle
+│   │   ├── favicon.svg            # Browser icon
+│   │   ├── icons.svg              # App icons
+│   │   ├── index.html             # HTML entry point (served by Express)
+│   │   ├── manifest.json          # PWA configuration
+│   │   └── sw.js                  # Service worker
+│   ├── package.json               # Client dependencies specification
+│   └── README.md                  # Frontend documentation
+│
+├── server/                        # Backend REST API & Intelligence Services
+│   ├── data/                      # Persistent database & knowledge bases
+│   │   ├── cendric_db.json        # Embedded persistent JSON database
+│   │   ├── sri_lanka_tax_kb.json  # Sri Lankan Inland Revenue Act No. 24 of 2017 tax corpus
+│   │   └── cached_exchange_rates.json # Auto-updating real-time currency exchange rates
+│   ├── services/                  # Modular backend domain services
+│   │   ├── ragService.js          # Sri Lankan tax RAG retrieval & deduction calculator
+│   │   └── currencyService.js     # Live currency exchange rate sync engine
+│   ├── .env.example               # Backend environment variable template
+│   ├── package.json               # Backend dependencies & scripts
+│   ├── server.js                  # Express.js REST API & SSE streaming server
+│   └── README.md                  # Backend documentation
+│
+├── .env.example                   # Quick-copy environment configuration
+├── .gitignore                     # Git exclusion rules (node_modules, .env, backups)
+├── package.json                   # Root package configuration & deployment scripts
+├── README.md                      # Comprehensive project guide
+└── start.bat                      # Windows one-click local launcher
+```
+
+---
+
 ## ✨ Key Features
 
 - **📊 Real-time Transactions & Spending Radar**: Category distribution donut chart with interactive slice hover and smart compact amount scaling.
@@ -20,69 +60,49 @@ Cendric is an AI-powered financial management and real-time tax intelligence pla
 - **🔔 Dynamic Financial Notification Center**: Actionable notifications on burn rate, budget thresholds, tax filing deadlines (Nov 30, Aug 15), and subscription renewals.
 - **💱 Real-Time Foreign Exchange Rates**: Live synchronizer for USD, EUR, GBP, AUD, CAD to LKR.
 - **⌨️ Global Command Palette**: Quick navigation (`Ctrl + K` or `Cmd + K`) across transactions, chat, settings, and modals.
+- **🌗 Unified Glassmorphism System**: Ultra-crisp **Kind Warm White Glass** (`data-theme="light"`) and **Deep Space Dark Glass** (`data-theme="dark"`) with real-time sidebar toggle.
 
 ---
 
-## 🛠️ Architecture & Tech Stack
+## 🚀 Quick Start for Team Members
 
-- **Frontend**: Single Page Application built with React 19, Tailwind CSS, Lucide Icons, and responsive modular styling.
-- **Backend**: Node.js & Express.js REST API with Server-Sent Events (SSE) streaming.
-- **AI & RAG Service**: TF-IDF and hybrid semantic vector search over Sri Lankan tax knowledge base with optional Google Gemini integration (`gemini-1.5-flash`).
-- **Database**: Dual-layer architecture — seamless auto-fallback from MongoDB Atlas to persistent embedded JSON database (`server/data/cendric_db.json`).
-
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-- Node.js (v18 or higher recommended)
-- npm
-
-### 2. Installation
-Clone the repository:
+### 1. Clone & Setup
 ```bash
 git clone https://github.com/Piratheep-R/Project_Cendric.git
 cd Project_Cendric
 ```
 
-Install backend dependencies:
+### 2. Configure Environment (Optional)
+Copy the environment template into `server/.env`:
+- **Windows**:
+  ```cmd
+  copy .env.example server\.env
+  ```
+- **Mac / Linux**:
+  ```bash
+  cp .env.example server/.env
+  ```
+
+*(If you don't provide a Gemini API key or MongoDB URI, Cendric will still run seamlessly with built-in RAG and the persistent local JSON database!)*
+
+### 3. Install & Run
+You can launch the app directly from the project root:
+
 ```bash
 cd server
 npm install
-```
-
-### 3. Environment Variables
-Create a `.env` file in the `server` directory (refer to `server/.env.example`):
-```env
-PORT=5000
-JWT_SECRET=your_jwt_secret_key_here
-GEMINI_API_KEY=your_gemini_api_key_here # Optional
-MONGODB_URI=your_mongodb_uri_here       # Optional
-```
-
-### 4. Running the Application
-From the `server` directory:
-```bash
 node server.js
 ```
+*(On Windows, you can also simply double-click **`start.bat`**)*
+
 Open **[http://localhost:5000](http://localhost:5000)** in your browser.
 
 ---
 
-## ☁️ Deployment
+## ☁️ Production Deployment
 
-### One-Click Cloud Deployment (Render / Railway / Koyeb)
-
-1. **Root Directory**: Project root
-2. **Build Command**: 
-   ```bash
-   cd server && npm install
-   ```
-3. **Start Command**: 
-   ```bash
-   cd server && node server.js
-   ```
-4. **Environment Variables**:
-   - `PORT`: `5000` (or host assigned `PORT`)
-   - `JWT_SECRET`: Random 32+ character string
-   - `GEMINI_API_KEY`: Google Gemini API Key (optional)
+The project is pre-configured for zero-config deployments on **Railway**, **Render**, or **Koyeb**:
+- **Root Directory**: Project root
+- **Build Command**: `cd server && npm install`
+- **Start Command**: `node server/server.js` (or `npm start`)
+- **Live Production URL**: [https://projectcendric-production.up.railway.app](https://projectcendric-production.up.railway.app)
