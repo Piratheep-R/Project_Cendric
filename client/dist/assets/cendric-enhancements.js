@@ -4037,27 +4037,63 @@
       const langBtn = langContainer.querySelector('#cendric-header-lang-btn');
       const langMenu = langContainer.querySelector('#cendric-header-lang-menu');
 
+      const closeMenu = () => {
+        if (langMenu) {
+          langMenu.classList.remove('open');
+          langMenu.style.setProperty('display', 'none', 'important');
+        }
+      };
+
+      const openMenu = () => {
+        if (langMenu) {
+          langMenu.classList.add('open');
+          langMenu.style.setProperty('display', 'flex', 'important');
+          const panel = document.getElementById('cendric-notif-panel');
+          if (panel) panel.style.display = 'none';
+        }
+      };
+
+      const toggleMenu = () => {
+        if (langMenu.classList.contains('open') || langMenu.style.display === 'flex') {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      };
+
       langBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const isOpen = langMenu.style.display === 'flex';
-        langMenu.style.display = isOpen ? 'none' : 'flex';
-        const panel = document.getElementById('cendric-notif-panel');
-        if (panel) panel.style.display = 'none';
+        toggleMenu();
       });
 
       langMenu.querySelectorAll('.cendric-header-lang-opt').forEach(opt => {
         opt.addEventListener('click', (e) => {
           e.stopPropagation();
           const code = opt.getAttribute('data-code');
-          langMenu.style.display = 'none';
+          closeMenu();
           langMenu.querySelectorAll('.cendric-header-lang-opt').forEach(o => o.classList.remove('active'));
           opt.classList.add('active');
           setLanguage(code);
         });
       });
 
-      document.addEventListener('click', () => {
-        if (langMenu) langMenu.style.display = 'none';
+      // Close dropdown when clicking outside
+      document.addEventListener('pointerdown', (e) => {
+        if (langMenu && !langContainer.contains(e.target)) {
+          closeMenu();
+        }
+      });
+      document.addEventListener('click', (e) => {
+        if (langMenu && !langContainer.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      // Close dropdown on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeMenu();
+        }
       });
     }
 
@@ -4115,7 +4151,10 @@
     bellBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       const langMenu = document.getElementById('cendric-header-lang-menu');
-      if (langMenu) langMenu.style.display = 'none';
+      if (langMenu) {
+        langMenu.classList.remove('open');
+        langMenu.style.setProperty('display', 'none', 'important');
+      }
       toggleNotificationPanel();
     });
 

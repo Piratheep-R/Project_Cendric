@@ -4633,10 +4633,15 @@ div[style*="zIndex: 999"] select {
   box-shadow: 0 6px 20px rgba(109, 90, 230, 0.2) !important;
 }
 
+.cendric-header-lang-container {
+  position: relative !important;
+  display: inline-block !important;
+}
+
 .cendric-header-lang-menu {
   position: absolute !important;
   top: calc(100% + 8px) !important;
-  right: 48px !important;
+  right: 0 !important;
   width: 200px !important;
   border-radius: 14px !important;
   background: var(--card-bg, #ffffff) !important;
@@ -4645,11 +4650,14 @@ div[style*="zIndex: 999"] select {
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   padding: 6px !important;
-  display: flex !important;
+  display: none;
   flex-direction: column !important;
   gap: 4px !important;
   z-index: 10000 !important;
   animation: cendricModalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.cendric-header-lang-menu.open {
+  display: flex !important;
 }
 [data-theme="dark"] .cendric-header-lang-menu {
   background: rgba(18, 24, 39, 0.95) !important;
