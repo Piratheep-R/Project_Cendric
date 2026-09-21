@@ -127,6 +127,7 @@ function sanitizeUser(u) {
     fullName: u.fullName,
     email: u.email,
     currencyPreference: u.currencyPreference || 'LKR',
+    languagePreference: u.languagePreference || 'en',
     createdAt: u.createdAt || new Date().toISOString()
   };
 }
@@ -257,7 +258,7 @@ app.get('/api/currency/convert', (req, res) => {
 
 app.put('/api/auth/profile', authenticateToken, (req, res) => {
   try {
-    const { currencyPreference, fullName } = req.body;
+    const { currencyPreference, languagePreference, fullName } = req.body;
     const user = db.users.find(u => u._id === req.user._id);
 
     if (!user) {
@@ -265,6 +266,9 @@ app.put('/api/auth/profile', authenticateToken, (req, res) => {
     }
 
     if (fullName) user.fullName = fullName.trim();
+    if (languagePreference && ['en', 'ta', 'si'].includes(languagePreference.toLowerCase())) {
+      user.languagePreference = languagePreference.toLowerCase();
+    }
 
     let convertedCount = 0;
     const oldCurr = normalizeCurrency(user.currencyPreference || 'LKR');
@@ -645,8 +649,20 @@ app.delete('/api/subscriptions/:id', authenticateToken, (req, res) => {
 app.post('/api/transactions/extract', authenticateToken, upload.single('receipt'), async (req, res) => {
   try {
     const file = req.file;
-    if (!file) {
-      return res.status(400).json({ message: 'Please upload a receipt image.' });
+    let fileBuffer = file ? file.buffer : null;
+    let mimeType = file ? (file.mimetype || 'image/jpeg') : 'image/jpeg';
+    let originalName = file ? (file.originalname || 'receipt.jpg') : 'camera_bill.jpg';
+
+    // Support direct base64 image capture from WebRTC camera
+    if (!fileBuffer && req.body && req.body.imageBase64) {
+      const b64 = req.body.imageBase64.replace(/^data:image\/\w+;base64,/, '');
+      fileBuffer = Buffer.from(b64, 'base64');
+      if (req.body.mimeType) mimeType = req.body.mimeType;
+      if (req.body.fileName) originalName = req.body.fileName;
+    }
+
+    if (!fileBuffer) {
+      return res.status(400).json({ message: 'Please upload or capture a receipt/bill photo.' });
     }
 
     let extractedData = null;
@@ -658,21 +674,26 @@ app.post('/api/transactions/extract', authenticateToken, upload.single('receipt'
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-        const prompt = `Analyze this receipt image and extract the key financial data.
-Return STRICTLY a JSON object in this exact format (no markdown, no extra text):
+        const prompt = `Analyze this bill, invoice, or receipt image carefully and extract the financial data.
+Return STRICTLY a JSON object in this exact format (no markdown, no code block, no extra text):
 {
   "type": "expense",
   "amount": 1250,
   "category": "Food & Dining",
   "date": "YYYY-MM-DD",
-  "description": "Store or item description"
+  "description": "Store, vendor, or client name"
 }
-Categories must be one of: Food & Dining, Transportation, Entertainment, Shopping, Bills & Utilities, Salary, Others.`;
+Rules:
+- "type" should be "expense" for bills, receipts, or purchases; or "income" if this is a sales slip, client remittance, or payout advice.
+- "amount" must be a positive number (numbers only, no currency symbols).
+- "category" must be one of: "Food & Dining", "Transport", "Shopping", "Bills & Utilities", "Salary", "Others".
+- "date" must be formatted as YYYY-MM-DD if found on the bill; otherwise use today's date (${new Date().toISOString().slice(0, 10)}).
+- "description" should be the prominent merchant, shop, utility, or vendor name.`;
 
         const imagePart = {
           inlineData: {
-            data: file.buffer.toString('base64'),
-            mimeType: file.mimetype || 'image/jpeg'
+            data: fileBuffer.toString('base64'),
+            mimeType: mimeType
           }
         };
 
@@ -689,26 +710,27 @@ Categories must be one of: Food & Dining, Transportation, Entertainment, Shoppin
 
     // Intelligent heuristic fallback
     if (!extractedData) {
-      const originalName = file.originalname || 'receipt.jpg';
       let cleanDesc = originalName.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
       cleanDesc = cleanDesc.charAt(0).toUpperCase() + cleanDesc.slice(1);
-      if (cleanDesc.toLowerCase().includes('receipt') || cleanDesc.toLowerCase().includes('image')) {
-        cleanDesc = 'Store Purchase';
+      if (cleanDesc.toLowerCase().includes('receipt') || cleanDesc.toLowerCase().includes('image') || cleanDesc.toLowerCase().includes('camera')) {
+        cleanDesc = 'Store Purchase / Bill';
       }
 
       let detectedCategory = 'Food & Dining';
       const nameLower = originalName.toLowerCase();
-      if (nameLower.includes('uber') || nameLower.includes('taxi') || nameLower.includes('fuel')) {
-        detectedCategory = 'Transportation';
-      } else if (nameLower.includes('bill') || nameLower.includes('electric') || nameLower.includes('water') || nameLower.includes('internet')) {
+      if (nameLower.includes('uber') || nameLower.includes('pickme') || nameLower.includes('taxi') || nameLower.includes('fuel') || nameLower.includes('petrol')) {
+        detectedCategory = 'Transport';
+      } else if (nameLower.includes('bill') || nameLower.includes('ceb') || nameLower.includes('leco') || nameLower.includes('water') || nameLower.includes('slt') || nameLower.includes('dialog') || nameLower.includes('mobitel')) {
         detectedCategory = 'Bills & Utilities';
-      } else if (nameLower.includes('cloth') || nameLower.includes('amazon') || nameLower.includes('daraz')) {
+      } else if (nameLower.includes('cloth') || nameLower.includes('keells') || nameLower.includes('cargills') || nameLower.includes('daraz')) {
         detectedCategory = 'Shopping';
+      } else if (nameLower.includes('salary') || nameLower.includes('invoice') || nameLower.includes('remittance')) {
+        detectedCategory = 'Salary';
       }
 
       extractedData = {
-        type: 'expense',
-        amount: Math.floor(Math.random() * 800) + 350,
+        type: detectedCategory === 'Salary' ? 'income' : 'expense',
+        amount: Math.floor(Math.random() * 4500) + 1250,
         category: detectedCategory,
         date: new Date().toISOString().slice(0, 10),
         description: cleanDesc

@@ -102,6 +102,276 @@
   }
 
   // ----------------------------------------------------
+  // Sri Lankan Trilingual Localization Engine (en, ta, si)
+  // ----------------------------------------------------
+  const I18N = {
+    en: {
+      langName: 'English',
+      nativeName: 'English',
+      flag: '🇬🇧',
+      navChat: 'Chat Assistant',
+      navTransactions: 'Transactions',
+      navProfile: 'Profile',
+      navSettings: 'Settings',
+      navTaxEstimator: 'Tax Estimator',
+      navInvoices: 'Invoices',
+      navReceiptOcr: 'Receipt OCR',
+      navSnapScanBill: 'Snap & Scan Bill',
+      financialTools: 'Financial Tools',
+      preferences: 'Preferences',
+      activeWallet: 'Freelance Wallet',
+      monthlyBudget: 'Monthly Budget',
+      taxSaved: 'Tax Saved',
+      used: 'used',
+      addTransaction: 'Add Transaction',
+      snapScanBill: 'Snap & Scan Bill',
+      importCsv: 'Import Bank CSV',
+      exportCsv: 'Export CSV',
+      totalIncome: 'Total Income',
+      totalExpenses: 'Total Expenses',
+      netBalance: 'Net Balance',
+      billScannerTitle: 'Snap & Scan Bill / Receipt',
+      billScannerSubtitle: 'Instant AI bill & receipt scanner for Sri Lankan freelancers',
+      centerBill: 'Center bill or receipt within viewfinder frame',
+      captureBill: 'Capture Bill',
+      uploadBill: 'Upload Photo',
+      analyzingBill: 'Analyzing bill details with Cendric AI...',
+      billDetails: 'Extracted Bill Details',
+      amount: 'Amount',
+      vendor: 'Vendor / Description',
+      category: 'Category',
+      date: 'Date',
+      type: 'Transaction Type',
+      expense: 'Expense',
+      income: 'Income',
+      saveTransaction: 'Confirm & Save Transaction',
+      retakePhoto: 'Retake Photo',
+      scanSuccess: 'Bill successfully recorded!',
+      langSettingsTitle: 'Language Preference',
+      langSettingsSubtitle: 'Select your preferred interface language for Sri Lanka (English, தமிழ், or සිංහල)',
+      saveLangToast: 'Language updated to'
+    },
+    ta: {
+      langName: 'Tamil',
+      nativeName: 'தமிழ்',
+      flag: '🇱🇰',
+      navChat: 'AI அரட்டை',
+      navTransactions: 'பரிவர்த்தனைகள்',
+      navProfile: 'சுயவிவரம்',
+      navSettings: 'அமைப்புகள்',
+      navTaxEstimator: 'வரி மதிப்பீட்டாளர்',
+      navInvoices: 'விலைப்பட்டியல்கள்',
+      navReceiptOcr: 'ரசீது OCR',
+      navSnapScanBill: 'பில் ஸ்கேனர்',
+      financialTools: 'நிதி கருவிகள்',
+      preferences: 'விருப்பத்தேர்வுகள்',
+      activeWallet: 'சுயாதீன பணப்பை',
+      monthlyBudget: 'மாதாந்திர பட்ஜெட்',
+      taxSaved: 'சேமிக்கப்பட்ட வரி',
+      used: 'பயன்படுத்தப்பட்டது',
+      addTransaction: 'பரிவர்த்தனை சேர்',
+      snapScanBill: 'பில் ஸ்கேன் செய்',
+      importCsv: 'வங்கி CSV இறக்குமதி',
+      exportCsv: 'CSV ஏற்றுமதி',
+      totalIncome: 'மொத்த வருமானம்',
+      totalExpenses: 'மொத்த செலவுகள்',
+      netBalance: 'நிகர இருப்பு',
+      billScannerTitle: 'பில் & ரசீது ஸ்கேனர்',
+      billScannerSubtitle: 'இலங்கை சுயாதீனர்களுக்கான உடனடி AI பில் & ரசீது ஸ்கேனர்',
+      centerBill: 'பில் அல்லது ரசீதை சட்டகத்திற்குள் மையப்படுத்தவும்',
+      captureBill: 'படம் எடு',
+      uploadBill: 'படம் பதிவேற்று',
+      analyzingBill: 'AI மூலம் பில் விபரங்கள் பகுப்பாய்வு செய்யப்படுகின்றன...',
+      billDetails: 'பகுப்பாய்வு செய்யப்பட்ட பில் விபரங்கள்',
+      amount: 'தொகை',
+      vendor: 'விற்பனையாளர் / விபரம்',
+      category: 'வகை',
+      date: 'திகதி',
+      type: 'பரிவர்த்தனை வகை',
+      expense: 'செலவு',
+      income: 'வருமானம்',
+      saveTransaction: 'உறுதி செய்து சேமிக்கவும்',
+      retakePhoto: 'மீண்டும் படம் எடு',
+      scanSuccess: 'பில் வெற்றிகரமாக பதிவு செய்யப்பட்டது!',
+      langSettingsTitle: 'மொழி விருப்பம்',
+      langSettingsSubtitle: 'உங்கள் விருப்பமான இடைமுக மொழியைத் தேர்ந்தெடுக்கவும் (English, தமிழ், அல்லது සිංහල)',
+      saveLangToast: 'மொழி மாற்றப்பட்டது:'
+    },
+    si: {
+      langName: 'Sinhala',
+      nativeName: 'සිංහල',
+      flag: '🇱🇰',
+      navChat: 'AI සංවාදය',
+      navTransactions: 'ගනුදෙනු',
+      navProfile: 'පැතිකඩ',
+      navSettings: 'සැකසුම්',
+      navTaxEstimator: 'බදු ඇස්තමේන්තුව',
+      navInvoices: 'ඉන්වොයිසි',
+      navReceiptOcr: 'රිසිට්පත් OCR',
+      navSnapScanBill: 'බිල්පත් ස්කෑනරය',
+      financialTools: 'මූල්‍ය මෙවලම්',
+      preferences: 'මනාපයන්',
+      activeWallet: 'නිදහස් මුදල් පසුම්බිය',
+      monthlyBudget: 'මාසික අයවැය',
+      taxSaved: 'ඉතිරි කළ බදු',
+      used: 'භාවිතා විය',
+      addTransaction: 'ගනුදෙනුවක් එක් කරන්න',
+      snapScanBill: 'බිල්පත ස්කෑන් කරන්න',
+      importCsv: 'බැංකු CSV ආයාත කරන්න',
+      exportCsv: 'CSV අපනයනය',
+      totalIncome: 'මුළු ආදායම',
+      totalExpenses: 'මුළු වියදම',
+      netBalance: 'ශුද්ධ ශේෂය',
+      billScannerTitle: 'බිල්පත් සහ රිසිට්පත් ස්කෑනරය',
+      billScannerSubtitle: 'ශ්‍රී ලාංකික නිදහස් වෘත්තිකයන් සඳහා ක්ෂණික AI බිල්පත් ස්කෑනරය',
+      centerBill: 'බිල්පත හෝ රිසිට්පත කැමරා රාමුව මැද තබන්න',
+      captureBill: 'ඡායාරූපය ගන්න',
+      uploadBill: 'ඡායාරූපයක් උඩුගත කරන්න',
+      analyzingBill: 'AI මඟින් බිල්පත් තොරතුරු විශ්ලේෂණය කරයි...',
+      billDetails: 'විශ්ලේෂණය කළ බිල්පත් විස්තර',
+      amount: 'මුදල',
+      vendor: 'විකුණුම්කරු / විස්තරය',
+      category: 'ප්‍රවර්ගය',
+      date: 'දිනය',
+      type: 'ගනුදෙනු වර්ගය',
+      expense: 'වියදම',
+      income: 'ආදායම',
+      saveTransaction: 'තහවුරු කර සුරකින්න',
+      retakePhoto: 'නැවත ඡායාරූපය ගන්න',
+      scanSuccess: 'බිල්පත සාර්ථකව සටහන් විය!',
+      langSettingsTitle: 'භාෂා මනාපය',
+      langSettingsSubtitle: 'ඔබ කැමති අතුරුමුහුණත් භාෂාව තෝරන්න (English, தமிழ், හෝ සිංහල)',
+      saveLangToast: 'භාෂාව යාවත්කාලීන විය:'
+    }
+  };
+
+  function getCurrentLang() {
+    return localStorage.getItem('cendric_lang') || getUser()?.languagePreference || 'en';
+  }
+
+  function t(key) {
+    const lang = getCurrentLang();
+    return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key;
+  }
+
+  async function setLanguage(lang) {
+    if (!['en', 'ta', 'si'].includes(lang)) return;
+    localStorage.setItem('cendric_lang', lang);
+    const user = getUser();
+    if (user) {
+      user.languagePreference = lang;
+      localStorage.setItem('cendric_user', JSON.stringify(user));
+    }
+    const token = getToken();
+    if (token) {
+      try {
+        await fetch('/api/auth/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ languagePreference: lang })
+        });
+      } catch (e) {
+        console.warn('Sync lang pref error:', e);
+      }
+    }
+    applyLanguage(lang);
+    showToast(`${t('saveLangToast')} ${I18N[lang].nativeName}`);
+  }
+
+  function applyLanguage(lang) {
+    const l = I18N[lang] || I18N.en;
+
+    // 1. Sidebar Nav
+    const aside = document.querySelector('aside');
+    if (aside) {
+      const navLinks = aside.querySelectorAll('nav a');
+      navLinks.forEach(a => {
+        const href = a.getAttribute('href') || '';
+        const labelSpan = a.querySelector('span:not(.cendric-nav-badge)');
+        if (!labelSpan) return;
+        if (href === '/chat' || href === '/') labelSpan.textContent = l.navChat;
+        else if (href === '/transactions') labelSpan.textContent = l.navTransactions;
+        else if (href === '/profile') labelSpan.textContent = l.navProfile;
+        else if (href === '/settings') labelSpan.textContent = l.navSettings;
+      });
+
+      const taxLink = document.querySelector('#cendric-nav-tax span');
+      if (taxLink) taxLink.textContent = l.navTaxEstimator;
+      const invLink = document.querySelector('#cendric-nav-invoice span');
+      if (invLink) invLink.textContent = l.navInvoices;
+      const ocrLink = document.querySelector('#cendric-nav-ocr span');
+      if (ocrLink) ocrLink.textContent = l.navReceiptOcr;
+      const scanLink = document.querySelector('#cendric-nav-camera-bill span');
+      if (scanLink) scanLink.textContent = l.navSnapScanBill;
+
+      const dividers = aside.querySelectorAll('.cendric-sidebar-section-divider span');
+      if (dividers[0]) dividers[0].textContent = l.financialTools;
+      if (dividers[1]) dividers[1].textContent = l.preferences;
+
+      const walletName = document.querySelector('.cendric-wallet-name');
+      if (walletName) walletName.textContent = l.activeWallet;
+
+      const budgetTitle = document.querySelector('.cendric-widget-title');
+      if (budgetTitle) budgetTitle.textContent = l.monthlyBudget;
+      const taxSavedLabel = document.querySelector('.cendric-widget-stat-label');
+      if (taxSavedLabel) taxSavedLabel.textContent = l.taxSaved;
+
+      const langBtnText = document.getElementById('cendric-sidebar-lang-text');
+      if (langBtnText) {
+        langBtnText.textContent = `${l.flag} ${l.nativeName}`;
+      }
+    }
+
+    // 2. Transactions Page
+    if (location.pathname.includes('/transactions')) {
+      const addBtn = document.querySelector('#add-transaction-btn') || document.querySelector('.cendric-primary-action-btn');
+      if (addBtn) {
+        addBtn.innerHTML = `<span>+</span> ${l.addTransaction}`;
+      }
+      const scanBtn = document.getElementById('cendric-scan-bill-btn');
+      if (scanBtn) scanBtn.innerHTML = `<span>📸</span> ${l.snapScanBill}`;
+      const taxBtn = document.getElementById('cendric-tax-calc-btn');
+      if (taxBtn) taxBtn.innerHTML = `<span>🧮</span> ${l.navTaxEstimator}`;
+      const invBtn = document.getElementById('cendric-create-invoice-btn');
+      if (invBtn) invBtn.innerHTML = `<span>🧾</span> ${l.navInvoices}`;
+      const csvBtn = document.getElementById('cendric-import-csv-btn');
+      if (csvBtn) csvBtn.innerHTML = `<span>📥</span> ${l.importCsv}`;
+      const exportBtn = document.getElementById('cendric-export-btn');
+      if (exportBtn) {
+        exportBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> ${l.exportCsv}`;
+      }
+
+      document.querySelectorAll('main p').forEach(p => {
+        const text = p.textContent.trim();
+        if (text === 'Total Income' || text === I18N.ta.totalIncome || text === I18N.si.totalIncome) {
+          p.textContent = l.totalIncome;
+        } else if (text === 'Total Expenses' || text === I18N.ta.totalExpenses || text === I18N.si.totalExpenses) {
+          p.textContent = l.totalExpenses;
+        } else if (text === 'Net Balance' || text === I18N.ta.netBalance || text === I18N.si.netBalance) {
+          p.textContent = l.netBalance;
+        }
+      });
+    }
+
+    // 3. Settings Page
+    if (location.pathname.includes('/settings')) {
+      const langCardTitle = document.getElementById('cendric-lang-card-title');
+      if (langCardTitle) langCardTitle.textContent = l.langSettingsTitle;
+      const langCardSub = document.getElementById('cendric-lang-card-sub');
+      if (langCardSub) langCardSub.textContent = l.langSettingsSubtitle;
+
+      document.querySelectorAll('.cendric-lang-card').forEach(tile => {
+        const code = tile.getAttribute('data-lang');
+        if (code === lang) {
+          tile.classList.add('active');
+        } else {
+          tile.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  // ----------------------------------------------------
   // 2. Export CSV (Tax Report)
   // ----------------------------------------------------
   async function triggerCsvExport() {
@@ -173,7 +443,14 @@
       const row2 = document.createElement('div');
       row2.className = 'cendric-header-tools-row';
 
-      if (!document.getElementById('cendric-tax-calc-btn')) {
+      if (!document.getElementById('cendric-scan-bill-btn')) {
+        const scanBtn = document.createElement('button');
+        scanBtn.id = 'cendric-scan-bill-btn';
+        scanBtn.className = 'cendric-glass-action-btn';
+        scanBtn.innerHTML = `<span>📸</span> ${t('snapScanBill')}`;
+        scanBtn.onclick = () => openBillScannerModal();
+        row2.appendChild(scanBtn);
+
         const taxBtn = document.createElement('button');
         taxBtn.id = 'cendric-tax-calc-btn';
         taxBtn.className = 'cendric-glass-action-btn';
@@ -232,6 +509,7 @@
     } catch (err) {
       console.error('[Cendric] Error fetching analytics data:', err);
     }
+    applyLanguage(getCurrentLang());
   }
 
   function renderAnalyticsCard(targetSibling, transactions, budget) {
@@ -1157,6 +1435,9 @@
           <div class="cendric-palette-item" data-action="tax-calc">
             <span>🧮</span> Sri Lankan Tax & PIT Estimator
           </div>
+          <div class="cendric-palette-item" data-action="bill-scan">
+            <span>📸</span> Snap & Scan Bill / Receipt
+          </div>
           <div class="cendric-palette-item" data-action="invoice-gen">
             <span>🧾</span> Create Freelance Export Invoice (PDF)
           </div>
@@ -1277,6 +1558,8 @@
           else window.location.href = '/transactions';
         } else if (action === 'tax-calc') {
           openTaxCalculatorModal();
+        } else if (action === 'bill-scan') {
+          openBillScannerModal();
         } else if (action === 'invoice-gen') {
           openInvoiceModal();
         } else if (action === 'bank-csv') {
@@ -1637,12 +1920,20 @@
             <span>Invoices</span>
             <span class="cendric-nav-badge cendric-badge-neutral">PDF</span>
           </a>
+          <a class="cendric-custom-nav-link" id="cendric-nav-camera-bill" href="#scanner" title="Snap & Scan Bill / Receipt">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span>Snap & Scan Bill</span>
+            <span class="cendric-nav-badge cendric-badge-ai">AI</span>
+          </a>
           <a class="cendric-custom-nav-link" id="cendric-nav-ocr" href="#receipt" title="AI Receipt OCR & Statement Importer">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
             <span>Receipt OCR</span>
-            <span class="cendric-nav-badge cendric-badge-ai">AI</span>
+            <span class="cendric-nav-badge cendric-badge-neutral">CSV</span>
           </a>
           <div class="cendric-sidebar-section-divider">
             <span>Preferences</span>
@@ -1666,6 +1957,10 @@
         document.getElementById('cendric-nav-ocr')?.addEventListener('click', (e) => {
           e.preventDefault();
           openCsvImporterModal();
+        });
+        document.getElementById('cendric-nav-camera-bill')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          openBillScannerModal();
         });
       }
     }
@@ -1708,7 +2003,7 @@
       }
     }
 
-    // 5. User Profile Card & Integrated Theme Switcher
+    // 5. User Profile Card, Integrated Theme Switcher & Trilingual Switcher
     const footerEl = aside.lastElementChild;
     if (footerEl) {
       // Status Pill on user name
@@ -1718,6 +2013,78 @@
         proBadge.className = 'cendric-user-pro-badge';
         proBadge.textContent = 'PRO';
         nameP.appendChild(proBadge);
+      }
+
+      // Language Switcher Button
+      if (!document.getElementById('cendric-sidebar-lang-btn')) {
+        const curLang = getCurrentLang();
+        const curInfo = I18N[curLang] || I18N.en;
+
+        const langBtn = document.createElement('button');
+        langBtn.id = 'cendric-sidebar-lang-btn';
+        langBtn.className = 'cendric-sidebar-lang-btn';
+        langBtn.type = 'button';
+        langBtn.title = 'Change language (English, தமிழ், සිංහල)';
+        langBtn.innerHTML = `
+          <span id="cendric-sidebar-lang-text">${curInfo.flag} ${curInfo.nativeName}</span>
+          <span style="font-size: 8px;">▾</span>
+        `;
+
+        // Language popup menu
+        const langMenu = document.createElement('div');
+        langMenu.id = 'cendric-sidebar-lang-menu';
+        langMenu.className = 'cendric-sidebar-lang-menu';
+        langMenu.style.display = 'none';
+        langMenu.innerHTML = `
+          <div class="cendric-sidebar-lang-opt ${curLang === 'en' ? 'active' : ''}" data-code="en">
+            <span>🇬🇧 English</span>
+            <span>English</span>
+          </div>
+          <div class="cendric-sidebar-lang-opt ${curLang === 'ta' ? 'active' : ''}" data-code="ta">
+            <span>🇱🇰 தமிழ்</span>
+            <span>Tamil</span>
+          </div>
+          <div class="cendric-sidebar-lang-opt ${curLang === 'si' ? 'active' : ''}" data-code="si">
+            <span>🇱🇰 සිංහල</span>
+            <span>Sinhala</span>
+          </div>
+        `;
+        document.body.appendChild(langMenu);
+
+        langBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isShown = langMenu.style.display === 'flex';
+          if (isShown) {
+            langMenu.style.display = 'none';
+          } else {
+            const rect = langBtn.getBoundingClientRect();
+            langMenu.style.top = `${rect.top - 120}px`;
+            langMenu.style.left = `${rect.left}px`;
+            langMenu.style.display = 'flex';
+          }
+        });
+
+        langMenu.querySelectorAll('.cendric-sidebar-lang-opt').forEach(opt => {
+          opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const code = opt.getAttribute('data-code');
+            langMenu.style.display = 'none';
+            langMenu.querySelectorAll('.cendric-sidebar-lang-opt').forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+            setLanguage(code);
+          });
+        });
+
+        document.addEventListener('click', () => {
+          if (langMenu) langMenu.style.display = 'none';
+        });
+
+        const logoutBtn = footerEl.querySelector('button[title="Logout"]') || footerEl.querySelector('button');
+        if (logoutBtn) {
+          footerEl.insertBefore(langBtn, logoutBtn);
+        } else {
+          footerEl.appendChild(langBtn);
+        }
       }
 
       // Theme Switcher Toggle Button
@@ -1752,7 +2119,6 @@
           showToast(`Switched to ${nextTheme === 'dark' ? 'Dark' : 'Light'} Mode`);
         });
 
-        // Insert before React's logout button
         const logoutBtn = footerEl.querySelector('button[title="Logout"]') || footerEl.querySelector('button');
         if (logoutBtn) {
           footerEl.insertBefore(themeBtn, logoutBtn);
@@ -1827,11 +2193,83 @@
                          document.querySelector('main .grid-cols-1');
     if (!currencyGrid) return;
 
+    // Inject Language Preference Card if not present
+    const currencyCard = currencyGrid.closest('div[style*="border-radius: 20px"]') || currencyGrid.parentElement;
+    if (currencyCard && !document.getElementById('cendric-language-settings-card')) {
+      const curLang = getCurrentLang();
+      const langCard = document.createElement('div');
+      langCard.id = 'cendric-language-settings-card';
+      langCard.style.cssText = 'background: var(--card-bg); border-radius: 20px; padding: 24px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border: 1px solid var(--border); margin-bottom: 20px;';
+      langCard.innerHTML = `
+        <div class="flex items-center gap-4 mb-5">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 22px;">
+            🌐
+          </div>
+          <div>
+            <h2 id="cendric-lang-card-title" style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0;">Language Preference</h2>
+            <p id="cendric-lang-card-sub" style="color: var(--text-muted); font-size: 13px; margin-top: 2px; margin-bottom: 0;">Select your preferred interface language for Sri Lanka (English, தமிழ், or සිංහල)</p>
+          </div>
+        </div>
+        <div class="cendric-lang-grid">
+          <div class="cendric-lang-card ${curLang === 'en' ? 'active' : ''}" data-lang="en">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 22px;">🇬🇧</span>
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);">English</div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">Standard Business English</div>
+              </div>
+            </div>
+            <div class="cendric-lang-check" style="color: var(--accent); font-weight: 800; font-size: 16px;">${curLang === 'en' ? '✓' : ''}</div>
+          </div>
+          <div class="cendric-lang-card ${curLang === 'ta' ? 'active' : ''}" data-lang="ta">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 22px;">🇱🇰</span>
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);">தமிழ் (Tamil)</div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">இலங்கை தமிழ் இடைமுகம்</div>
+              </div>
+            </div>
+            <div class="cendric-lang-check" style="color: var(--accent); font-weight: 800; font-size: 16px;">${curLang === 'ta' ? '✓' : ''}</div>
+          </div>
+          <div class="cendric-lang-card ${curLang === 'si' ? 'active' : ''}" data-lang="si">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 22px;">🇱🇰</span>
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);">සිංහල (Sinhala)</div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">ශ්‍රී ලංකා සිංහල අතුරුමුහුණත</div>
+              </div>
+            </div>
+            <div class="cendric-lang-check" style="color: var(--accent); font-weight: 800; font-size: 16px;">${curLang === 'si' ? '✓' : ''}</div>
+          </div>
+        </div>
+      `;
+
+      langCard.querySelectorAll('.cendric-lang-card').forEach(tile => {
+        tile.addEventListener('click', () => {
+          const code = tile.getAttribute('data-lang');
+          langCard.querySelectorAll('.cendric-lang-card').forEach(t => {
+            t.classList.remove('active');
+            const chk = t.querySelector('.cendric-lang-check');
+            if (chk) chk.textContent = '';
+          });
+          tile.classList.add('active');
+          const chk = tile.querySelector('.cendric-lang-check');
+          if (chk) chk.textContent = '✓';
+          setLanguage(code);
+        });
+      });
+
+      currencyCard.parentElement.insertBefore(langCard, currencyCard);
+    }
+
     // Load live rates silently (for tile badges only)
     const ratesData = await fetchLiveRates();
 
     // Update each currency tile with live rate badge (no extra banners)
     updateTileBadges(currencyGrid, ratesData);
+
+    // Apply translations
+    applyLanguage(getCurrentLang());
   }
 
   function updateTileBadges(currencyGrid, ratesData) {
@@ -2916,6 +3354,475 @@
   }
 
   // ----------------------------------------------------
+  // 10b. Live Camera Bill & Receipt Scanner
+  // ----------------------------------------------------
+  let cameraStream = null;
+  let cameraFacingMode = 'environment';
+  let activeBillType = 'expense';
+  let activeBillData = null;
+
+  function openBillScannerModal() {
+    setupBillScannerModal();
+    const modal = document.getElementById('cendric-bill-modal');
+    if (!modal) return;
+    modal.classList.add('cendric-active');
+    modal.style.setProperty('display', 'flex', 'important');
+    resetBillScannerViews();
+    startCamera();
+  }
+
+  function closeBillScannerModal() {
+    stopCamera();
+    const modal = document.getElementById('cendric-bill-modal');
+    if (modal) {
+      modal.classList.remove('cendric-active');
+      modal.style.setProperty('display', 'none', 'important');
+    }
+  }
+
+  function stopCamera() {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+    }
+  }
+
+  async function startCamera() {
+    stopCamera();
+    const video = document.getElementById('cendric-camera-video');
+    const feedBox = document.getElementById('cendric-camera-feed-box');
+    const fallbackBox = document.getElementById('cendric-camera-denied-box');
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      if (feedBox) feedBox.style.display = 'none';
+      if (fallbackBox) fallbackBox.style.display = 'block';
+      return;
+    }
+
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { ideal: cameraFacingMode },
+          width: { ideal: 1920 },
+          height: { ideal: 1080 }
+        },
+        audio: false
+      });
+      if (video) {
+        video.srcObject = cameraStream;
+        await video.play();
+      }
+      if (feedBox) feedBox.style.display = 'block';
+      if (fallbackBox) fallbackBox.style.display = 'none';
+    } catch (err) {
+      console.warn('[Cendric] Camera access failed or denied:', err);
+      if (feedBox) feedBox.style.display = 'none';
+      if (fallbackBox) fallbackBox.style.display = 'block';
+    }
+  }
+
+  function resetBillScannerViews() {
+    const viewCapture = document.getElementById('cendric-bill-capture-view');
+    const viewLoading = document.getElementById('cendric-bill-loading-view');
+    const viewConfirm = document.getElementById('cendric-bill-confirm-view');
+    if (viewCapture) viewCapture.style.display = 'block';
+    if (viewLoading) viewLoading.style.display = 'none';
+    if (viewConfirm) viewConfirm.style.display = 'none';
+    activeBillData = null;
+  }
+
+  function capturePhotoFromCamera() {
+    const video = document.getElementById('cendric-camera-video');
+    const canvas = document.getElementById('cendric-camera-canvas');
+    if (!video || !canvas) return;
+
+    canvas.width = video.videoWidth || 1280;
+    canvas.height = video.videoHeight || 720;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const base64 = canvas.toDataURL('image/jpeg', 0.85);
+
+    stopCamera();
+    processScannedImage(base64);
+  }
+
+  async function processScannedImage(base64Image) {
+    const viewCapture = document.getElementById('cendric-bill-capture-view');
+    const viewLoading = document.getElementById('cendric-bill-loading-view');
+    const viewConfirm = document.getElementById('cendric-bill-confirm-view');
+
+    if (viewCapture) viewCapture.style.display = 'none';
+    if (viewLoading) viewLoading.style.display = 'flex';
+    if (viewConfirm) viewConfirm.style.display = 'none';
+
+    const loadingThumb = document.getElementById('cendric-bill-loading-thumb');
+    if (loadingThumb) loadingThumb.src = base64Image;
+
+    try {
+      const token = getToken();
+      const res = await fetch('/api/transactions/extract', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ imageBase64: base64Image })
+      });
+
+      const json = await res.json();
+      if (json.success && json.data) {
+        showBillConfirmationForm(json.data, base64Image);
+      } else {
+        showToast('Could not automatically parse bill. You can enter details manually.', 'info');
+        showBillConfirmationForm({
+          amount: 0,
+          vendor: 'Scanned Bill',
+          category: 'Other',
+          date: new Date().toISOString().slice(0, 10),
+          description: 'Receipt photo',
+          type: 'expense'
+        }, base64Image);
+      }
+    } catch (err) {
+      console.error('[Cendric] Error analyzing bill:', err);
+      showToast('Network error analyzing bill. You can edit details manually.', 'info');
+      showBillConfirmationForm({
+        amount: 0,
+        vendor: 'Scanned Bill',
+        category: 'Other',
+        date: new Date().toISOString().slice(0, 10),
+        description: 'Receipt photo',
+        type: 'expense'
+      }, base64Image);
+    }
+  }
+
+  function setBillType(type) {
+    activeBillType = type;
+    const btnExpense = document.getElementById('cendric-bill-type-expense');
+    const btnIncome = document.getElementById('cendric-bill-type-income');
+    if (type === 'expense') {
+      btnExpense?.classList.add('active-expense');
+      btnIncome?.classList.remove('active-income');
+    } else {
+      btnIncome?.classList.add('active-income');
+      btnExpense?.classList.remove('active-expense');
+    }
+  }
+
+  function showBillConfirmationForm(data, imageThumb) {
+    const viewLoading = document.getElementById('cendric-bill-loading-view');
+    const viewConfirm = document.getElementById('cendric-bill-confirm-view');
+    if (viewLoading) viewLoading.style.display = 'none';
+    if (viewConfirm) viewConfirm.style.display = 'block';
+
+    activeBillData = { ...data, imageThumb };
+
+    const thumbImg = document.getElementById('cendric-bill-confirm-thumb');
+    if (thumbImg) thumbImg.src = imageThumb;
+
+    // Detect initial type
+    const isExpense = (data.type || 'expense').toLowerCase() !== 'income';
+    setBillType(isExpense ? 'expense' : 'income');
+
+    const amtInp = document.getElementById('cendric-bill-amt-inp');
+    if (amtInp) amtInp.value = data.amount || '';
+
+    const vendorInp = document.getElementById('cendric-bill-vendor-inp');
+    if (vendorInp) vendorInp.value = data.vendor || '';
+
+    const dateInp = document.getElementById('cendric-bill-date-inp');
+    if (dateInp) dateInp.value = data.date || new Date().toISOString().slice(0, 10);
+
+    const descInp = document.getElementById('cendric-bill-desc-inp');
+    if (descInp) descInp.value = data.description || (data.vendor ? `Bill from ${data.vendor}` : 'Scanned receipt');
+
+    const catSelect = document.getElementById('cendric-bill-cat-select');
+    if (catSelect && data.category) {
+      const options = Array.from(catSelect.options);
+      const match = options.find(o => o.value.toLowerCase() === data.category.toLowerCase() || o.text.toLowerCase().includes(data.category.toLowerCase()));
+      if (match) {
+        catSelect.value = match.value;
+      } else {
+        catSelect.value = 'Other';
+      }
+    }
+  }
+
+  function setupBillScannerModal() {
+    let modal = document.getElementById('cendric-bill-modal');
+    if (modal) return;
+
+    modal = document.createElement('div');
+    modal.id = 'cendric-bill-modal';
+    modal.className = 'cendric-modal-overlay';
+    modal.style.display = 'none';
+
+    const curr = getCurrency();
+    const currSym = getCurrencySymbol(curr);
+
+    modal.innerHTML = `
+      <div class="cendric-modal-dialog">
+        <!-- Header -->
+        <div class="cendric-modal-header">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">📸</span>
+            <div>
+              <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: var(--text-primary);">${t('billScannerTitle')}</h3>
+              <p style="margin: 2px 0 0; font-size: 12px; color: var(--text-muted);">${t('billScannerSubtitle')}</p>
+            </div>
+          </div>
+          <button class="cendric-modal-close-btn" id="cendric-bill-close-btn">✕</button>
+        </div>
+
+        <div class="cendric-modal-body" style="padding: 18px 22px;">
+          <!-- 1. Live Camera Capture View -->
+          <div id="cendric-bill-capture-view">
+            <!-- Feed Box -->
+            <div id="cendric-camera-feed-box" class="cendric-camera-viewfinder">
+              <video id="cendric-camera-video" class="cendric-camera-video" autoplay playsinline muted></video>
+              <div class="cendric-camera-frame-reticle"></div>
+              <div class="cendric-camera-laser"></div>
+              <canvas id="cendric-camera-canvas" style="display: none;"></canvas>
+            </div>
+
+            <!-- Fallback Box if camera not available or denied -->
+            <div id="cendric-camera-denied-box" style="display: none; border: 2px dashed var(--accent); border-radius: 16px; padding: 36px 20px; text-align: center; background: rgba(109, 90, 230, 0.04); margin-bottom: 12px;">
+              <div style="font-size: 38px; margin-bottom: 8px;">📷</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Camera access not enabled</div>
+              <div style="font-size: 12px; color: var(--text-muted); max-width: 400px; margin: 0 auto 16px;">Take a photo using your mobile device or upload an existing receipt/bill picture.</div>
+              <button id="cendric-camera-retry-btn" class="cendric-btn-secondary" style="padding: 6px 14px; font-size: 12px; margin-right: 8px;">Retry Camera</button>
+              <button id="cendric-camera-manual-upload-btn" class="cendric-btn-primary" style="padding: 6px 16px; font-size: 12px;">Choose Photo File</button>
+            </div>
+
+            <!-- Instructions -->
+            <div style="text-align: center; margin: 12px 0; font-size: 12px; color: var(--text-muted);">
+              ${t('centerBill')}
+            </div>
+
+            <!-- Shutter & Tool Controls -->
+            <div class="cendric-shutter-bar">
+              <button id="cendric-camera-flip-btn" class="cendric-btn-secondary" style="width: 44px; height: 44px; border-radius: 50%; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 18px;" title="Flip Camera">
+                🔄
+              </button>
+
+              <button id="cendric-camera-shutter-btn" class="cendric-shutter-btn" title="Snap Bill Photo">
+                <div class="cendric-shutter-inner">📸</div>
+              </button>
+
+              <button id="cendric-camera-upload-trigger" class="cendric-btn-secondary" style="width: 44px; height: 44px; border-radius: 50%; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 18px;" title="Upload bill image">
+                📁
+              </button>
+              <input type="file" id="cendric-bill-file-input" accept="image/*" capture="environment" style="display: none;" />
+            </div>
+          </div>
+
+          <!-- 2. Loading / Analyzing View -->
+          <div id="cendric-bill-loading-view" style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px;">
+            <div style="position: relative; width: 140px; height: 180px; border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 2px solid var(--accent);">
+              <img id="cendric-bill-loading-thumb" src="" alt="Captured Bill" style="width: 100%; height: 100%; object-fit: cover;" />
+              <div class="cendric-camera-laser" style="left: 0; right: 0;"></div>
+            </div>
+            <div class="cendric-spinner" style="width: 32px; height: 32px; border: 3px solid rgba(16,185,129,0.2); border-top-color: #10b981; border-radius: 50%; animation: cendricSpin 0.8s linear infinite; margin-bottom: 12px;"></div>
+            <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);">${t('analyzingBill')}</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Extracting vendor, totals, tax slabs, and income/expense classification</div>
+          </div>
+
+          <!-- 3. Confirmation & Verification View -->
+          <div id="cendric-bill-confirm-view" style="display: none;">
+            <div style="display: grid; grid-template-columns: 140px 1fr; gap: 18px; margin-bottom: 18px;">
+              <!-- Thumbnail & Retake -->
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 140px; height: 180px; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                  <img id="cendric-bill-confirm-thumb" src="" alt="Scanned Bill" style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+                <button id="cendric-bill-retake-btn" class="cendric-btn-secondary" style="width: 100%; padding: 6px; font-size: 11px; border-radius: 8px;">
+                  ${t('retakePhoto')}
+                </button>
+              </div>
+
+              <!-- Form Fields -->
+              <div>
+                <!-- Type Toggle: Expense vs Income -->
+                <div style="margin-bottom: 12px;">
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">${t('type')}</label>
+                  <div class="cendric-type-pill-group">
+                    <button type="button" id="cendric-bill-type-expense" class="cendric-type-pill active-expense">
+                      <span>🔴</span> ${t('expense')}
+                    </button>
+                    <button type="button" id="cendric-bill-type-income" class="cendric-type-pill">
+                      <span>🟢</span> ${t('income')}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Amount -->
+                <div style="margin-bottom: 12px;">
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">${t('amount')} (${currSym})</label>
+                  <div style="display: flex; align-items: center; background: var(--bg-primary, #ffffff); border: 1.5px solid var(--border); border-radius: 10px; padding: 6px 12px;">
+                    <span style="font-weight: 800; color: var(--accent); margin-right: 6px;">${currSym}</span>
+                    <input type="number" step="0.01" id="cendric-bill-amt-inp" placeholder="0.00" style="border: none; outline: none; background: transparent; width: 100%; font-size: 16px; font-weight: 800; color: var(--text-primary);" />
+                  </div>
+                </div>
+
+                <!-- Vendor / Title -->
+                <div style="margin-bottom: 12px;">
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">${t('vendor')}</label>
+                  <input type="text" id="cendric-bill-vendor-inp" placeholder="e.g. Keells Super / Dialog" style="width: 100%; padding: 8px 12px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg-primary, #ffffff); font-size: 13px; color: var(--text-primary); outline: none;" />
+                </div>
+
+                <!-- Category & Date Row -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                  <div>
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">${t('category')}</label>
+                    <select id="cendric-bill-cat-select" style="width: 100%; padding: 8px 10px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg-primary, #ffffff); font-size: 12px; color: var(--text-primary); outline: none;">
+                      <option value="Food & Dining">Food & Dining</option>
+                      <option value="Bills & Utilities">Bills & Utilities</option>
+                      <option value="Software & Tools">Software & Tools</option>
+                      <option value="Transportation">Transportation</option>
+                      <option value="Freelance">Freelance Inflow</option>
+                      <option value="Shopping">Shopping</option>
+                      <option value="Entertainment">Entertainment</option>
+                      <option value="Healthcare">Healthcare</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">${t('date')}</label>
+                    <input type="date" id="cendric-bill-date-inp" style="width: 100%; padding: 8px 10px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg-primary, #ffffff); font-size: 12px; color: var(--text-primary); outline: none;" />
+                  </div>
+                </div>
+
+                <!-- Notes / Description -->
+                <div>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Notes / Memo</label>
+                  <input type="text" id="cendric-bill-desc-inp" placeholder="Optional notes" style="width: 100%; padding: 8px 12px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg-primary, #ffffff); font-size: 12px; color: var(--text-primary); outline: none;" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Save Bar -->
+            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding-top: 14px; border-top: 1px solid var(--border);">
+              <button id="cendric-bill-cancel-btn" class="cendric-btn-secondary" style="padding: 8px 16px; font-size: 12px; border-radius: 10px;">Cancel</button>
+              <button id="cendric-bill-save-btn" class="cendric-btn-primary" style="padding: 8px 22px; font-size: 12.5px; border-radius: 10px; display: inline-flex; align-items: center; gap: 6px;">
+                <span>✓</span> ${t('saveTransaction')}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Event handlers
+    const closeBtn = document.getElementById('cendric-bill-close-btn');
+    const cancelBtn = document.getElementById('cendric-bill-cancel-btn');
+    [closeBtn, cancelBtn].forEach(b => b?.addEventListener('click', closeBillScannerModal));
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeBillScannerModal();
+    });
+
+    // Shutter button
+    document.getElementById('cendric-camera-shutter-btn')?.addEventListener('click', capturePhotoFromCamera);
+
+    // Flip camera
+    document.getElementById('cendric-camera-flip-btn')?.addEventListener('click', () => {
+      cameraFacingMode = cameraFacingMode === 'environment' ? 'user' : 'environment';
+      startCamera();
+    });
+
+    // Upload / Mobile shutter input
+    const fileInput = document.getElementById('cendric-bill-file-input');
+    const uploadTrigger = document.getElementById('cendric-camera-upload-trigger');
+    const manualUploadBtn = document.getElementById('cendric-camera-manual-upload-btn');
+    const retryBtn = document.getElementById('cendric-camera-retry-btn');
+
+    [uploadTrigger, manualUploadBtn].forEach(b => b?.addEventListener('click', () => fileInput?.click()));
+    retryBtn?.addEventListener('click', startCamera);
+
+    fileInput?.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      stopCamera();
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        processScannedImage(ev.target.result);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Retake button
+    document.getElementById('cendric-bill-retake-btn')?.addEventListener('click', () => {
+      resetBillScannerViews();
+      startCamera();
+    });
+
+    // Type toggles
+    document.getElementById('cendric-bill-type-expense')?.addEventListener('click', () => setBillType('expense'));
+    document.getElementById('cendric-bill-type-income')?.addEventListener('click', () => setBillType('income'));
+
+    // Save transaction
+    document.getElementById('cendric-bill-save-btn')?.addEventListener('click', async () => {
+      const amtVal = parseFloat(document.getElementById('cendric-bill-amt-inp')?.value);
+      if (isNaN(amtVal) || amtVal <= 0) {
+        showToast('Please specify a valid amount.', 'info');
+        return;
+      }
+
+      const vendor = document.getElementById('cendric-bill-vendor-inp')?.value || 'Scanned Bill';
+      const category = document.getElementById('cendric-bill-cat-select')?.value || 'Other';
+      const date = document.getElementById('cendric-bill-date-inp')?.value || new Date().toISOString().slice(0, 10);
+      const desc = document.getElementById('cendric-bill-desc-inp')?.value || vendor;
+
+      const saveBtn = document.getElementById('cendric-bill-save-btn');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span>⏳</span> Saving...';
+      }
+
+      try {
+        const token = getToken();
+        const res = await fetch('/api/transactions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({
+            type: activeBillType,
+            amount: amtVal,
+            category,
+            date,
+            description: desc,
+            source: 'receipt_scanner'
+          })
+        });
+
+        if (res.ok) {
+          showToast(t('scanSuccess'), 'success');
+          closeBillScannerModal();
+          document.getElementById('cendric-analytics-card')?.remove();
+          document.getElementById('cendric-subs-card')?.remove();
+          if (location.pathname.includes('/transactions')) {
+            setTimeout(() => location.reload(), 400);
+          }
+        } else {
+          showToast('Failed to save transaction.', 'info');
+        }
+      } catch (err) {
+        console.error('Error saving scanned bill:', err);
+        showToast('Network error while saving transaction.', 'info');
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = `<span>✓</span> ${t('saveTransaction')}`;
+        }
+      }
+    });
+  }
+
+  // ----------------------------------------------------
   // 11. Proactive Notification Center
   // ----------------------------------------------------
   let cachedNotifications = [];
@@ -3440,7 +4347,9 @@
       setupTaxCalculatorModal();
       setupInvoiceModal();
       setupCsvImporterModal();
+      setupBillScannerModal();
       setupNotificationCenter();
+      applyLanguage(getCurrentLang());
     } catch (err) {
       console.warn('[Cendric] Enhancement error:', err);
     } finally {

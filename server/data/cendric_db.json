@@ -6,7 +6,8 @@
       "email": "piratheep@example.com",
       "password": "$2a$10$cqDMZVG94bw0CO5Ush2q6edy3y4Lp2vDMCRdDhSsmCW2QcurBY/q6",
       "currencyPreference": "LKR",
-      "createdAt": "2026-09-20T07:35:11.713Z"
+      "createdAt": "2026-09-20T07:35:11.713Z",
+      "languagePreference": "en"
     },
     {
       "_id": "4cd75b34685891633f217c38",
@@ -152,129 +153,8 @@
     },
     {
       "userId": "4cd75b34685891633f217c38",
-      "sessionId": null,
-      "messages": [
-        {
-          "role": "user",
-          "content": "hi"
-        },
-        {
-          "role": "assistant",
-          "content": "👋 Hello prasath! I'm **Cendric**, your finance co-pilot. You currently have **0** recorded transactions with a net balance of **USD 0**.\n\nHow can I help you manage your finances today?"
-        },
-        {
-          "role": "user",
-          "content": "How much have I earned vs spent this whieek?"
-        },
-        {
-          "role": "assistant",
-          "content": "📊 **Spending Summary:**\n\n• **Total Expenses:** USD 0 (0 transactions)\n• **Total Income:** USD 0\n• **Net Balance:** USD 0"
-        },
-        {
-          "role": "user",
-          "content": "Give me 3 tips to optimize freelance software costs."
-        },
-        {
-          "role": "assistant",
-          "content": "💡 **Cendric Pro Financial Tips for Freelancers:**\n\n1. **The 50/30/20 Guideline**: Strive to allocate 50% to essentials, 30% to wants, and 20% to savings/investments.\n2. **Emergency Cushion**: With freelance income variability, aim for a 3–6 month living expense reserve.\n3. **Tax Provision**: Automatically set aside 20–25% of every incoming client invoice into a separate tax holding bucket.\n4. **Receipt Logging**: Use our receipt scanner regularly to capture deductible business expenses!"
-        },
-        {
-          "role": "user",
-          "content": "Do I pay tax on Upwork USD earnings in Sri Lanka?"
-        },
-        {
-          "role": "assistant",
-          "content": "🇱🇰 **Tax Treatment of IT, Software & Freelance Export Services**\n\nUnder the Third Schedule of the Inland Revenue Act No. 24 of 2017 and government export incentives, earnings derived by resident individuals from providing Information Technology (IT) and enabled services (including software engineering, web development, graphic design, UI/UX, BPO, and digital consulting) to persons outside Sri Lanka are granted beneficial tax status, provided:\n1. The service is provided to a recipient outside Sri Lanka and utilized abroad.\n2. The payments are received in convertible foreign currency (e.g., USD, EUR, GBP, AUD).\n3. The foreign funds are remitted to Sri Lanka through authorized commercial banking channels (into a Business Foreign Currency Account - BFCA or Personal Foreign Currency Account - PFCA).\n\nFreelancers working through platforms like Upwork, Fiverr, Deel, or direct overseas clients must retain bank inward remittance credit advices, invoices, and client contracts to establish that funds represent IT export income.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 (Third Schedule) & Ministry of Finance Directives* (Third Schedule (Exempt Amounts) & Foreign Currency Export Provisions)\n"
-        },
-        {
-          "role": "user",
-          "content": "Calculate my Sri Lankan tax on LKR 2.4M"
-        },
-        {
-          "role": "assistant",
-          "content": "I analyzed your finances:\n\n• **Net Balance:** USD 0\n• **Total Income:** USD 0 across 0 invoices\n• **Total Expenses:** USD 0 across 0 purchases\n\nYou can ask me specific questions like *\"How much did I spend on Food?\"*, *\"Calculate my income tax\"*, *\"Do I pay tax on Upwork USD?\"*, or upload receipts to auto-extract expenses!"
-        },
-        {
-          "role": "user",
-          "content": "Calculate my Sri Lankan tax on LKR 2.4M"
-        },
-        {
-          "role": "assistant",
-          "content": "I analyzed your finances:\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 across 1 invoices\n• **Total Expenses:** LKR 4,429,121 across 1 purchases\n\nYou can ask me specific questions like *\"How much did I spend on Food?\"*, *\"Calculate my income tax\"*, *\"Do I pay tax on Upwork USD?\"*, or upload receipts to auto-extract expenses!"
-        },
-        {
-          "role": "user",
-          "content": "how much i have to pay as tax with my income"
-        },
-        {
-          "role": "assistant",
-          "content": "I analyzed your finances:\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 across 1 invoices\n• **Total Expenses:** LKR 4,429,121 across 1 purchases\n\nYou can ask me specific questions like *\"How much did I spend on Food?\"*, *\"Calculate my income tax\"*, *\"Do I pay tax on Upwork USD?\"*, or upload receipts to auto-extract expenses!"
-        },
-        {
-          "role": "user",
-          "content": "What freelance expenses can I deduct?"
-        },
-        {
-          "role": "assistant",
-          "content": "🇱🇰 **Allowable Business Expense Deductions for Freelancers**\n\nUnder Section 11 of the Inland Revenue Act, expenses incurred wholly and exclusively in the production of income from self-employment or freelance business are fully deductible from gross revenue before calculating taxable profit:\n1. Software Subscriptions & Cloud Tools: GitHub, Figma, AWS, Vercel, Google Workspace, Adobe Creative Cloud, JetBrains, ChatGPT Plus, antivirus, domain registrations.\n2. Telecommunications & Internet: Home broadband, 4G/5G mobile data, and phone bills (apportioned to business usage, typically 70% to 80%).\n3. Capital Allowance / Depreciation (Section 16): Information technology equipment (laptops, PCs, monitors, UPS, webcams) can be depreciated over 4 years at 25% per year (or over 3 years at 33.3% per year).\n4. Workspace & Utilities: Coworking space desk fees (Likuid, Hatch, Regus) or a dedicated home office portion of electricity and rent.\n5. Professional Development: Online courses (Coursera, Udemy), technical books, certification fees directly relevant to your freelance trade.\n6. Bank & Payment Gateway Fees: Bank charges on foreign wire transfers, Wise fees, Stripe fees, and PayPal withdrawal fees.\n\nAll deductions require proof: invoices, digital receipts, and bank statements must be maintained for 5 years.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017* (Section 11 (General Principles of Deductions) & Section 16 (Capital Allowances))\n"
-        },
-        {
-          "role": "user",
-          "content": "Calculate my APIT on LKR 3,600,000 income"
-        },
-        {
-          "role": "assistant",
-          "content": "🇱🇰 **Sri Lankan Personal Income Tax (PIT) Calculation**\n\nBased on the **Inland Revenue Act No. 24 of 2017 (as amended)**:\n\n• **Gross Freelance Income:** LKR 3,600,000\n• **Allowable Deductions (Section 11):** -LKR 1,440,000\n• **Assessable Income:** LKR 2,160,000\n• **Tax-Free Personal Relief:** -LKR 1,200,000 (LKR 100,000/month)\n• **Taxable Income:** LKR 960,000\n\n### 📊 Progressive Slab Breakdown:\n• **6% on first LKR 500,000:** LKR 500,000 @ 6% = **LKR 30,000**\n• **12% on next LKR 500,000:** LKR 460,000 @ 12% = **LKR 55,200**\n\n**Total Estimated Annual Tax Payable:** **LKR 85,200**\n• **Effective Tax Rate:** 2.4%\n• **Quarterly Advance Payment:** ~LKR 21,300 / quarter\n\n> 💡 **Tip:** If your income is from **IT & Software export services** received in foreign currency (USD/EUR) through commercial bank inward remittances, ensure you retain bank credit advices to substantiate foreign export treatment under the Third Schedule."
-        },
-        {
-          "role": "user",
-          "content": "Do I pay tax on Upwork USD in Sri Lanka?"
-        },
-        {
-          "role": "assistant",
-          "content": "🇱🇰 **Tax Treatment of IT, Software & Freelance Export Services**\n\nUnder the Third Schedule of the Inland Revenue Act No. 24 of 2017 and government export incentives, earnings derived by resident individuals from providing Information Technology (IT) and enabled services (including software engineering, web development, graphic design, UI/UX, BPO, and digital consulting) to persons outside Sri Lanka are granted beneficial tax status, provided:\n1. The service is provided to a recipient outside Sri Lanka and utilized abroad.\n2. The payments are received in convertible foreign currency (e.g., USD, EUR, GBP, AUD).\n3. The foreign funds are remitted to Sri Lanka through authorized commercial banking channels (into a Business Foreign Currency Account - BFCA or Personal Foreign Currency Account - PFCA).\n\nFreelancers working through platforms like Upwork, Fiverr, Deel, or direct overseas clients must retain bank inward remittance credit advices, invoices, and client contracts to establish that funds represent IT export income.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 (Third Schedule) & Ministry of Finance Directives* (Third Schedule (Exempt Amounts) & Foreign Currency Export Provisions)\n\n**Your Current Cendric Balance:** You have **LKR 44,291,206** in recorded earnings and **LKR 4,429,121** in expenses."
-        },
-        {
-          "role": "user",
-          "content": "How do I get a TIN number?"
-        },
-        {
-          "role": "assistant",
-          "content": "🇱🇰 **Mandatory Taxpayer Identification Number (TIN) Requirement**\n\nFrom January 1, 2024, obtaining a Taxpayer Identification Number (TIN) is mandatory for all Sri Lankan residents who reach 18 years of age, or who earn gross income exceeding LKR 1,200,000 per year.\nA TIN is required by law for:\n- Opening a current or fixed deposit bank account in Sri Lanka\n- Registering or transferring motor vehicles\n- Registering title to land or property\n- Obtaining building plan approvals and local business registrations\n\nImportant: Registering for a TIN DOES NOT automatically make you liable to pay tax. You only pay income tax if your taxable net earnings exceed the LKR 1,200,000 threshold.\nRegistration is free online via the Inland Revenue Department RAMIS e-Services portal (eservices.ird.gov.lk). Failure to register can carry a penalty of up to LKR 50,000 under Section 177.\n\n**Legal Authority & Source:**\n• 📜 *Inland Revenue Act No. 24 of 2017 & IRD Gazette Notice* (Section 102 & Public Notice PN/TIN/2023-01)\n"
-        },
-        {
-          "role": "user",
-          "content": "what about me, do i have to pay tax"
-        },
-        {
-          "role": "assistant",
-          "content": "💼 **Your Financial Position:**\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 (1 transactions)\n• **Total Expenses:** LKR 4,429,121 (1 transactions)\n\n🎉 You are operating at a **positive cash flow!**"
-        },
-        {
-          "role": "user",
-          "content": "how much do i have to pay for tax"
-        },
-        {
-          "role": "assistant",
-          "content": "💼 **Your Financial Position:**\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 (1 transactions)\n• **Total Expenses:** LKR 4,429,121 (1 transactions)\n\n🎉 You are operating at a **positive cash flow!**"
-        },
-        {
-          "role": "user",
-          "content": "how much do i have to pay for tax"
-        },
-        {
-          "role": "assistant",
-          "content": "🇱🇰 **Sri Lankan Personal Income Tax (PIT) Calculation**\n\nBased on the **Inland Revenue Act No. 24 of 2017 (as amended)**:\n\n• **Gross Freelance Income:** LKR 44,291,206\n• **Allowable Deductions (Section 11):** -LKR 4,429,121\n• **Assessable Income:** LKR 39,862,085\n• **Tax-Free Personal Relief:** -LKR 1,200,000 (LKR 100,000/month)\n• **Taxable Income:** LKR 38,662,085\n\n### 📊 Progressive Slab Breakdown:\n• **6% on first LKR 500,000:** LKR 500,000 @ 6% = **LKR 30,000**\n• **12% on next LKR 500,000:** LKR 500,000 @ 12% = **LKR 60,000**\n• **18% on next LKR 500,000:** LKR 500,000 @ 18% = **LKR 90,000**\n• **24% on next LKR 500,000:** LKR 500,000 @ 24% = **LKR 120,000**\n• **30% on next LKR 500,000:** LKR 500,000 @ 30% = **LKR 150,000**\n• **36% on remaining balance:** LKR 36,162,085 @ 36% = **LKR 13,018,351**\n\n**Total Estimated Annual Tax Payable:** **LKR 13,468,351**\n• **Effective Tax Rate:** 30.4%\n• **Quarterly Advance Payment:** ~LKR 3,367,088 / quarter\n\n> 💡 **Tip:** If your income is from **IT & Software export services** received in foreign currency (USD/EUR) through commercial bank inward remittances, ensure you retain bank credit advices to substantiate foreign export treatment under the Third Schedule."
-        },
-        {
-          "role": "user",
-          "content": "clear chat"
-        },
-        {
-          "role": "assistant",
-          "content": "I analyzed your finances:\n\n• **Net Balance:** LKR 39,862,085\n• **Total Income:** LKR 44,291,206 across 1 invoices\n• **Total Expenses:** LKR 4,429,121 across 1 purchases\n\nYou can ask me specific questions like *\"How much did I spend on Food?\"*, *\"Calculate my income tax\"*, *\"Do I pay tax on Upwork USD?\"*, or upload receipts to auto-extract expenses!"
-        }
-      ]
+      "sessionId": "7d8d75284f79a047",
+      "messages": []
     }
   ],
   "budgets": {
