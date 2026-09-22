@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const subscriptionSchema = new mongoose.Schema({
   _id: {
-    type: String,
-    default: () => new mongoose.Types.ObjectId().toString()
+    type: mongoose.Schema.Types.Mixed,
+    default: () => new mongoose.Types.ObjectId()
   },
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.Mixed,
     required: [true, 'User ID is required'],
     index: true
   },

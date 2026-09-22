@@ -2471,6 +2471,7 @@
           document.getElementById('cendric-analytics-card')?.remove();
           document.getElementById('cendric-subs-card')?.remove();
           showToast(`Switched currency to ${code}! All amounts converted with live rates.`);
+          setTimeout(() => location.reload(), 450);
         });
       }
     }

@@ -35,6 +35,15 @@
       "currencyPreference": "LKR",
       "languagePreference": "en",
       "createdAt": "2026-09-22T19:42:01.611Z"
+    },
+    {
+      "_id": "746376426634cdfad1dc98b8",
+      "fullName": "Currency Test User",
+      "email": "curr_test_1790107233477@example.com",
+      "password": "$2a$10$UcB/smw679zAQnWtcGGVgu6j/t1MHfB1BiQzPKFKQJXi2z/ZmvDp2",
+      "currencyPreference": "LKR",
+      "languagePreference": "en",
+      "createdAt": "2026-09-22T20:00:33.788Z"
     }
   ],
   "transactions": [

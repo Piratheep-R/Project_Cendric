@@ -4,6 +4,7 @@ const { Transaction } = require('../models');
 const { isMongoDBConnected } = require('../config/db');
 const { db, saveDB } = require('../utils/localDB');
 const currencyService = require('../services/currencyService');
+const { toUserQuery, toIdQuery } = require('../utils/dbHelper');
 
 function normalizeCurrency(c) {
   return currencyService.normalizeCurrency(c);
@@ -16,15 +17,16 @@ async function getTransactions(req, res) {
     let total = 0;
 
     if (isMongoDBConnected()) {
-      let query = Transaction.find({ userId: req.user._id }).sort({ date: -1, createdAt: -1 });
+      const userQ = toUserQuery(req.user._id);
+      let query = Transaction.find({ userId: userQ }).sort({ date: -1, createdAt: -1 });
       if (!isNaN(limit) && limit > 0) {
         query = query.limit(limit);
       }
       results = await query.lean();
-      total = await Transaction.countDocuments({ userId: req.user._id });
+      total = await Transaction.countDocuments({ userId: userQ });
     } else {
       const userTransactions = db.transactions
-        .filter(t => t.userId === req.user._id)
+        .filter(t => String(t.userId) === String(req.user._id))
         .sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
 
       results = !isNaN(limit) && limit > 0 ? userTransactions.slice(0, limit) : userTransactions;
@@ -103,13 +105,13 @@ async function updateTransaction(req, res) {
     let updatedTx = null;
     if (isMongoDBConnected()) {
       updatedTx = await Transaction.findOneAndUpdate(
-        { _id: txId, userId: req.user._id },
+        { _id: toIdQuery(txId), userId: toUserQuery(req.user._id) },
         { $set: updateFields },
         { new: true }
       ).lean();
     }
 
-    const tx = db.transactions.find(t => t._id === txId && t.userId === req.user._id);
+    const tx = db.transactions.find(t => String(t._id) === String(txId) && String(t.userId) === String(req.user._id));
     if (!tx && !updatedTx) {
       return res.status(404).json({ message: 'Transaction not found.' });
     }
@@ -132,12 +134,12 @@ async function deleteTransaction(req, res) {
     let deleted = false;
 
     if (isMongoDBConnected()) {
-      const resMongo = await Transaction.findOneAndDelete({ _id: txId, userId: req.user._id });
+      const resMongo = await Transaction.findOneAndDelete({ _id: toIdQuery(txId), userId: toUserQuery(req.user._id) });
       if (resMongo) deleted = true;
     }
 
     const initialLen = db.transactions.length;
-    db.transactions = db.transactions.filter(t => !(t._id === txId && t.userId === req.user._id));
+    db.transactions = db.transactions.filter(t => !(String(t._id) === String(txId) && String(t.userId) === String(req.user._id)));
     if (db.transactions.length < initialLen) deleted = true;
 
     if (!deleted) {
@@ -211,10 +213,10 @@ async function exportTransactionsCSV(req, res) {
   try {
     let userTransactions = [];
     if (isMongoDBConnected()) {
-      userTransactions = await Transaction.find({ userId: req.user._id }).sort({ date: -1, createdAt: -1 }).lean();
+      userTransactions = await Transaction.find({ userId: toUserQuery(req.user._id) }).sort({ date: -1, createdAt: -1 }).lean();
     } else {
       userTransactions = db.transactions
-        .filter(t => t.userId === req.user._id)
+        .filter(t => String(t.userId) === String(req.user._id))
         .sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
     }
 

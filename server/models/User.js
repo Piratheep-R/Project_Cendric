@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    default: () => new mongoose.Types.ObjectId().toString()
-  },
   fullName: {
     type: String,
     required: [true, 'Full name is required'],
@@ -19,8 +15,10 @@ const userSchema = new mongoose.Schema({
     index: true
   },
   password: {
-    type: String,
-    required: [true, 'Password is required']
+    type: String
+  },
+  passwordHash: {
+    type: String
   },
   currencyPreference: {
     type: String,

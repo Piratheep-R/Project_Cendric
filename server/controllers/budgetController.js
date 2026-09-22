@@ -2,6 +2,7 @@ const { Budget } = require('../models');
 const { isMongoDBConnected } = require('../config/db');
 const { db, saveDB } = require('../utils/localDB');
 const currencyService = require('../services/currencyService');
+const { toUserQuery } = require('../utils/dbHelper');
 
 function normalizeCurrency(c) {
   return currencyService.normalizeCurrency(c);
@@ -11,11 +12,11 @@ async function getBudget(req, res) {
   try {
     let budget = null;
     if (isMongoDBConnected()) {
-      budget = await Budget.findOne({ userId: req.user._id }).lean();
+      budget = await Budget.findOne({ userId: toUserQuery(req.user._id) }).lean();
     }
     if (!budget) {
       if (!db.budgets) db.budgets = {};
-      budget = db.budgets[req.user._id] || { monthlyLimit: 50000, alertsEnabled: true };
+      budget = db.budgets[req.user._id] || db.budgets[String(req.user._id)] || { monthlyLimit: 50000, alertsEnabled: true };
     }
     res.json(budget);
   } catch (err) {
@@ -35,7 +36,7 @@ async function updateBudget(req, res) {
     let updatedBudget = null;
     if (isMongoDBConnected()) {
       updatedBudget = await Budget.findOneAndUpdate(
-        { userId: req.user._id },
+        { userId: toUserQuery(req.user._id) },
         {
           monthlyLimit: numLimit,
           baseLimitUSD,

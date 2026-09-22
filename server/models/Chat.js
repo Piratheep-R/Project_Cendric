@@ -18,7 +18,7 @@ const chatMessageSchema = new mongoose.Schema({
 
 const chatSchema = new mongoose.Schema({
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.Mixed,
     required: [true, 'User ID is required'],
     unique: true,
     index: true

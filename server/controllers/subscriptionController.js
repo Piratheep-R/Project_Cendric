@@ -3,6 +3,7 @@ const { Subscription } = require('../models');
 const { isMongoDBConnected } = require('../config/db');
 const { db, saveDB } = require('../utils/localDB');
 const currencyService = require('../services/currencyService');
+const { toUserQuery, toIdQuery } = require('../utils/dbHelper');
 
 function normalizeCurrency(c) {
   return currencyService.normalizeCurrency(c);
@@ -12,10 +13,10 @@ async function getSubscriptions(req, res) {
   try {
     let userSubs = [];
     if (isMongoDBConnected()) {
-      userSubs = await Subscription.find({ userId: req.user._id }).sort({ renewalDate: 1 }).lean();
+      userSubs = await Subscription.find({ userId: toUserQuery(req.user._id) }).sort({ renewalDate: 1 }).lean();
     } else {
       if (!db.subscriptions) db.subscriptions = [];
-      userSubs = db.subscriptions.filter(s => s.userId === req.user._id);
+      userSubs = db.subscriptions.filter(s => String(s.userId) === String(req.user._id));
     }
 
     // Seed default starter subscriptions if empty
@@ -43,7 +44,7 @@ async function getSubscriptions(req, res) {
 
       if (isMongoDBConnected()) {
         await Subscription.insertMany(seedDocs, { ordered: false });
-        userSubs = await Subscription.find({ userId: req.user._id }).sort({ renewalDate: 1 }).lean();
+        userSubs = await Subscription.find({ userId: toUserQuery(req.user._id) }).sort({ renewalDate: 1 }).lean();
       } else {
         userSubs = seedDocs;
       }
@@ -94,10 +95,10 @@ async function createSubscription(req, res) {
 async function deleteSubscription(req, res) {
   try {
     if (isMongoDBConnected()) {
-      await Subscription.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
+      await Subscription.findOneAndDelete({ _id: toIdQuery(req.params.id), userId: toUserQuery(req.user._id) });
     }
     if (!db.subscriptions) db.subscriptions = [];
-    db.subscriptions = db.subscriptions.filter(s => !(s._id === req.params.id && s.userId === req.user._id));
+    db.subscriptions = db.subscriptions.filter(s => !(String(s._id) === String(req.params.id) && String(s.userId) === String(req.user._id)));
     saveDB();
 
     res.json({ success: true, message: 'Subscription removed.' });

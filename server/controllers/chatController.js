@@ -5,6 +5,7 @@ const { isMongoDBConnected } = require('../config/db');
 const { db, saveDB } = require('../utils/localDB');
 const ragService = require('../services/ragService');
 const currencyService = require('../services/currencyService');
+const { toUserQuery } = require('../utils/dbHelper');
 
 // Helper: generate contextual follow-up question suggestions
 function generateFollowUps(question, answer, lang = 'en') {
@@ -69,9 +70,9 @@ async function streamChat(req, res) {
     // Build financial context
     let userTx = [];
     if (isMongoDBConnected()) {
-      userTx = await Transaction.find({ userId: req.user._id }).lean();
+      userTx = await Transaction.find({ userId: toUserQuery(req.user._id) }).lean();
     } else {
-      userTx = db.transactions.filter(t => t.userId === req.user._id);
+      userTx = db.transactions.filter(t => String(t.userId) === String(req.user._id));
     }
 
     const totalIncome  = userTx.filter(t => t.type === 'income').reduce((s, t) => s + (Number(t.amount) || 0), 0);
@@ -104,7 +105,7 @@ async function streamChat(req, res) {
 
       if (isMongoDBConnected()) {
         await Chat.findOneAndUpdate(
-          { userId: req.user._id },
+          { userId: toUserQuery(req.user._id) },
           {
             $setOnInsert: { sessionId: crypto.randomBytes(8).toString('hex') },
             $push: { messages: { $each: newMessages, $slice: -120 } }
@@ -113,7 +114,7 @@ async function streamChat(req, res) {
         );
       }
 
-      let userChat = db.chats.find(c => c.userId === req.user._id);
+      let userChat = db.chats.find(c => String(c.userId) === String(req.user._id));
       if (!userChat) {
         userChat = { userId: req.user._id, sessionId: crypto.randomBytes(8).toString('hex'), messages: [] };
         db.chats.push(userChat);
@@ -288,10 +289,10 @@ async function getChatHistory(req, res) {
   try {
     let userChat = null;
     if (isMongoDBConnected()) {
-      userChat = await Chat.findOne({ userId: req.user._id }).lean();
+      userChat = await Chat.findOne({ userId: toUserQuery(req.user._id) }).lean();
     }
     if (!userChat) {
-      userChat = db.chats.find(c => c.userId === req.user._id);
+      userChat = db.chats.find(c => String(c.userId) === String(req.user._id));
     }
 
     const messages = userChat ? userChat.messages : [];
@@ -312,12 +313,12 @@ async function clearChatHistory(req, res) {
     const newSessionId = crypto.randomBytes(8).toString('hex');
     if (isMongoDBConnected()) {
       await Chat.findOneAndUpdate(
-        { userId: req.user._id },
+        { userId: toUserQuery(req.user._id) },
         { messages: [], sessionId: newSessionId }
       );
     }
 
-    const idx = db.chats.findIndex(c => c.userId === req.user._id);
+    const idx = db.chats.findIndex(c => String(c.userId) === String(req.user._id));
     if (idx !== -1) {
       db.chats[idx].messages = [];
       db.chats[idx].sessionId = newSessionId;
@@ -343,9 +344,9 @@ async function postChatMessage(req, res) {
 
     let userTx = [];
     if (isMongoDBConnected()) {
-      userTx = await Transaction.find({ userId: req.user._id }).lean();
+      userTx = await Transaction.find({ userId: toUserQuery(req.user._id) }).lean();
     } else {
-      userTx = db.transactions.filter(t => t.userId === req.user._id);
+      userTx = db.transactions.filter(t => String(t.userId) === String(req.user._id));
     }
 
     const totalIncome = userTx.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
@@ -488,7 +489,7 @@ Respond helpfully, politely, and concisely with practical numbers, insights, or 
 
     if (isMongoDBConnected()) {
       await Chat.findOneAndUpdate(
-        { userId: req.user._id },
+        { userId: toUserQuery(req.user._id) },
         {
           sessionId,
           $push: { messages: { $each: newChatMessages, $slice: -120 } }
@@ -497,7 +498,7 @@ Respond helpfully, politely, and concisely with practical numbers, insights, or 
       );
     }
 
-    let userChat = db.chats.find(c => c.userId === req.user._id);
+    let userChat = db.chats.find(c => String(c.userId) === String(req.user._id));
     if (!userChat) {
       userChat = {
         userId: req.user._id,

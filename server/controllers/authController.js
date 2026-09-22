@@ -6,6 +6,7 @@ const { isMongoDBConnected } = require('../config/db');
 const { db, saveDB } = require('../utils/localDB');
 const { sanitizeUser, JWT_SECRET } = require('../middleware/auth');
 const currencyService = require('../services/currencyService');
+const { toUserQuery } = require('../utils/dbHelper');
 
 function normalizeCurrency(c) {
   return currencyService.normalizeCurrency(c);
@@ -88,7 +89,7 @@ async function login(req, res) {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password || user.passwordHash);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
@@ -129,13 +130,14 @@ async function updateProfile(req, res) {
         console.log(`[Currency Engine] Converting all amounts for ${user.email} from ${oldCurr} to ${newCurr} using live rates`);
 
         const oldRate = currencyService.getRateFor(oldCurr);
+        const userQ = toUserQuery(user._id);
 
         // 1. Convert all transactions
         if (isMongoDBConnected()) {
-          const txs = await Transaction.find({ userId: user._id });
+          const txs = await Transaction.find({ userId: userQ });
           for (const t of txs) {
-            let baseUSD = t.baseAmountUSD;
-            if (baseUSD === undefined || baseUSD === null || isNaN(baseUSD)) {
+            let baseUSD = Number(t.baseAmountUSD);
+            if (!baseUSD || isNaN(baseUSD) || baseUSD <= 0) {
               baseUSD = (Number(t.amount) || 0) / oldRate;
             }
             const newAmount = convertAmount(t.amount, oldCurr, newCurr, baseUSD);
@@ -145,40 +147,44 @@ async function updateProfile(req, res) {
         }
 
         db.transactions.forEach(t => {
-          if (t.userId === user._id) {
-            if (t.baseAmountUSD === undefined || t.baseAmountUSD === null || isNaN(t.baseAmountUSD)) {
-              t.baseAmountUSD = (Number(t.amount) || 0) / oldRate;
+          if (String(t.userId) === String(user._id)) {
+            let baseUSD = Number(t.baseAmountUSD);
+            if (!baseUSD || isNaN(baseUSD) || baseUSD <= 0) {
+              baseUSD = (Number(t.amount) || 0) / oldRate;
             }
-            t.amount = convertAmount(t.amount, oldCurr, newCurr, t.baseAmountUSD);
+            t.baseAmountUSD = baseUSD;
+            t.amount = convertAmount(t.amount, oldCurr, newCurr, baseUSD);
           }
         });
 
         // 2. Convert monthly budget
         if (isMongoDBConnected()) {
-          const b = await Budget.findOne({ userId: user._id });
+          const b = await Budget.findOne({ userId: userQ });
           if (b && b.monthlyLimit) {
-            let baseLimitUSD = b.baseLimitUSD;
-            if (!baseLimitUSD || isNaN(baseLimitUSD)) {
+            let baseLimitUSD = Number(b.baseLimitUSD);
+            if (!baseLimitUSD || isNaN(baseLimitUSD) || baseLimitUSD <= 0) {
               baseLimitUSD = Number(b.monthlyLimit) / oldRate;
             }
             const newLimit = convertAmount(b.monthlyLimit, oldCurr, newCurr, baseLimitUSD);
-            await Budget.findOneAndUpdate({ userId: user._id }, { monthlyLimit: newLimit, baseLimitUSD });
+            await Budget.findOneAndUpdate({ userId: userQ }, { monthlyLimit: newLimit, baseLimitUSD });
           }
         }
-        if (db.budgets && db.budgets[user._id] && db.budgets[user._id].monthlyLimit) {
-          const b = db.budgets[user._id];
-          if (b.baseLimitUSD === undefined || b.baseLimitUSD === null || isNaN(b.baseLimitUSD)) {
-            b.baseLimitUSD = (Number(b.monthlyLimit) || 0) / oldRate;
+        const bLocal = db.budgets && (db.budgets[user._id] || db.budgets[String(user._id)]);
+        if (bLocal && bLocal.monthlyLimit) {
+          let baseLimitUSD = Number(bLocal.baseLimitUSD);
+          if (!baseLimitUSD || isNaN(baseLimitUSD) || baseLimitUSD <= 0) {
+            baseLimitUSD = (Number(bLocal.monthlyLimit) || 0) / oldRate;
           }
-          b.monthlyLimit = convertAmount(b.monthlyLimit, oldCurr, newCurr, b.baseLimitUSD);
+          bLocal.baseLimitUSD = baseLimitUSD;
+          bLocal.monthlyLimit = convertAmount(bLocal.monthlyLimit, oldCurr, newCurr, baseLimitUSD);
         }
 
         // 3. Convert subscriptions
         if (isMongoDBConnected()) {
-          const subs = await Subscription.find({ userId: user._id });
+          const subs = await Subscription.find({ userId: userQ });
           for (const s of subs) {
-            let baseUSD = s.baseAmountUSD;
-            if (!baseUSD || isNaN(baseUSD)) {
+            let baseUSD = Number(s.baseAmountUSD);
+            if (!baseUSD || isNaN(baseUSD) || baseUSD <= 0) {
               baseUSD = Number(s.amount) / oldRate;
             }
             const newSubAmt = convertAmount(s.amount, oldCurr, newCurr, baseUSD);
@@ -187,11 +193,13 @@ async function updateProfile(req, res) {
         }
         if (db.subscriptions) {
           db.subscriptions.forEach(s => {
-            if (s.userId === user._id) {
-              if (s.baseAmountUSD === undefined || s.baseAmountUSD === null || isNaN(s.baseAmountUSD)) {
-                s.baseAmountUSD = (Number(s.amount) || 0) / oldRate;
+            if (String(s.userId) === String(user._id)) {
+              let baseUSD = Number(s.baseAmountUSD);
+              if (!baseUSD || isNaN(baseUSD) || baseUSD <= 0) {
+                baseUSD = (Number(s.amount) || 0) / oldRate;
               }
-              s.amount = convertAmount(s.amount, oldCurr, newCurr, s.baseAmountUSD);
+              s.baseAmountUSD = baseUSD;
+              s.amount = convertAmount(s.amount, oldCurr, newCurr, baseUSD);
             }
           });
         }

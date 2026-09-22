@@ -201,9 +201,11 @@ class CurrencyService {
     const rateFrom = this.rates[fromNorm] || 1.0;
     const rateTo = this.rates[toNorm] || 1.0;
 
-    // If baseUSD is provided, use it directly to eliminate multi-hop rounding drift
-    const inUSD = (baseUSD !== null && !isNaN(baseUSD)) ? Number(baseUSD) : (num / rateFrom);
-    const converted = inUSD * rateTo;
+    // If baseUSD is provided and positive, use it directly to eliminate multi-hop rounding drift
+    const validBaseUSD = (baseUSD !== null && baseUSD !== undefined && !isNaN(baseUSD) && Number(baseUSD) > 0)
+      ? Number(baseUSD)
+      : (num / rateFrom);
+    const converted = validBaseUSD * rateTo;
 
     // Formatting / rounding:
     // Whole numbers for LKR and INR

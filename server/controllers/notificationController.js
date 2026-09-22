@@ -2,6 +2,7 @@ const { Transaction, Budget, Subscription } = require('../models');
 const { isMongoDBConnected } = require('../config/db');
 const { db } = require('../utils/localDB');
 const currencyService = require('../services/currencyService');
+const { toUserQuery } = require('../utils/dbHelper');
 
 function normalizeCurrency(c) {
   return currencyService.normalizeCurrency(c);
@@ -18,13 +19,14 @@ async function getNotifications(req, res) {
     let userSubs = [];
 
     if (isMongoDBConnected()) {
-      userTx = await Transaction.find({ userId }).lean();
-      budget = await Budget.findOne({ userId }).lean();
-      userSubs = await Subscription.find({ userId }).lean();
+      const userQ = toUserQuery(userId);
+      userTx = await Transaction.find({ userId: userQ }).lean();
+      budget = await Budget.findOne({ userId: userQ }).lean();
+      userSubs = await Subscription.find({ userId: userQ }).lean();
     } else {
-      userTx = db.transactions.filter(t => t.userId === userId);
-      budget = (db.budgets && db.budgets[userId]) || { monthlyLimit: 50000 };
-      userSubs = (db.subscriptions || []).filter(s => s.userId === userId);
+      userTx = db.transactions.filter(t => String(t.userId) === String(userId));
+      budget = (db.budgets && (db.budgets[userId] || db.budgets[String(userId)])) || { monthlyLimit: 50000 };
+      userSubs = (db.subscriptions || []).filter(s => String(s.userId) === String(userId));
     }
 
     const expenses = userTx.filter(t => t.type === 'expense');
