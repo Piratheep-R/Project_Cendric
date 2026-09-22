@@ -15,7 +15,26 @@
       "email": "prasath@gmail.com",
       "password": "$2a$10$vnUSgdLZ.eEPPYIZW4jI6.sMdzvYVneouV7bIdvRSFMkYgqssE5My",
       "currencyPreference": "LKR",
-      "createdAt": "2026-09-20T07:39:22.781Z"
+      "createdAt": "2026-09-20T07:39:22.781Z",
+      "languagePreference": "en"
+    },
+    {
+      "_id": "3cdb928bfc66bc24944b0dac",
+      "fullName": "MERN Verified User",
+      "email": "mern_1790105669311@example.com",
+      "password": "$2a$10$no8HVsBKN51DaZjnE9UT3eOEiG0YdiviakzIn255MXkD9EIbzLvIe",
+      "currencyPreference": "LKR",
+      "languagePreference": "en",
+      "createdAt": "2026-09-22T19:34:29.928Z"
+    },
+    {
+      "_id": "230588e9c4e72b3dbcf6903e",
+      "fullName": "MERN Verified User",
+      "email": "mern_1790106121071@example.com",
+      "password": "$2a$10$tenigbM1jXvexDSatK.Hl.YOioAivdvOK1PsR366cLbRUWO4ExJSq",
+      "currencyPreference": "LKR",
+      "languagePreference": "en",
+      "createdAt": "2026-09-22T19:42:01.611Z"
     }
   ],
   "transactions": [
@@ -83,7 +102,7 @@
       "_id": "3565479b2ce8d7ca0115596a",
       "userId": "4cd75b34685891633f217c38",
       "type": "expense",
-      "amount": 4429121,
+      "amount": 4420670,
       "baseAmountUSD": 13370.002794330583,
       "category": "Bills & Utilities",
       "date": "2026-09-20",
@@ -95,13 +114,37 @@
       "_id": "89b874a11ab60c4fc8c40846",
       "userId": "4cd75b34685891633f217c38",
       "type": "income",
-      "amount": 44291206,
+      "amount": 44206701,
       "baseAmountUSD": 133700.02794330585,
       "category": "Salary",
       "date": "2026-09-20",
       "description": "Salary",
       "source": "manual",
       "createdAt": "2026-09-20T15:55:17.371Z"
+    },
+    {
+      "_id": "4eb3e322788a7722dc7a601b",
+      "userId": "3cdb928bfc66bc24944b0dac",
+      "type": "income",
+      "amount": 150000,
+      "baseAmountUSD": 453.6643490215254,
+      "category": "Freelance MERN",
+      "date": "2026-09-22",
+      "description": "Direct MongoDB Mongoose insertion test",
+      "source": "manual",
+      "createdAt": "2026-09-22T19:34:30.299Z"
+    },
+    {
+      "_id": "a9e727b780027404b898cc62",
+      "userId": "230588e9c4e72b3dbcf6903e",
+      "type": "income",
+      "amount": 150000,
+      "baseAmountUSD": 453.6643490215254,
+      "category": "Freelance MERN",
+      "date": "2026-09-22",
+      "description": "Direct MongoDB Mongoose insertion test",
+      "source": "manual",
+      "createdAt": "2026-09-22T19:42:01.863Z"
     }
   ],
   "chats": [
@@ -153,13 +196,13 @@
     },
     {
       "userId": "4cd75b34685891633f217c38",
-      "sessionId": "7d8d75284f79a047",
+      "sessionId": "4003c322e2a2e68c",
       "messages": []
     }
   ],
   "budgets": {
     "4cd75b34685891633f217c38": {
-      "monthlyLimit": 50000,
+      "monthlyLimit": 49905,
       "alertsEnabled": true,
       "updatedAt": "2026-09-20T08:43:02.808Z",
       "baseLimitUSD": 150.93292729075492
@@ -169,6 +212,18 @@
       "baseLimitUSD": 200,
       "alertsEnabled": true,
       "updatedAt": "2026-09-20T08:48:21.246Z"
+    },
+    "3cdb928bfc66bc24944b0dac": {
+      "monthlyLimit": 75000,
+      "baseLimitUSD": 226.8321745107627,
+      "alertsEnabled": true,
+      "updatedAt": "2026-09-22T19:34:30.922Z"
+    },
+    "230588e9c4e72b3dbcf6903e": {
+      "monthlyLimit": 75000,
+      "baseLimitUSD": 226.8321745107627,
+      "alertsEnabled": true,
+      "updatedAt": "2026-09-22T19:42:02.525Z"
     }
   },
   "subscriptions": [
@@ -226,6 +281,72 @@
       "category": "AI Tools",
       "createdAt": "2026-09-20T08:17:24.850Z",
       "baseAmountUSD": 0.06037317091630196
+    },
+    {
+      "_id": "079cfbd30a10e973",
+      "userId": "3cdb928bfc66bc24944b0dac",
+      "name": "GitHub Pro",
+      "amount": 1323,
+      "baseAmountUSD": 4,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-01",
+      "category": "Software & Tools",
+      "createdAt": "2026-09-22T19:34:31.122Z"
+    },
+    {
+      "_id": "768d327517191de2",
+      "userId": "3cdb928bfc66bc24944b0dac",
+      "name": "Figma Professional",
+      "amount": 4960,
+      "baseAmountUSD": 15,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-05",
+      "category": "Design",
+      "createdAt": "2026-09-22T19:34:31.122Z"
+    },
+    {
+      "_id": "23a956d81be68e72",
+      "userId": "3cdb928bfc66bc24944b0dac",
+      "name": "ChatGPT Plus",
+      "amount": 6613,
+      "baseAmountUSD": 20,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-12",
+      "category": "AI Tools",
+      "createdAt": "2026-09-22T19:34:31.122Z"
+    },
+    {
+      "_id": "9b6d98ffe2aefb68",
+      "userId": "230588e9c4e72b3dbcf6903e",
+      "name": "GitHub Pro",
+      "amount": 1323,
+      "baseAmountUSD": 4,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-01",
+      "category": "Software & Tools",
+      "createdAt": "2026-09-22T19:42:02.750Z"
+    },
+    {
+      "_id": "9018bf4a69d0ad94",
+      "userId": "230588e9c4e72b3dbcf6903e",
+      "name": "Figma Professional",
+      "amount": 4960,
+      "baseAmountUSD": 15,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-05",
+      "category": "Design",
+      "createdAt": "2026-09-22T19:42:02.750Z"
+    },
+    {
+      "_id": "11d9d24b43660267",
+      "userId": "230588e9c4e72b3dbcf6903e",
+      "name": "ChatGPT Plus",
+      "amount": 6613,
+      "baseAmountUSD": 20,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-12",
+      "category": "AI Tools",
+      "createdAt": "2026-09-22T19:42:02.750Z"
     }
   ]
 }
