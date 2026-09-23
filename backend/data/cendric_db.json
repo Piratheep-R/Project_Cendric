@@ -44,6 +44,15 @@
       "currencyPreference": "LKR",
       "languagePreference": "en",
       "createdAt": "2026-09-22T20:00:33.788Z"
+    },
+    {
+      "_id": "647574c27862bbb661db64b3",
+      "fullName": "MERN Verified User",
+      "email": "mern_1790179538101@example.com",
+      "password": "$2a$10$f0WFU.cUotC9v.f2KNPJxeDmRMxCgH1sAKrtIpyuyWMlOeUe1y0Ua",
+      "currencyPreference": "LKR",
+      "languagePreference": "en",
+      "createdAt": "2026-09-23T16:05:38.381Z"
     }
   ],
   "transactions": [
@@ -154,6 +163,18 @@
       "description": "Direct MongoDB Mongoose insertion test",
       "source": "manual",
       "createdAt": "2026-09-22T19:42:01.863Z"
+    },
+    {
+      "_id": "b5f52248bb5dea4996172377",
+      "userId": "647574c27862bbb661db64b3",
+      "type": "income",
+      "amount": 150000,
+      "baseAmountUSD": 454.161829553023,
+      "category": "Freelance MERN",
+      "date": "2026-09-23",
+      "description": "Direct MongoDB Mongoose insertion test",
+      "source": "manual",
+      "createdAt": "2026-09-23T16:05:38.652Z"
     }
   ],
   "chats": [
@@ -356,6 +377,39 @@
       "renewalDate": "2026-10-12",
       "category": "AI Tools",
       "createdAt": "2026-09-22T19:42:02.750Z"
+    },
+    {
+      "_id": "ef08adbc0c06759f",
+      "userId": "647574c27862bbb661db64b3",
+      "name": "GitHub Pro",
+      "amount": 1321,
+      "baseAmountUSD": 4,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-01",
+      "category": "Software & Tools",
+      "createdAt": "2026-09-23T16:05:39.523Z"
+    },
+    {
+      "_id": "b0985186286e5b88",
+      "userId": "647574c27862bbb661db64b3",
+      "name": "Figma Professional",
+      "amount": 4954,
+      "baseAmountUSD": 15,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-05",
+      "category": "Design",
+      "createdAt": "2026-09-23T16:05:39.523Z"
+    },
+    {
+      "_id": "42ffe40f4af7f093",
+      "userId": "647574c27862bbb661db64b3",
+      "name": "ChatGPT Plus",
+      "amount": 6606,
+      "baseAmountUSD": 20,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-12",
+      "category": "AI Tools",
+      "createdAt": "2026-09-23T16:05:39.523Z"
     }
   ]
 }

@@ -8,32 +8,41 @@ Cendric is an AI-powered financial management and real-time tax intelligence pla
 
 ```
 project-Cendric/
-├── client/                        # Frontend Web Application
+├── frontend/                      # React 19 Frontend Web Application
 │   ├── dist/                      # Production-ready web assets
 │   │   ├── assets/                # Stylesheets, scripts & branding imagery
-│   │   │   ├── cendric-enhancements.js # Client UI enhancements, charts & modals
+│   │   │   ├── cendric-enhancements.js # Trilingual i18n, live bill scanner, dynamic DOM
 │   │   │   ├── index-Dr3oI3zo.css      # Precision Frosted Glass Design System (Light & Dark)
 │   │   │   └── index-k68ZFBuM.js       # React 19 core application bundle
-│   │   ├── favicon.svg            # Browser icon
-│   │   ├── icons.svg              # App icons
+│   │   ├── favicon.svg            # Browser vector icon
+│   │   ├── icons.svg              # App icons sprite
 │   │   ├── index.html             # HTML entry point (served by Express)
 │   │   ├── manifest.json          # PWA configuration
 │   │   └── sw.js                  # Service worker
-│   ├── package.json               # Client dependencies specification
+│   ├── package.json               # Client dependencies (React 19, Lucide, Tailwind, Vite)
 │   └── README.md                  # Frontend documentation
 │
-├── server/                        # Backend REST API & Intelligence Services
-│   ├── data/                      # Persistent database & knowledge bases
-│   │   ├── cendric_db.json        # Embedded persistent JSON database
-│   │   ├── sri_lanka_tax_kb.json  # Sri Lankan Inland Revenue Act No. 24 of 2017 tax corpus
+├── backend/                       # Node.js & Express.js REST API & AI Services
+│   ├── config/                    # MongoDB Atlas Mongoose connection & resilience
+│   ├── controllers/               # Business logic & route handlers (MVC)
+│   ├── data/                      # Persistent database & legal knowledge base
+│   │   ├── cendric_db.json        # Offline fallback database
+│   │   ├── sri_lanka_tax_kb.json  # Sri Lankan Inland Revenue Act tax corpus
 │   │   └── cached_exchange_rates.json # Auto-updating real-time currency exchange rates
-│   ├── services/                  # Modular backend domain services
-│   │   ├── ragService.js          # Sri Lankan tax RAG retrieval & deduction calculator
-│   │   └── currencyService.js     # Live currency exchange rate sync engine
+│   ├── middleware/                # JWT verification & Multer receipt upload
+│   ├── models/                    # Mongoose schemas (User, Transaction, Budget, etc.)
+│   ├── routes/                    # Modular Express REST route definitions
+│   ├── scripts/                   # Automated MERN testing suite (testMern.js)
+│   ├── services/                  # Modular backend domain services (RAG, FX Rates)
+│   ├── utils/                     # Database helpers & local fallback managers
 │   ├── .env.example               # Backend environment variable template
 │   ├── package.json               # Backend dependencies & scripts
 │   ├── server.js                  # Express.js REST API & SSE streaming server
 │   └── README.md                  # Backend documentation
+│
+├── docs/                          # Project Documentation & Academic Artifacts
+│   ├── ARCHITECTURE.md            # Detailed system architecture specification
+│   └── VIVA_GUIDE.md              # Comprehensive viva examination preparation guide
 │
 ├── .env.example                   # Quick-copy environment configuration
 ├── .gitignore                     # Git exclusion rules (node_modules, .env, backups)

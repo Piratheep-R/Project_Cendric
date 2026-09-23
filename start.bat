@@ -1,6 +1,6 @@
 @echo off
 title Cendric AI Finance Assistant
-cd /d "%~dp0server"
+cd /d "%~dp0backend"
 
 echo ===================================================
 echo Checking port 5000...

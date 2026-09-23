@@ -2,11 +2,11 @@
   "name": "project-cendric",
   "version": "1.0.0",
   "description": "Cendric AI — Personal Finance & Sri Lankan Tax Intelligence Platform",
-  "main": "server/server.js",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "dev": "node server/server.js",
-    "build": "cd server && npm install"
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "build": "cd backend && npm install"
   },
   "engines": {
     "node": ">=18.0.0"

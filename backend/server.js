@@ -31,7 +31,9 @@ app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 app.use('/api', apiRoutes);
 
 // Static Client Frontend Serving (React Single Page Application)
-const clientDistPath = path.resolve(__dirname, '../client/dist');
+const clientDistPath = fs.existsSync(path.resolve(__dirname, '../frontend/dist'))
+  ? path.resolve(__dirname, '../frontend/dist')
+  : path.resolve(__dirname, '../client/dist');
 
 if (fs.existsSync(clientDistPath)) {
   app.use(express.static(clientDistPath, {
