@@ -129,7 +129,8 @@ async function streamChat(req, res) {
     if (apiKey && (apiKey.startsWith('AIza') || apiKey.startsWith('AQ.') || apiKey.length > 20)) {
       try {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const targetModel = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+        const model = genAI.getGenerativeModel({ model: targetModel });
 
         let ragContext = '';
         if (retrievedLaws.length > 0) {
@@ -366,7 +367,8 @@ async function postChatMessage(req, res) {
     if (apiKey && (apiKey.startsWith('AIza') || apiKey.startsWith('AQ.') || apiKey.length > 20)) {
       try {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const targetModel = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+        const model = genAI.getGenerativeModel({ model: targetModel });
 
         let ragContext = '';
         if (retrievedLaws.length > 0) {
