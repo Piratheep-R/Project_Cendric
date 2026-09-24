@@ -51,7 +51,27 @@ async function getSubscriptions(req, res) {
       saveDB();
     }
 
-    res.json(userSubs);
+    const userCurr = normalizeCurrency(req.user.currencyPreference || 'LKR');
+    const rate = currencyService.getRateFor(userCurr);
+
+    const formattedSubs = userSubs.map(s => {
+      let baseUSD = Number(s.baseAmountUSD);
+      if (!baseUSD || isNaN(baseUSD) || baseUSD <= 0) {
+        if ((userCurr === 'LKR' || userCurr === 'INR') && s.amount < 100) {
+          baseUSD = Number(s.amount);
+        } else {
+          baseUSD = Number(s.amount) / rate;
+        }
+      }
+      const convertedAmount = userCurr === 'USD' ? baseUSD : Math.round(baseUSD * rate);
+      return {
+        ...s,
+        baseAmountUSD: baseUSD,
+        amount: convertedAmount
+      };
+    });
+
+    res.json(formattedSubs);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch subscriptions.' });
   }

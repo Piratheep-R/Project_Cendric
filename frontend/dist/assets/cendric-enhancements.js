@@ -1068,12 +1068,22 @@
 
     const curr = getCurrency();
     const currSym = getCurrencySymbol(curr);
+    const rates = cachedLiveRates?.rates || {};
+    const rate = rates[curr] || (curr === 'LKR' ? 331.27 : 1);
+
+    const convertedSubs = (subs || []).map(s => {
+      let amt = Number(s.amount) || 0;
+      if (curr === 'LKR' && amt < 100) {
+        amt = Math.round(amt * rate);
+      }
+      return { ...s, displayAmount: amt };
+    });
 
     const card = document.createElement('div');
     card.id = 'cendric-subs-card';
     card.className = 'cendric-glass-card';
 
-    const totalSub = subs.reduce((sum, s) => sum + (Number(s.amount) || 0), 0);
+    const totalSub = convertedSubs.reduce((sum, s) => sum + (Number(s.displayAmount) || 0), 0);
 
     card.innerHTML = `
       <div class="cendric-analytics-header">
@@ -1087,14 +1097,14 @@
         </div>
         <div style="display: flex; align-items: center; gap: 12px;">
           <span style="font-size: 13px; font-weight: 600; color: var(--text-primary);">
-            Burn Rate: <strong style="color: var(--accent); font-weight: 800;">${formatMoney(totalSub)}/mo</strong>
+            Burn Rate: <strong style="color: var(--accent); font-weight: 800;">${formatMoney(totalSub, curr)}/mo</strong>
           </span>
           <button id="cendric-add-sub-btn" class="cendric-pill-btn">+ Add Tool</button>
         </div>
       </div>
 
       <div class="cendric-subs-grid">
-        ${subs.map(s => `
+        ${convertedSubs.map(s => `
           <div class="cendric-sub-tile">
             <div style="display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1;">
               <div class="cendric-sub-icon">⚡</div>
@@ -1104,7 +1114,7 @@
               </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: 12px;">
-              <span class="cendric-sub-price">${formatMoney(s.amount)}<span style="font-size: 11px; font-weight: 500; color: var(--text-muted);">/mo</span></span>
+              <span class="cendric-sub-price">${formatMoney(s.displayAmount, curr)}<span style="font-size: 11px; font-weight: 500; color: var(--text-muted);">/mo</span></span>
               <button class="cendric-sub-del-btn" data-id="${s._id}" title="Remove subscription">✕</button>
             </div>
           </div>
@@ -2806,7 +2816,7 @@
 
         <div class="cendric-modal-body" style="padding: 16px 20px; overflow-y: auto; flex: 1;">
           <!-- Action bar with toggle between Edit and Preview -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border-subtle);">
+          <div class="cendric-inv-action-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border-subtle);">
             <div style="display: flex; gap: 8px;">
               <button id="cendric-inv-tab-edit" class="cendric-pill-btn active" style="padding: 6px 14px; font-size: 12px;">✏️ Edit Details</button>
               <button id="cendric-inv-tab-preview" class="cendric-pill-btn" style="padding: 6px 14px; font-size: 12px;">👁️ Printable Preview</button>
@@ -2824,7 +2834,7 @@
           <!-- EDIT FORM VIEW -->
           <div id="cendric-inv-edit-view">
             <!-- Row 1: Freelancer & Client Info -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+            <div class="cendric-inv-grid-parties" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
               <div style="padding: 12px; border-radius: 12px; background: var(--glass-inner-bg); border: 1px solid var(--glass-border-subtle);">
                 <span style="font-size: 12px; font-weight: 700; color: var(--accent); display: block; margin-bottom: 8px;">Freelancer Details (Payee)</span>
                 <input type="text" id="cendric-inv-from-name" value="${userFullName}" placeholder="Your Full Name" style="width: 100%; margin-bottom: 6px; padding: 7px 10px; border-radius: 7px; border: 1px solid var(--glass-border-subtle); background: var(--bg-primary); color: var(--text-primary); font-size: 12px; box-sizing: border-box;" />
@@ -2841,7 +2851,7 @@
             </div>
 
             <!-- Row 2: Invoice Metadata & Currency -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div class="cendric-inv-grid-meta" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px;">
               <div>
                 <label style="font-size: 11px; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 4px;">Invoice #</label>
                 <input type="text" id="cendric-inv-number" value="INV-${new Date().getFullYear()}-001" style="width: 100%; padding: 7px 10px; border-radius: 7px; border: 1px solid var(--glass-border-subtle); background: var(--glass-inner-bg); color: var(--text-primary); font-size: 12px; box-sizing: border-box;" />
@@ -2883,7 +2893,7 @@
             <!-- Inward Remittance Banking Details -->
             <div style="padding: 12px; border-radius: 12px; background: var(--glass-inner-bg); border: 1px solid var(--glass-border-subtle); margin-bottom: 14px;">
               <span style="font-size: 12px; font-weight: 700; color: #10b981; display: block; margin-bottom: 8px;">🇱🇰 Sri Lankan Bank Remittance Details (For Direct SWIFT Transfer)</span>
-              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+              <div class="cendric-inv-grid-bank" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
                 <input type="text" id="cendric-inv-bank-name" value="Commercial Bank of Ceylon PLC" placeholder="Bank Name" style="padding: 7px 10px; border-radius: 7px; border: 1px solid var(--glass-border-subtle); background: var(--bg-primary); color: var(--text-primary); font-size: 12px; box-sizing: border-box;" />
                 <input type="text" id="cendric-inv-bank-swift" value="CCEYLKFX" placeholder="SWIFT / BIC Code" style="padding: 7px 10px; border-radius: 7px; border: 1px solid var(--glass-border-subtle); background: var(--bg-primary); color: var(--text-primary); font-size: 12px; box-sizing: border-box;" />
                 <input type="text" id="cendric-inv-bank-account" value="8010049281 (USD Foreign Account)" placeholder="Account Number" style="padding: 7px 10px; border-radius: 7px; border: 1px solid var(--glass-border-subtle); background: var(--bg-primary); color: var(--text-primary); font-size: 12px; box-sizing: border-box;" />
@@ -3018,11 +3028,11 @@
     if (!container) return;
 
     container.innerHTML = invoiceItems.map((item, idx) => `
-      <div style="display: grid; grid-template-columns: 3fr 1fr 1fr 1fr auto; gap: 8px; align-items: center;">
+      <div class="cendric-inv-line-row" style="display: grid; grid-template-columns: 3fr 1fr 1fr 1fr auto; gap: 8px; align-items: center;">
         <input type="text" class="cendric-inv-item-desc" data-idx="${idx}" value="${item.description}" placeholder="Description" style="padding: 6px 10px; border-radius: 6px; border: 1px solid var(--glass-border-subtle); background: var(--bg-primary); color: var(--text-primary); font-size: 12px;" />
         <input type="number" class="cendric-inv-item-hours" data-idx="${idx}" value="${item.hours}" placeholder="Hours/Qty" style="padding: 6px 10px; border-radius: 6px; border: 1px solid var(--glass-border-subtle); background: var(--bg-primary); color: var(--text-primary); font-size: 12px;" />
         <input type="number" class="cendric-inv-item-rate" data-idx="${idx}" value="${item.rate}" placeholder="Rate" style="padding: 6px 10px; border-radius: 6px; border: 1px solid var(--glass-border-subtle); background: var(--bg-primary); color: var(--text-primary); font-size: 12px;" />
-        <span style="font-size: 12px; font-weight: 700; color: var(--text-primary); text-align: right;">${(Number(item.hours || 0) * Number(item.rate || 0)).toFixed(2)}</span>
+        <span class="cendric-inv-item-total" style="font-size: 12px; font-weight: 700; color: var(--text-primary); text-align: right;">${(Number(item.hours || 0) * Number(item.rate || 0)).toFixed(2)}</span>
         <button class="cendric-inv-item-del" data-idx="${idx}" style="background: none; border: none; color: #ef4444; font-size: 14px; cursor: pointer; padding: 4px;" title="Remove row">✕</button>
       </div>
     `).join('');
@@ -5380,6 +5390,15 @@
   function setupMobileDrawer() {
     const aside = document.querySelector('aside');
     if (!aside) return;
+
+    // 0. Create or ensure Mobile Top Navigation Bar Backdrop
+    let mobileNav = document.getElementById('cendric-mobile-navbar');
+    if (!mobileNav) {
+      mobileNav = document.createElement('div');
+      mobileNav.id = 'cendric-mobile-navbar';
+      mobileNav.className = 'cendric-mobile-navbar';
+      document.body.appendChild(mobileNav);
+    }
 
     // 1. Create or ensure Fullscreen Backdrop
     let backdrop = document.getElementById('cendric-sidebar-backdrop');

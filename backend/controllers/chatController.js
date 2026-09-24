@@ -193,7 +193,7 @@ Respond concisely with markdown formatting. Keep responses under 300 words.`;
     let answer = '';
 
     if (retrievedLaws.length > 0) {
-      const taxAns = ragService.generateAuthoritativeAnswer(q, retrievedLaws, { currency, totalIncome, totalExpense });
+      const taxAns = ragService.generateAuthoritativeAnswer(q, retrievedLaws, { currency, totalIncome, totalExpense, lang: userLang });
       if (taxAns) answer = taxAns;
     }
 
@@ -426,7 +426,8 @@ Respond helpfully, politely, and concisely with practical numbers, insights, or 
         const taxAns = ragService.generateAuthoritativeAnswer(q, retrievedLaws, {
           currency,
           totalIncome,
-          totalExpense
+          totalExpense,
+          lang: userLang
         });
         if (taxAns) {
           answer = taxAns;

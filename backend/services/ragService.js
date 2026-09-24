@@ -245,11 +245,25 @@ class RagService {
     const totalIncome = userFinancials.totalIncome || 0;
     const totalExpense = userFinancials.totalExpense || 0;
 
+    // Detect target language: user preference or script auto-detection
+    const isTa = userFinancials.lang === 'ta' || /[\u0B80-\u0BFF]/.test(query);
+    const isSi = userFinancials.lang === 'si' || /[\u0D80-\u0DFF]/.test(query);
+
     // 1. Check if user asked to calculate tax or asked how much tax to pay
     const numberMatch = query.match(/(?:lkr|rs\.?|\$)?\s*([0-9]+(?:,[0-9]+)*(?:\.[0-9]+)?)\s*(m|million|k|lakhs?)?\b/i);
     let targetAmount = null;
 
-    if (numberMatch && (qLower.includes('calculate') || qLower.includes('tax on') || qLower.includes('how much tax') || qLower.includes('estimate') || qLower.includes('pay for tax'))) {
+    const hasTaxCalcIntent = 
+      qLower.includes('calculate') || qLower.includes('tax on') || qLower.includes('how much tax') || 
+      qLower.includes('estimate') || qLower.includes('pay for tax') || qLower.includes('pay in tax') ||
+      qLower.includes('apit') || qLower.includes('pit') || qLower.includes('income tax') ||
+      // Tamil intent keywords
+      qLower.includes('கணக்கிடு') || qLower.includes('கணக்கிடுங்கள்') || qLower.includes('கணக்கிட') || 
+      qLower.includes('வரி') || qLower.includes('வருமானம்') || qLower.includes('மதிப்பிடு') ||
+      // Sinhala intent keywords
+      qLower.includes('ගණනය') || qLower.includes('ගණන්') || qLower.includes('බදු') || qLower.includes('ආදායම');
+
+    if (numberMatch && hasTaxCalcIntent) {
       let rawNum = parseFloat(numberMatch[1].replace(/,/g, ''));
       const unit = (numberMatch[2] || '').toLowerCase();
       if (unit === 'm' || unit === 'million') rawNum *= 1000000;
@@ -266,6 +280,8 @@ class RagService {
       qLower.includes('tax do i have to pay') ||
       qLower.includes('how much tax') ||
       qLower.includes('what is my tax') ||
+      (qLower.includes('வரி') && (qLower.includes('என்') || qLower.includes('மதிப்') || qLower.includes('எவ்வளவு'))) ||
+      (qLower.includes('බදු') && (qLower.includes('මගේ') || qLower.includes('කොපමණ'))) ||
       (qLower.includes('tax') && (qLower.includes('how much') || qLower.includes('pay') || qLower.includes('owe')))
     ) {
       targetAmount = totalIncome > 0 ? totalIncome : 0;
@@ -273,6 +289,78 @@ class RagService {
 
     if (targetAmount !== null && targetAmount > 0) {
       const calc = this.calculateSriLankanTax(targetAmount, totalExpense > 0 ? Math.min(targetAmount * 0.4, totalExpense) : 0);
+
+      if (isTa) {
+        let res = `🇱🇰 **இலங்கை தனிநபர் வருமான வரி (APIT) கணக்கீடு**\n\n`;
+        res += `**உள்நாட்டு இறைவரிச் சட்டம் (Inland Revenue Act No. 24 of 2017 - திருத்தப்பட்டது):**\n\n`;
+        res += `• **மொத்த வருமானம் (Gross Income):** LKR ${calc.grossIncome.toLocaleString()}\n`;
+        if (calc.allowableDeductions > 0) {
+          res += `• **அனுமதிக்கப்பட்ட கழிவுகள் (Section 11):** -LKR ${calc.allowableDeductions.toLocaleString()}\n`;
+          res += `• **மதிப்பிடத்தக்க வருமானம் (Assessable Income):** LKR ${calc.netIncome.toLocaleString()}\n`;
+        }
+        res += `• **வரி இல்லாத தனிநபர் சலுகை (Personal Relief):** -LKR 1,200,000 (மாதம் LKR 100,000)\n`;
+        res += `• **வரிக்குட்பட்ட நிகர வருமானம் (Taxable Income):** LKR ${calc.taxableIncome.toLocaleString()}\n\n`;
+
+        if (calc.taxableIncome <= 0) {
+          res += `🎉 **வரி எதுவும் செலுத்த வேண்டியதில்லை (Zero Tax)!** உங்கள் வருமானம் சட்டரீதியான வரி விலக்கு வரம்பான LKR 1,200,000 இற்குள் உள்ளது.\n\n`;
+        } else {
+          res += `### 📊 படிமுறை வரி விவரம் (Progressive Slabs):\n`;
+          calc.breakdown.forEach(b => {
+            let slabLabelTa = b.label
+              .replace('6% on first LKR 500,000', 'முதல் LKR 500,000 இற்கு 6%')
+              .replace('12% on next LKR 500,000', 'அடுத்த LKR 500,000 இற்கு 12%')
+              .replace('18% on next LKR 500,000', 'அடுத்த LKR 500,000 இற்கு 18%')
+              .replace('24% on next LKR 500,000', 'அடுத்த LKR 500,000 இற்கு 24%')
+              .replace('30% on next LKR 500,000', 'அடுத்த LKR 500,000 இற்கு 30%')
+              .replace('36% on remaining balance', 'மீதித் தொகைக்கு 36%');
+            res += `• **${slabLabelTa}:** LKR ${b.taxedAmount.toLocaleString()} @ ${b.ratePct} = **LKR ${b.taxAmount.toLocaleString()}**\n`;
+          });
+          res += `\n**மொத்த வருடாந்திர வரி (Total APIT):** **LKR ${calc.totalTax.toLocaleString()}**\n`;
+          res += `• **செயல்திறன் வரி விகிதம் (Effective Tax Rate):** ${calc.effectiveRate}\n`;
+          res += `• **மாதாந்திர தோராய தவணை (Monthly APIT):** ~LKR ${Math.round(calc.totalTax / 12).toLocaleString()} / மாதம்\n`;
+          res += `• **காலாண்டு முன்கூட்டிய தவணை (Quarterly APIT):** ~LKR ${Math.round(calc.totalTax / 4).toLocaleString()} / காலாண்டு\n\n`;
+        }
+
+        res += `> 💡 **குறிப்பு:** உங்கள் வருமானம் **IT & மென்பொருள் ஏற்றுமதி சேவைகள்** மூலம் வணிக வங்கி ஊடாக வெளிநாட்டு நாணயத்தில் (USD/EUR) பெறப்பட்டால், உள்நாட்டு இறைவரிச் சட்டத்தின் மூன்றாம் அட்டவணை (Third Schedule) கீழ் வரி விலக்கு கோரலாம். அதற்கான வங்கி கடன் சான்றுகளை (Bank Credit Advices) எப்போதும் பாதுகாத்து வையுங்கள்.`;
+        return res;
+      }
+
+      if (isSi) {
+        let res = `🇱🇰 **ශ්‍රී ලංකා පුද්ගලික ආදායම් බදු (APIT) ගණනය කිරීම**\n\n`;
+        res += `**දේශීය ආදායම් පනත (Inland Revenue Act No. 24 of 2017 - සංශෝධිත):**\n\n`;
+        res += `• **මුළු ආදායම (Gross Income):** LKR ${calc.grossIncome.toLocaleString()}\n`;
+        if (calc.allowableDeductions > 0) {
+          res += `• **අනුමත අඩුකිරීම් (Section 11):** -LKR ${calc.allowableDeductions.toLocaleString()}\n`;
+          res += `• **තක්සේරු කළ හැකි ආදායම:** LKR ${calc.netIncome.toLocaleString()}\n`;
+        }
+        res += `• **බදු රහිත පුද්ගලික සහනය:** -LKR 1,200,000 (මසකට LKR 100,000)\n`;
+        res += `• **බදු අයවිය හැකි ශුද්ධ ආදායම:** LKR ${calc.taxableIncome.toLocaleString()}\n\n`;
+
+        if (calc.taxableIncome <= 0) {
+          res += `🎉 **බදු ගෙවීමට අවශ්‍ය නැත!** ඔබගේ ආදායම වසරකට LKR 1,200,000 බදු රහිත සීමාව තුළ පවතී.\n\n`;
+        } else {
+          res += `### 📊 ප්‍රගතිශීලී බදු අනුපාත විස්තරය (Progressive Slabs):\n`;
+          calc.breakdown.forEach(b => {
+            let slabLabelSi = b.label
+              .replace('6% on first LKR 500,000', 'පළමු LKR 500,000 සඳහා 6%')
+              .replace('12% on next LKR 500,000', 'ඊළඟ LKR 500,000 සඳහා 12%')
+              .replace('18% on next LKR 500,000', 'ඊළඟ LKR 500,000 සඳහා 18%')
+              .replace('24% on next LKR 500,000', 'ඊළඟ LKR 500,000 සඳහා 24%')
+              .replace('30% on next LKR 500,000', 'ඊළඟ LKR 500,000 සඳහා 30%')
+              .replace('36% on remaining balance', 'ඉතිරි ශේෂය සඳහා 36%');
+            res += `• **${slabLabelSi}:** LKR ${b.taxedAmount.toLocaleString()} @ ${b.ratePct} = **LKR ${b.taxAmount.toLocaleString()}**\n`;
+          });
+          res += `\n**ගෙවිය යුතු මුළු වාර්ෂික බද්ද (Total APIT):** **LKR ${calc.totalTax.toLocaleString()}**\n`;
+          res += `• **ඵලදායී බදු අනුපාතය:** ${calc.effectiveRate}\n`;
+          res += `• **මාසික ඇස්තමේන්තුව (Monthly APIT):** ~LKR ${Math.round(calc.totalTax / 12).toLocaleString()} / මසකට\n`;
+          res += `• **කාර්තුමය අත්තිකාරම් ගෙවීම:** ~LKR ${Math.round(calc.totalTax / 4).toLocaleString()} / කාර්තුවකට\n\n`;
+        }
+
+        res += `> 💡 **සටහන:** ඔබගේ ආදායම **තොරතුරු තාක්ෂණ / මෘදුකාංග අපනයන සේවා (IT Export)** මගින් වාණිජ බැංකු හරහා විදේශ විනිමයෙන් (USD/EUR) උපයා ගන්නේ නම්, 3 වන උපලේඛනය යටතේ බදු නිදහස් වේ. බැංකු ණය උපදෙස් (Bank Credit Advices) සුරක්ෂිතව තබා ගන්න.`;
+        return res;
+      }
+
+      // Default English response
       let res = `🇱🇰 **Sri Lankan Personal Income Tax (PIT) Calculation**\n\n`;
       res += `Based on the **Inland Revenue Act No. 24 of 2017 (as amended)**:\n\n`;
       res += `• **Gross Freelance Income:** LKR ${calc.grossIncome.toLocaleString()}\n`;
@@ -292,6 +380,7 @@ class RagService {
         });
         res += `\n**Total Estimated Annual Tax Payable:** **LKR ${calc.totalTax.toLocaleString()}**\n`;
         res += `• **Effective Tax Rate:** ${calc.effectiveRate}\n`;
+        res += `• **Monthly APIT Estimate:** ~LKR ${Math.round(calc.totalTax / 12).toLocaleString()} / month\n`;
         res += `• **Quarterly Advance Payment:** ~LKR ${Math.round(calc.totalTax / 4).toLocaleString()} / quarter\n\n`;
       }
 
@@ -302,6 +391,41 @@ class RagService {
     // 2. Synthesize using top retrieved legal chunks
     if (retrievedChunks.length > 0) {
       const primary = retrievedChunks[0];
+
+      if (isTa) {
+        let response = `🇱🇰 **${primary.title}**\n\n`;
+        response += `${primary.content}\n\n`;
+        if (retrievedChunks.length > 1) {
+          const secondary = retrievedChunks[1];
+          response += `### 📌 தொடர்புடைய விதிமுறை: ${secondary.title}\n${secondary.summary}\n\n`;
+        }
+        response += `**சட்டரீதியான ஆதாரம் (Legal Authority):**\n`;
+        retrievedChunks.forEach(c => {
+          response += `• 📜 *${c.act}* (${c.section})\n`;
+        });
+        if (totalIncome > 0) {
+          response += `\n**உங்கள் தற்போதைய நிதி நிலை:** பதிவு செய்யப்பட்ட வருமானம் **${currency} ${totalIncome.toLocaleString()}**, செலவுகள் **${currency} ${totalExpense.toLocaleString()}**.`;
+        }
+        return response;
+      }
+
+      if (isSi) {
+        let response = `🇱🇰 **${primary.title}**\n\n`;
+        response += `${primary.content}\n\n`;
+        if (retrievedChunks.length > 1) {
+          const secondary = retrievedChunks[1];
+          response += `### 📌 අදාළ රෙගුලාසිය: ${secondary.title}\n${secondary.summary}\n\n`;
+        }
+        response += `**නීතිමය මූලාශ්‍රය (Legal Authority):**\n`;
+        retrievedChunks.forEach(c => {
+          response += `• 📜 *${c.act}* (${c.section})\n`;
+        });
+        if (totalIncome > 0) {
+          response += `\n**ඔබගේ වත්මන් ශේෂය:** වාර්තාගත ආදායම **${currency} ${totalIncome.toLocaleString()}**, වියදම් **${currency} ${totalExpense.toLocaleString()}**.`;
+        }
+        return response;
+      }
+
       let response = `🇱🇰 **${primary.title}**\n\n`;
       response += `${primary.content}\n\n`;
 

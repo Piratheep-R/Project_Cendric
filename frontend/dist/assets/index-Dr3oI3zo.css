@@ -5613,14 +5613,43 @@ body.cendric-drawer-open {
     width: 100% !important;
     max-width: 100vw !important;
     margin: 0 !important;
-    padding: 68px 14px 28px !important;
+    padding: 72px 14px 28px !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
   }
 
+  /* Fixed Top App Bar Header Backdrop for Mobile */
+  .cendric-mobile-navbar {
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 58px !important;
+    background: rgba(18, 24, 39, 0.94) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
+    z-index: 9980 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  :root:not([data-theme="dark"]) .cendric-mobile-navbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  /* Top Hamburger Toggle Button */
+  .cendric-mobile-toggle-btn {
+    top: 9px !important;
+    left: 12px !important;
+    z-index: 9999 !important;
+  }
+
   /* Top Right Dock (Language & Notifications) */
   .cendric-top-dock {
-    top: 12px !important;
+    top: 9px !important;
     right: 12px !important;
     gap: 8px !important;
     z-index: 9990 !important;
@@ -5649,10 +5678,25 @@ body.cendric-drawer-open {
     margin: 0 auto !important;
   }
 
-  /* Chat Viewport Responsiveness */
-  .cendric-chat-header-actions {
-    margin-right: 0 !important;
-    position: static !important;
+  /* Chat Viewport on Mobile: contained strictly below 58px top navbar */
+  #cendric-chat-overlay {
+    top: 58px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: calc(100vh - 58px) !important;
+    min-height: calc(100vh - 58px) !important;
+    max-height: calc(100vh - 58px) !important;
+    overflow: hidden !important;
+    z-index: 20 !important;
+  }
+
+  .cendric-chat-header {
+    display: none !important; /* Top navbar already houses drawer toggle, language selector, and notifications */
+  }
+
+  .cendric-chat-messages {
+    padding: 14px 12px 8px !important;
   }
 
   .cendric-prompt-chips-wrapper,
@@ -5672,6 +5716,130 @@ body.cendric-drawer-open {
     padding: 7px 14px !important;
     font-size: 12px !important;
     border-radius: 20px !important;
+  }
+
+  /* Subscriptions Card & Analytics Header Mobile Safety */
+  .cendric-analytics-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .cendric-analytics-header > div:last-child {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  #cendric-subs-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .cendric-subs-grid {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .cendric-sub-tile {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    padding: 12px 14px !important;
+  }
+
+  .cendric-sub-tile > div:first-child {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  .cendric-sub-tile > div:last-child {
+    flex-shrink: 0 !important;
+    margin-left: 8px !important;
+  }
+
+  /* Invoice Modal Mobile Optimization */
+  .cendric-inv-action-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .cendric-inv-action-bar > div {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+  }
+
+  .cendric-inv-action-bar button {
+    flex: 1 !important;
+    text-align: center !important;
+    justify-content: center !important;
+    font-size: 11px !important;
+    padding: 7px 6px !important;
+  }
+
+  .cendric-inv-grid-parties {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .cendric-inv-grid-meta {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .cendric-inv-grid-bank {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .cendric-inv-line-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    padding: 8px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid var(--glass-border-subtle) !important;
+    border-radius: 8px !important;
+    margin-bottom: 8px !important;
+    align-items: center !important;
+  }
+
+  .cendric-inv-line-row .cendric-inv-item-desc {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .cendric-inv-line-row .cendric-inv-item-hours {
+    width: calc(30% - 6px) !important;
+    flex: 1 !important;
+    box-sizing: border-box !important;
+  }
+
+  .cendric-inv-line-row .cendric-inv-item-rate {
+    width: calc(30% - 6px) !important;
+    flex: 1 !important;
+    box-sizing: border-box !important;
+  }
+
+  .cendric-inv-line-row .cendric-inv-item-total {
+    flex: 1 !important;
+    text-align: right !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+  }
+
+  .cendric-inv-line-row .cendric-inv-item-del {
+    padding: 4px 8px !important;
+    font-size: 14px !important;
   }
 
   /* Chat Message Bubbles */
@@ -5711,8 +5879,8 @@ body.cendric-drawer-open {
   .cendric-modal-dialog {
     max-width: 100% !important;
     width: 100% !important;
-    max-height: 88vh !important;
-    border-radius: 24px 24px 16px 16px !important;
+    max-height: 90vh !important;
+    border-radius: 20px 20px 14px 14px !important;
     margin: 0 !important;
   }
 
@@ -5721,7 +5889,7 @@ body.cendric-drawer-open {
   }
 
   .cendric-modal-dialog > div:nth-child(2) {
-    padding: 16px !important;
+    padding: 14px !important;
   }
 
   .cendric-tax-type-grid {
