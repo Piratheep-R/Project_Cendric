@@ -7,7 +7,9 @@
       "password": "$2a$10$cqDMZVG94bw0CO5Ush2q6edy3y4Lp2vDMCRdDhSsmCW2QcurBY/q6",
       "currencyPreference": "LKR",
       "createdAt": "2026-09-20T07:35:11.713Z",
-      "languagePreference": "en"
+      "languagePreference": "en",
+      "isAdmin": true,
+      "isActive": true
     },
     {
       "_id": "4cd75b34685891633f217c38",

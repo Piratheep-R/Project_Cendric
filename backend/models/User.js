@@ -30,6 +30,14 @@ const userSchema = new mongoose.Schema({
     default: 'en',
     enum: ['en', 'ta', 'si']
   },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -52,6 +60,8 @@ userSchema.methods.toSafeObject = function () {
     email: this.email,
     currencyPreference: this.currencyPreference || 'LKR',
     languagePreference: this.languagePreference || 'en',
+    isAdmin: !!this.isAdmin,
+    isActive: this.isActive !== false,
     createdAt: this.createdAt
   };
 };

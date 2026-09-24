@@ -26,6 +26,7 @@ project-Cendric/
 │   ├── config/
 │   │   └── db.js                # MongoDB Atlas connection via Mongoose with offline fallback
 │   ├── controllers/             # Business Logic & Request Handlers (MVC)
+│   │   ├── adminController.js   # Platform KPIs, AI observability telemetry & user administration
 │   │   ├── authController.js    # Registration, bcrypt hashing, JWT issuance & verification
 │   │   ├── budgetController.js  # Category spending limits & alert calculations
 │   │   ├── chatController.js    # Real-time SSE streaming & Gemini 3.8 Flash AI with RAG
@@ -39,16 +40,17 @@ project-Cendric/
 │   │   ├── cendric_db.json      # Offline fallback database
 │   │   └── sri_lanka_tax_kb.json# Sri Lankan Tax Law Knowledge Base (Inland Revenue Act)
 │   ├── middleware/
-│   │   ├── auth.js              # Bearer JWT verification middleware
+│   │   ├── auth.js              # Bearer JWT verification & requireAdmin RBAC middleware
 │   │   └── upload.js            # Multer in-memory receipt upload handler
 │   ├── models/                  # Mongoose Document Schemas
 │   │   ├── Budget.js            # Monthly budget schema
 │   │   ├── Chat.js              # Conversation history schema
 │   │   ├── Subscription.js      # Recurring subscription schema
 │   │   ├── Transaction.js       # Income & Expense transaction schema
-│   │   ├── User.js              # User authentication & preference schema
+│   │   ├── User.js              # User authentication, preference & isAdmin/isActive schema
 │   │   └── index.js             # Unified model exports
 │   ├── routes/                  # Express REST Route Handlers
+│   │   ├── adminRoutes.js       # /api/admin (RBAC Protected: overview, user management)
 │   │   ├── authRoutes.js        # /api/auth
 │   │   ├── budgetRoutes.js      # /api/budgets
 │   │   ├── chatRoutes.js        # /api/chat
@@ -60,6 +62,7 @@ project-Cendric/
 │   │   ├── transactionRoutes.js # /api/transactions
 │   │   └── index.js             # Aggregated router & system health endpoint
 │   ├── scripts/
+│   │   ├── testAdmin.js         # Automated 10-point Admin RBAC & telemetry test suite
 │   │   └── testMern.js          # Automated end-to-end MERN verification test suite
 │   ├── services/                # Specialized Engines
 │   │   ├── currencyService.js   # Live multi-currency synchronization service
@@ -90,8 +93,14 @@ project-Cendric/
 1. **Clean Separation of Concerns (Frontend vs Backend)**:
    - Frontend is decoupled in `frontend/`, containing all client-side rendering assets.
    - Backend is encapsulated in `backend/`, following the Model-View-Controller (MVC) architecture.
-2. **Hybrid Database Resilience**:
+2. **Role-Based Access Control (RBAC)**:
+   - Secured administrative boundary (`/admin` and `/api/admin/*`) verified via `requireAdmin` middleware.
+   - Non-administrators receive `403 Forbidden`.
+   - Administrators cannot deactivate or demote themselves, guaranteeing system self-protection.
+3. **Hybrid Database Resilience**:
    - Primary: Cloud MongoDB Atlas via Mongoose.
    - Secondary: Seamless fallback to `backend/data/cendric_db.json` when running in offline or demo environments.
-3. **Retrieval-Augmented Generation (RAG)**:
+4. **Retrieval-Augmented Generation (RAG)**:
    - Queries are processed through a local TF-IDF cosine-similarity legal index before hitting Gemini 3.8 Flash, guaranteeing answers cite accurate Sri Lankan statutory provisions without hallucinations.
+5. **AI Observability**:
+   - Real-time tracking of Gemini model calls, receipts OCR parsed, active legal clauses, and system uptime exposed in the Admin Control Center.

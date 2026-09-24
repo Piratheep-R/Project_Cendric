@@ -48,3 +48,12 @@
 ### Q6: "Why is your order of languages Tamil, Sinhala, English?"
 > **Answer**:
 > "The order was designed to prioritize Sri Lanka's two official national languages (Tamil and Sinhala) for local freelancers, followed by English as the international business language. The language switcher and entire UI hierarchy strictly follow this sequence: 1. தமிழ், 2. සිංහල, 3. English."
+
+### Q7: "How is authorization and system security handled in your Admin Panel?"
+> **Answer**:
+> "We implemented Role-Based Access Control (RBAC). In the Mongoose `User` schema, each user document contains boolean flags: `isAdmin` and `isActive`.
+> 
+> All administrative endpoints (`/api/admin/*`) and the `/admin` view are guarded by two chained Express middleware: `authenticateToken` (verifies Bearer JWT signature) and `requireAdmin` (verifies `req.user.isAdmin === true`). If a regular user attempts to access `/admin` or invoke administrative endpoints, the server immediately returns `403 Forbidden`.
+> 
+> Furthermore, the admin controller implements self-protection constraints: an administrator cannot deactivate their own account or remove their own admin privileges, preventing accidental lockout. Deactivated accounts are automatically denied access at both the login stage and token verification stage."
+

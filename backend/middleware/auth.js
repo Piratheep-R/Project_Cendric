@@ -31,17 +31,31 @@ async function authenticateToken(req, res, next) {
         return res.status(401).json({ message: 'User account not found.' });
       }
 
+      if (user.isActive === false) {
+        return res.status(403).json({ message: 'This account has been deactivated. Please contact an administrator.' });
+      }
+
       req.user = user;
       next();
     } catch (authErr) {
       const fallbackUser = db.users.find(u => u._id === decoded.id);
       if (fallbackUser) {
+        if (fallbackUser.isActive === false) {
+          return res.status(403).json({ message: 'This account has been deactivated. Please contact an administrator.' });
+        }
         req.user = fallbackUser;
         return next();
       }
       return res.status(401).json({ message: 'User account authentication error.' });
     }
   });
+}
+
+function requireAdmin(req, res, next) {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ message: 'Access denied. Administrator privileges required.' });
+  }
+  next();
 }
 
 function sanitizeUser(u) {
@@ -51,12 +65,15 @@ function sanitizeUser(u) {
     email: u.email,
     currencyPreference: u.currencyPreference || 'LKR',
     languagePreference: u.languagePreference || 'en',
+    isAdmin: !!u.isAdmin,
+    isActive: u.isActive !== false,
     createdAt: u.createdAt || new Date().toISOString()
   };
 }
 
 module.exports = {
   authenticateToken,
+  requireAdmin,
   sanitizeUser,
   JWT_SECRET
 };

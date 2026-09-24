@@ -89,6 +89,10 @@ async function login(req, res) {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
+    if (user.isActive === false) {
+      return res.status(403).json({ message: 'This account has been deactivated. Please contact an administrator.' });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password || user.passwordHash);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid email or password.' });

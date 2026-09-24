@@ -74,6 +74,17 @@ async function migrateDataFromJSON() {
     }
 
     console.log('[MERN Migration] MongoDB database synchronization complete.');
+
+    // Ensure at least one admin exists in MongoDB
+    const adminCount = await User.countDocuments({ isAdmin: true });
+    if (adminCount === 0) {
+      const primaryUser = await User.findOne({ email: 'piratheep@example.com' }) || await User.findOne();
+      if (primaryUser) {
+        primaryUser.isAdmin = true;
+        await primaryUser.save();
+        console.log(`[Admin Seed] Granted Administrator role to ${primaryUser.email}`);
+      }
+    }
   } catch (err) {
     console.error('[MERN Migration Error]', err.message);
   }

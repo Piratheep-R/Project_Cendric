@@ -11,6 +11,7 @@ const chatRoutes = require('./chatRoutes');
 const currencyRoutes = require('./currencyRoutes');
 const taxRoutes = require('./taxRoutes');
 const notificationRoutes = require('./notificationRoutes');
+const adminRoutes = require('./adminRoutes');
 
 // System Health & MERN Stack Status
 router.get('/health', (req, res) => {
@@ -32,5 +33,6 @@ router.use('/chat', chatRoutes);
 router.use('/currency', currencyRoutes);
 router.use('/tax', taxRoutes);
 router.use('/notifications', notificationRoutes);
+router.use('/admin', adminRoutes);
 
 module.exports = router;

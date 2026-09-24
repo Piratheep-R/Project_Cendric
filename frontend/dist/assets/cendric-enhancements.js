@@ -2158,6 +2158,13 @@
             <span>Receipt OCR</span>
             <span class="cendric-nav-badge cendric-badge-neutral">CSV</span>
           </a>
+          <a class="cendric-custom-nav-link ${location.pathname === '/admin' ? 'active' : ''}" id="cendric-nav-admin" href="/admin" title="System Administrator Dashboard" style="${getUser()?.isAdmin ? 'display: flex !important;' : 'display: none !important;'}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Admin Panel</span>
+            <span class="cendric-nav-badge cendric-badge-role-admin">ADMIN</span>
+          </a>
           <div class="cendric-sidebar-section-divider">
             <span>Preferences</span>
           </div>
@@ -2184,6 +2191,11 @@
         document.getElementById('cendric-nav-camera-bill')?.addEventListener('click', (e) => {
           e.preventDefault();
           openBillScannerModal();
+        });
+        document.getElementById('cendric-nav-admin')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          history.pushState({}, '', '/admin');
+          handleRouteChange();
         });
       }
     }
@@ -4610,6 +4622,483 @@
   }
 
   // ----------------------------------------------------
+  // 13. System Administrator Control Center & Dashboard (/admin)
+  // ----------------------------------------------------
+  let cachedAdminOverview = null;
+  let cachedAdminUsers = [];
+  let isAdminLoading = false;
+  let adminSearchQuery = '';
+
+  async function enhanceAdminPage() {
+    const isUrlAdmin = location.pathname.startsWith('/admin') || location.hash === '#admin';
+    if (!isUrlAdmin) {
+      document.getElementById('cendric-admin-container')?.remove();
+      document.getElementById('cendric-admin-denied')?.remove();
+      return;
+    }
+
+    const main = document.querySelector('main');
+    if (!main) return;
+
+    const u = getUser();
+    if (!u) {
+      location.href = '/login';
+      return;
+    }
+
+    // Hide original main children
+    Array.from(main.children).forEach(el => {
+      if (!el.id?.startsWith('cendric')) {
+        el.setAttribute('data-cendric-hidden', 'true');
+        el.style.display = 'none';
+      }
+    });
+
+    if (!u.isAdmin) {
+      if (!document.getElementById('cendric-admin-denied')) {
+        const deniedDiv = document.createElement('div');
+        deniedDiv.id = 'cendric-admin-denied';
+        deniedDiv.className = 'cendric-admin-container';
+        deniedDiv.innerHTML = `
+          <div class="cendric-admin-card" style="max-width: 520px; margin: 80px auto; padding: 48px 32px; text-align: center;">
+            <div style="font-size: 54px; margin-bottom: 16px;">🛡️</div>
+            <h2 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin: 0 0 8px;">Access Restricted</h2>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin: 0 0 24px;">Administrator credentials are required to access this control center. Your account (${u.email}) is currently assigned the Standard User role.</p>
+            <div style="display: flex; justify-content: center; gap: 12px;">
+              <button id="cendric-admin-return-btn" class="cendric-btn-primary" style="padding: 10px 24px; border-radius: 99px; cursor: pointer;">
+                ← Return to Dashboard
+              </button>
+            </div>
+          </div>
+        `;
+        main.appendChild(deniedDiv);
+        document.getElementById('cendric-admin-return-btn')?.addEventListener('click', () => {
+          history.pushState({}, '', '/');
+          handleRouteChange();
+        });
+      }
+      return;
+    }
+
+    document.getElementById('cendric-admin-denied')?.remove();
+
+    let container = document.getElementById('cendric-admin-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'cendric-admin-container';
+      container.className = 'cendric-admin-container';
+      main.appendChild(container);
+    }
+
+    if (!cachedAdminOverview && !isAdminLoading) {
+      await loadAdminData();
+    }
+    renderAdminDashboard(container);
+  }
+
+  async function loadAdminData() {
+    isAdminLoading = true;
+    try {
+      const token = getToken();
+      const headers = { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) };
+
+      const [resOverview, resUsers] = await Promise.all([
+        fetch('/api/admin/overview', { headers }),
+        fetch('/api/admin/users', { headers })
+      ]);
+
+      if (resOverview.ok) {
+        cachedAdminOverview = await resOverview.json();
+      }
+      if (resUsers.ok) {
+        const uJson = await resUsers.json();
+        cachedAdminUsers = uJson.users || [];
+      }
+    } catch (err) {
+      console.warn('[Admin] Failed to load admin telemetry:', err);
+    } finally {
+      isAdminLoading = false;
+    }
+  }
+
+  function renderAdminDashboard(container) {
+    if (!container) return;
+
+    if (isAdminLoading && !cachedAdminOverview) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 100px 20px;">
+          <div class="cendric-spinner" style="width: 40px; height: 40px; border: 3px solid rgba(109,90,230,0.2); border-top-color: var(--accent); border-radius: 50%; animation: cendricSpin 0.8s linear infinite; margin: 0 auto 16px;"></div>
+          <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0 0 6px;">Loading Platform Telemetry...</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Aggregating MongoDB collections, AI observability, and financial metrics</p>
+        </div>
+      `;
+      return;
+    }
+
+    const ov = cachedAdminOverview || {
+      users: { total: 0, active: 0, deactivated: 0, admins: 0, new7d: 0 },
+      finances: { totalTransactions: 0, totalVolumeLKR: 0, totalIncomeLKR: 0, totalExpenseLKR: 0, netCashFlowLKR: 0, categoryBreakdown: {} },
+      ai: { activeModel: 'gemini-3.8-flash', totalAiMessages: 0, totalBillScans: 0, ragDocumentsIndexed: 8 },
+      system: { database: 'MongoDB Atlas', uptimeSeconds: 120 }
+    };
+
+    const users = cachedAdminUsers.filter(u => {
+      if (!adminSearchQuery) return true;
+      const q = adminSearchQuery.toLowerCase();
+      return (u.fullName || '').toLowerCase().includes(q) || (u.email || '').toLowerCase().includes(q);
+    });
+
+    const incomeVal = ov.finances.totalIncomeLKR || 0;
+    const expenseVal = ov.finances.totalExpenseLKR || 0;
+    const totalFlow = (incomeVal + expenseVal) || 1;
+    const incomePct = Math.round((incomeVal / totalFlow) * 100);
+    const expensePct = 100 - incomePct;
+
+    const uptimeHrs = Math.floor((ov.system.uptimeSeconds || 0) / 3600);
+    const uptimeMins = Math.floor(((ov.system.uptimeSeconds || 0) % 3600) / 60);
+
+    container.innerHTML = `
+      <!-- Header -->
+      <div class="cendric-admin-header">
+        <div>
+          <div class="cendric-admin-badge-hdr">
+            <span>🛡️</span> SYSTEM ADMINISTRATOR CONTROL CENTER
+          </div>
+          <h1 class="cendric-admin-title">Platform Intelligence & User Management</h1>
+          <p class="cendric-admin-sub">Real-time MERN telemetry, AI RAG observability, and user access control</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 99px; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); font-size: 12px; font-weight: 700; color: #10b981;">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+            ${ov.system.database.includes('MongoDB') ? 'MongoDB Atlas Online' : 'Local DB Online'}
+          </div>
+          <button id="cendric-admin-refresh-btn" class="cendric-admin-action-btn" style="padding: 8px 14px; font-size: 12px;">
+            ↻ Refresh Metrics
+          </button>
+          <button id="cendric-admin-exit-btn" class="cendric-admin-action-btn" style="padding: 8px 14px; font-size: 12px;">
+            ← Dashboard
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Primary KPI Cards -->
+      <div class="cendric-admin-kpi-grid">
+        <!-- 1. User Base -->
+        <div class="cendric-admin-card">
+          <div class="cendric-kpi-label">
+            <span>User Accounts</span>
+            <span style="font-size: 16px;">👥</span>
+          </div>
+          <div class="cendric-kpi-val">${ov.users.total}</div>
+          <div class="cendric-kpi-sub" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
+            <span style="color: #10b981; font-weight: 700;">● ${ov.users.active} Active</span>
+            <span style="color: #f43f5e; font-weight: 700;">● ${ov.users.deactivated} Inactive</span>
+            <span style="color: #6d5ae6; font-weight: 700;">👑 ${ov.users.admins} Admins</span>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px;">
+            +${ov.users.new7d} registered in last 7 days
+          </div>
+        </div>
+
+        <!-- 2. Financial Volume -->
+        <div class="cendric-admin-card">
+          <div class="cendric-kpi-label">
+            <span>Financial Volume</span>
+            <span style="font-size: 16px;">💳</span>
+          </div>
+          <div class="cendric-kpi-val">LKR ${(ov.finances.totalVolumeLKR / 1000).toFixed(1)}k</div>
+          <div class="cendric-kpi-sub" style="margin-bottom: 8px;">
+            <span style="color: #10b981; font-weight: 700;">+LKR ${(incomeVal/1000).toFixed(1)}k</span> in · 
+            <span style="color: #f43f5e; font-weight: 700;">-LKR ${(expenseVal/1000).toFixed(1)}k</span> out
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px;">
+            ${ov.finances.totalTransactions} total transactions recorded
+          </div>
+        </div>
+
+        <!-- 3. AI & RAG Observability -->
+        <div class="cendric-admin-card">
+          <div class="cendric-kpi-label">
+            <span>AI Model & RAG</span>
+            <span style="font-size: 16px;">⚡</span>
+          </div>
+          <div class="cendric-kpi-val" style="font-size: 20px; line-height: 1.3;">${ov.ai.activeModel}</div>
+          <div class="cendric-kpi-sub" style="margin-bottom: 8px;">
+            <span>${ov.ai.totalAiMessages} AI responses streamed</span> · 
+            <span>${ov.ai.totalBillScans} receipts OCR parsed</span>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px;">
+            ${ov.ai.ragDocumentsIndexed} Sri Lankan legal sections indexed
+          </div>
+        </div>
+
+        <!-- 4. System Uptime & Stack -->
+        <div class="cendric-admin-card">
+          <div class="cendric-kpi-label">
+            <span>Architecture & Stack</span>
+            <span style="font-size: 16px;">🏗️</span>
+          </div>
+          <div class="cendric-kpi-val" style="font-size: 22px;">MERN Stack</div>
+          <div class="cendric-kpi-sub" style="margin-bottom: 8px;">
+            <span>${ov.system.database}</span>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px;">
+            Server uptime: ${uptimeHrs}h ${uptimeMins}m · Node.js runtime
+          </div>
+        </div>
+      </div>
+
+      <!-- Mid-Section Analytics: Platform Flow & AI Architecture -->
+      <div class="cendric-admin-split-grid">
+        <!-- Cash Flow Bar & Top Categories -->
+        <div class="cendric-admin-table-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div>
+              <h3 style="font-size: 15px; font-weight: 800; color: var(--text-primary); margin: 0 0 2px;">Platform Cash Flow Dynamics</h3>
+              <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Aggregate income vs expenses across all users</p>
+            </div>
+            <span style="font-size: 14px; font-weight: 800; color: ${ov.finances.netCashFlowLKR >= 0 ? '#10b981' : '#f43f5e'};">
+              Net: LKR ${ov.finances.netCashFlowLKR.toLocaleString()}
+            </span>
+          </div>
+
+          <!-- Flow Ratio Progress Bar -->
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 700; margin-bottom: 6px;">
+              <span style="color: #10b981;">Income Inflow (${incomePct}%)</span>
+              <span style="color: #f43f5e;">Expense Outflow (${expensePct}%)</span>
+            </div>
+            <div style="height: 10px; border-radius: 99px; overflow: hidden; display: flex; background: rgba(0,0,0,0.06);">
+              <div style="width: ${incomePct}%; background: linear-gradient(90deg, #10b981, #059669); transition: width 0.5s ease;"></div>
+              <div style="width: ${expensePct}%; background: linear-gradient(90deg, #f43f5e, #e11d48); transition: width 0.5s ease;"></div>
+            </div>
+          </div>
+
+          <!-- Top Category Chips -->
+          <div>
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 8px;">Top Platform Expense Categories</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              ${Object.entries(ov.finances.categoryBreakdown || {}).sort((a,b)=>b[1].totalLKR - a[1].totalLKR).slice(0, 6).map(([cat, info]) => `
+                <div style="padding: 6px 10px; border-radius: 8px; background: var(--glass-inner-bg); border: 1px solid var(--border); font-size: 11.5px; display: flex; align-items: center; gap: 6px;">
+                  <span style="font-weight: 700; color: var(--text-primary);">${cat}</span>
+                  <span style="color: var(--accent); font-weight: 800;">LKR ${Math.round(info.totalLKR).toLocaleString()}</span>
+                  <span style="font-size: 10px; color: var(--text-muted);">(${info.count})</span>
+                </div>
+              `).join('') || '<div style="color: var(--text-muted); font-size: 12px;">No transactions recorded yet</div>'}
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Observability & Legal Intelligence -->
+        <div class="cendric-admin-table-card">
+          <div style="margin-bottom: 14px;">
+            <h3 style="font-size: 15px; font-weight: 800; color: var(--text-primary); margin: 0 0 2px;">AI Observability & Legal Grounding</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Inspection of Gemini 3.8 Flash RAG pipeline and integrations</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="padding: 10px 14px; border-radius: 12px; background: var(--glass-inner-bg); border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">Core Generative Model</div>
+                <div style="font-size: 11px; color: var(--text-muted);">High-performance DeepMind model for code, reasoning & chat</div>
+              </div>
+              <span class="cendric-badge-role-admin" style="background: rgba(109,90,230,0.15); color: var(--accent); border-color: rgba(109,90,230,0.3); font-size: 11px;">
+                ${ov.ai.activeModel}
+              </span>
+            </div>
+
+            <div style="padding: 10px 14px; border-radius: 12px; background: var(--glass-inner-bg); border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">RAG Legal Knowledge Corpus</div>
+                <div style="font-size: 11px; color: var(--text-muted);">${ov.ai.sriLankaTaxCorpus || 'Inland Revenue Act No. 24 of 2017'}</div>
+              </div>
+              <span class="cendric-badge-status-active" style="font-size: 11px;">
+                ${ov.ai.ragDocumentsIndexed} Sections Live
+              </span>
+            </div>
+
+            <div style="padding: 10px 14px; border-radius: 12px; background: var(--glass-inner-bg); border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">Forex Real-Time Rates Provider</div>
+                <div style="font-size: 11px; color: var(--text-muted);">${ov.ai.exchangeRateProvider}</div>
+              </div>
+              <span class="cendric-badge-status-active" style="font-size: 11px;">
+                Auto-Synced
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Registry Table Card -->
+      <div class="cendric-admin-table-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h3 style="font-size: 16px; font-weight: 800; color: var(--text-primary); margin: 0 0 2px;">User Access & Role Administration</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 0;">${cachedAdminUsers.length} total registered accounts · View, deactivate, or assign administrative roles</p>
+          </div>
+          <div class="cendric-admin-search-wrap">
+            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--text-muted);">🔍</span>
+            <input type="text" id="cendric-admin-search" class="cendric-admin-search-input" placeholder="Search by name or email..." value="${adminSearchQuery}" />
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="cendric-admin-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Currency / Lang</th>
+                <th>Status</th>
+                <th>Activity</th>
+                <th>Registered</th>
+                <th style="text-align: right;">Admin Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${users.length === 0 ? `
+                <tr>
+                  <td colspan="7" style="text-align: center; padding: 36px 14px; color: var(--text-muted);">
+                    No users matching "${adminSearchQuery}"
+                  </td>
+                </tr>
+              ` : users.map(u => {
+                const initial = (u.fullName || 'U').charAt(0).toUpperCase();
+                const isCurrent = String(u._id) === String(getUser()?._id);
+                return `
+                  <tr>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #6d5ae6, #06b6d4); color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;">
+                          ${initial}
+                        </div>
+                        <div>
+                          <div style="font-weight: 700; color: var(--text-primary);">${u.fullName} ${isCurrent ? '<span style="font-size: 10px; color: var(--accent); font-weight: 800;">(You)</span>' : ''}</div>
+                          <div style="font-size: 11px; color: var(--text-muted);">${u.email}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="${u.isAdmin ? 'cendric-badge-role-admin' : 'cendric-badge-role-user'}">
+                        ${u.isAdmin ? '🛡️ Admin' : '👤 User'}
+                      </span>
+                    </td>
+                    <td>
+                      <span style="font-weight: 700; font-size: 12px; color: var(--text-primary);">${u.currencyPreference || 'LKR'}</span>
+                      <span style="font-size: 11px; color: var(--text-muted);">· ${(u.languagePreference || 'en').toUpperCase()}</span>
+                    </td>
+                    <td>
+                      <span class="${u.isActive ? 'cendric-badge-status-active' : 'cendric-badge-status-deactivated'}">
+                        ${u.isActive ? '● Active' : '● Deactivated'}
+                      </span>
+                    </td>
+                    <td>
+                      <div style="font-weight: 700; color: var(--text-primary);">${u.transactionCount} transactions</div>
+                      <div style="font-size: 11px; color: var(--text-muted);">Spent: LKR ${(u.totalSpentLKR || 0).toLocaleString()}</div>
+                    </td>
+                    <td style="font-size: 12px; color: var(--text-muted);">
+                      ${new Date(u.createdAt).toLocaleDateString()}
+                    </td>
+                    <td style="text-align: right;">
+                      <div style="display: inline-flex; gap: 6px;">
+                        ${!isCurrent ? `
+                          <button class="cendric-admin-action-btn ${u.isActive ? 'btn-danger' : ''}" data-act="status" data-id="${u._id}" title="${u.isActive ? 'Deactivate Account' : 'Activate Account'}">
+                            ${u.isActive ? 'Deactivate' : 'Activate'}
+                          </button>
+                          <button class="cendric-admin-action-btn" data-act="role" data-id="${u._id}" title="${u.isAdmin ? 'Demote to User' : 'Promote to Admin'}">
+                            ${u.isAdmin ? 'Demote' : 'Make Admin'}
+                          </button>
+                        ` : `
+                          <span style="font-size: 11px; color: var(--text-muted); font-style: italic;">Current Session</span>
+                        `}
+                      </div>
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    // Wire up events
+    document.getElementById('cendric-admin-refresh-btn')?.addEventListener('click', async () => {
+      await loadAdminData();
+      renderAdminDashboard(container);
+      showToast('Administrative metrics refreshed', 'success');
+    });
+
+    document.getElementById('cendric-admin-exit-btn')?.addEventListener('click', () => {
+      history.pushState({}, '', '/');
+      handleRouteChange();
+    });
+
+    const searchInp = document.getElementById('cendric-admin-search');
+    searchInp?.addEventListener('input', (e) => {
+      adminSearchQuery = e.target.value.trim();
+      renderAdminDashboard(container);
+      const newInp = document.getElementById('cendric-admin-search');
+      if (newInp) {
+        newInp.focus();
+        newInp.selectionStart = newInp.selectionEnd = newInp.value.length;
+      }
+    });
+
+    // Wire up table buttons
+    container.querySelectorAll('button[data-act="status"]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        btn.disabled = true;
+        btn.textContent = '...';
+        try {
+          const token = getToken();
+          const res = await fetch(`/api/admin/users/${id}/toggle-status`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) }
+          });
+          const json = await res.json();
+          if (res.ok) {
+            showToast(json.message || 'Status updated', 'success');
+            await loadAdminData();
+            renderAdminDashboard(container);
+          } else {
+            showToast(json.message || 'Failed to update status', 'info');
+          }
+        } catch (err) {
+          showToast('Network error updating user', 'info');
+        }
+      });
+    });
+
+    container.querySelectorAll('button[data-act="role"]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        btn.disabled = true;
+        btn.textContent = '...';
+        try {
+          const token = getToken();
+          const res = await fetch(`/api/admin/users/${id}/toggle-admin`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) }
+          });
+          const json = await res.json();
+          if (res.ok) {
+            showToast(json.message || 'Role updated', 'success');
+            await loadAdminData();
+            renderAdminDashboard(container);
+          } else {
+            showToast(json.message || 'Failed to update role', 'info');
+          }
+        } catch (err) {
+          showToast('Network error updating role', 'info');
+        }
+      });
+    });
+  }
+
+  // ----------------------------------------------------
   // Safe Debounced Enhancement Orchestrator
   // ----------------------------------------------------
   let isEnhancing = false;
@@ -4625,6 +5114,7 @@
       await enhanceTransactionsPage();
       enhanceChatPage();
       await enhanceSettingsPage();
+      await enhanceAdminPage();
       setupCommandPalette();
       setupTaxCalculatorModal();
       setupInvoiceModal();
@@ -4669,6 +5159,10 @@
     if (url !== lastUrl) {
       lastUrl = url;
       // Clean stale injected elements if navigating away
+      if (!url.includes('/admin')) {
+        document.getElementById('cendric-admin-container')?.remove();
+        document.getElementById('cendric-admin-denied')?.remove();
+      }
       if (!url.includes('/transactions')) {
         document.getElementById('cendric-analytics-card')?.remove();
         document.getElementById('cendric-subs-card')?.remove();
@@ -4726,6 +5220,19 @@
   function handleRouteChange() {
     const url = location.href;
     lastUrl = url;
+    if (!url.includes('/admin')) {
+      document.getElementById('cendric-admin-container')?.remove();
+      document.getElementById('cendric-admin-denied')?.remove();
+      const main = document.querySelector('main');
+      if (main && !url.includes('/chat')) {
+        Array.from(main.children).forEach(el => {
+          if (el.getAttribute('data-cendric-hidden') === 'true') {
+            el.removeAttribute('data-cendric-hidden');
+            el.style.display = '';
+          }
+        });
+      }
+    }
     if (!url.includes('/chat')) {
       document.getElementById('cendric-chat-overlay')?.remove();
       document.getElementById('cendric-chat-prompt-chips')?.remove();
