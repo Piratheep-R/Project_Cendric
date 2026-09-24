@@ -1,5 +1,5 @@
 // Cendric PWA Service Worker
-const CACHE_NAME = 'cendric-cache-v5';
+const CACHE_NAME = 'cendric-cache-v6';
 const ASSETS = [
   '/',
   '/index.html',
