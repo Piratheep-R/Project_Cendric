@@ -1561,64 +1561,13 @@ table {
     flex-direction: column !important;
   }
 
-  /* Bottom Navigation Dock */
-  aside {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    top: auto !important;
-    width: 100% !important;
-    height: 60px !important;
-    min-height: 60px !important;
-    flex-direction: row !important;
-    border-right: none !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
-    z-index: 1000 !important;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.18) !important;
-    padding: 0 8px !important;
-    align-items: center !important;
-  }
-
-  /* Hide sidebar top logo and bottom profile footer */
-  aside > div:first-child,
-  aside > div:last-child {
-    display: none !important;
-  }
-
-  /* Bottom Nav links row */
-  aside nav {
-    flex-direction: row !important;
-    justify-content: space-around !important;
-    align-items: center !important;
-    width: 100% !important;
-    padding: 0 !important;
-    height: 100% !important;
-  }
-  aside nav a {
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 6px 8px !important;
-    gap: 3px !important;
-    font-size: 10px !important;
-    border-radius: 10px !important;
-    flex: 1 !important;
-    text-align: center !important;
-  }
-  aside nav a span:first-of-type {
-    display: block !important;
-    font-size: 10px !important;
-    line-height: 1 !important;
-  }
-  aside nav a span:last-child {
-    display: none !important;
-  }
-
-  /* Main container clearance for bottom dock */
+  /* Mobile Main Layout */
   main {
-    padding-bottom: 74px !important;
     width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    padding-top: 64px !important;
+    padding-bottom: 30px !important;
   }
 
   main > div[style*="padding: 28px"]:not([style*="height"]),
@@ -5482,5 +5431,332 @@ div[style*="zIndex: 999"] select {
   border-color: #5544d4 !important;
   transform: scale(1.01) !important;
 }
+
+/* ==========================================================================
+   11. MOBILE RESPONSIVE SUITE & COLLAPSIBLE DRAWER SIDEBAR (<= 900px)
+   ========================================================================== */
+
+/* Mobile Hamburger Toggle Button */
+.cendric-mobile-toggle-btn {
+  display: none;
+  position: fixed !important;
+  top: 12px !important;
+  left: 14px !important;
+  z-index: 9999 !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  background: var(--card-bg, #ffffff) !important;
+  border: 1px solid var(--border, rgba(0,0,0,0.1)) !important;
+  color: var(--text-primary, #1e293b) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  cursor: pointer !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+[data-theme="dark"] .cendric-mobile-toggle-btn {
+  background: rgba(17, 24, 39, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45) !important;
+}
+
+.cendric-mobile-toggle-btn:active {
+  transform: scale(0.92) !important;
+}
+
+/* Close Button Inside Drawer Header */
+.cendric-sidebar-close-btn {
+  display: none;
+  position: absolute !important;
+  top: 14px !important;
+  right: 12px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: var(--text-muted, #64748b) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  z-index: 10 !important;
+}
+
+[data-theme="dark"] .cendric-sidebar-close-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+}
+
+.cendric-sidebar-close-btn:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #ef4444 !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Fullscreen Glass Backdrop for Mobile Drawer */
+#cendric-sidebar-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(10, 15, 30, 0.65) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 99998 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#cendric-sidebar-backdrop.cendric-backdrop-active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+body.cendric-drawer-open {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+/* Media Query: <= 900px (Tablets & Mobile Phones) */
+@media (max-width: 900px) {
+  .cendric-mobile-toggle-btn {
+    display: flex !important;
+  }
+
+  .cendric-sidebar-close-btn {
+    display: flex !important;
+  }
+
+  /* Aside as off-canvas drawer */
+  aside {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 290px !important;
+    max-width: 85vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    z-index: 99999 !important;
+    transform: translateX(-105%) !important;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s ease !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-shadow: none !important;
+    visibility: hidden;
+  }
+
+  aside.cendric-sidebar-open {
+    transform: translateX(0) !important;
+    visibility: visible !important;
+    box-shadow: 12px 0 50px rgba(0, 0, 0, 0.65) !important;
+  }
+
+  /* Ensure all sidebar modules are properly visible in drawer */
+  aside > div:first-child {
+    display: flex !important;
+    padding: 16px 14px !important;
+    flex-direction: column !important;
+  }
+
+  aside > div:last-child {
+    display: flex !important;
+    margin: 10px 10px 20px !important;
+    padding: 10px !important;
+  }
+
+  aside nav {
+    flex-direction: column !important;
+    display: flex !important;
+    gap: 4px !important;
+    padding: 8px 10px !important;
+  }
+
+  aside nav a {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    padding: 10px 12px !important;
+    font-size: 13.5px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+  }
+
+  aside nav a span:first-of-type {
+    display: inline-block !important;
+    font-size: 13.5px !important;
+  }
+
+  aside nav a span:last-child {
+    display: inline-block !important;
+    font-size: 13.5px !important;
+  }
+
+  /* Main viewport clearance */
+  #root > div {
+    flex-direction: column !important;
+  }
+
+  main {
+    width: 100% !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 68px 14px 28px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Top Right Dock (Language & Notifications) */
+  .cendric-top-dock {
+    top: 12px !important;
+    right: 12px !important;
+    gap: 8px !important;
+    z-index: 9990 !important;
+  }
+
+  .cendric-header-lang-btn {
+    height: 40px !important;
+    padding: 6px 12px !important;
+    font-size: 11.5px !important;
+    border-radius: 12px !important;
+  }
+
+  .cendric-top-dock .cendric-notif-bell-btn {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
+
+  .cendric-top-dock .cendric-notif-panel {
+    position: fixed !important;
+    top: 60px !important;
+    right: 12px !important;
+    left: 12px !important;
+    width: auto !important;
+    max-width: 420px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Chat Viewport Responsiveness */
+  .cendric-chat-header-actions {
+    margin-right: 0 !important;
+    position: static !important;
+  }
+
+  .cendric-prompt-chips-wrapper,
+  div[class*="prompt-chips"] {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 8px !important;
+    padding: 6px 2px 10px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .cendric-chip {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 7px 14px !important;
+    font-size: 12px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Chat Message Bubbles */
+  div[class*="message-assistant"],
+  div[class*="message-user"],
+  div[style*="max-width: 80%"],
+  div[style*="max-width: 75%"] {
+    max-width: 92% !important;
+  }
+
+  /* Transactions & Cards Responsive Grid */
+  .cendric-stat-grid,
+  main .grid-cols-3,
+  div[class*="grid-cols-3"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Tables horizontal touch scrolling */
+  .table-responsive,
+  div[class*="overflow-hidden"] table,
+  .cendric-admin-table-card {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  table {
+    min-width: 540px !important;
+  }
+
+  /* Modals Optimization for Phones */
+  .cendric-modal-overlay {
+    padding: 10px !important;
+    align-items: flex-end !important;
+  }
+
+  .cendric-modal-dialog {
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: 88vh !important;
+    border-radius: 24px 24px 16px 16px !important;
+    margin: 0 !important;
+  }
+
+  .cendric-modal-header {
+    padding: 16px 18px !important;
+  }
+
+  .cendric-modal-dialog > div:nth-child(2) {
+    padding: 16px !important;
+  }
+
+  .cendric-tax-type-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cendric-camera-viewfinder {
+    height: 240px !important;
+  }
+}
+
+/* Extra Tweaks for Small Mobile Screens (<= 480px) */
+@media (max-width: 480px) {
+  .cendric-header-lang-text-full {
+    display: none !important;
+  }
+
+  .cendric-header-row1 h1 {
+    font-size: 19px !important;
+  }
+
+  #add-transaction-btn,
+  .cendric-primary-action-btn {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+  }
+
+  .cendric-admin-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cendric-invoice-sheet {
+    padding: 18px 12px !important;
+  }
+}
+
 
 

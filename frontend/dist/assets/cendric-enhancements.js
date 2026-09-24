@@ -5125,6 +5125,7 @@
       setupCsvImporterModal();
       setupBillScannerModal();
       setupTopHeaderDock();
+      setupMobileDrawer();
       applyLanguage(getCurrentLang());
     } catch (err) {
       console.warn('[Cendric] Enhancement error:', err);
@@ -5272,8 +5273,114 @@
     scheduleCheckAndEnhance();
   }
 
+  // ----------------------------------------------------
+  // 13. Mobile Navigation & Responsive Drawer Controller
+  // ----------------------------------------------------
+  function setupMobileDrawer() {
+    const aside = document.querySelector('aside');
+    if (!aside) return;
+
+    // 1. Create or ensure Fullscreen Backdrop
+    let backdrop = document.getElementById('cendric-sidebar-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.id = 'cendric-sidebar-backdrop';
+      backdrop.className = 'cendric-sidebar-backdrop';
+      document.body.appendChild(backdrop);
+      backdrop.addEventListener('click', () => {
+        closeMobileSidebar();
+      });
+      backdrop.addEventListener('touchstart', () => {
+        closeMobileSidebar();
+      }, { passive: true });
+    }
+
+    // 2. Create or ensure Mobile Hamburger Toggle Button (Top-Left on Mobile)
+    let toggleBtn = document.getElementById('cendric-mobile-toggle-btn');
+    if (!toggleBtn) {
+      toggleBtn = document.createElement('button');
+      toggleBtn.id = 'cendric-mobile-toggle-btn';
+      toggleBtn.className = 'cendric-mobile-toggle-btn';
+      toggleBtn.type = 'button';
+      toggleBtn.setAttribute('aria-label', 'Toggle Navigation Menu');
+      toggleBtn.title = 'Open Menu / வழிசெலுத்தல் / මෙනුව';
+      toggleBtn.innerHTML = `
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      `;
+      document.body.appendChild(toggleBtn);
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMobileSidebar();
+      });
+    }
+
+    // 3. Create or ensure Mobile Close Button inside Sidebar Header
+    let closeBtn = document.getElementById('cendric-sidebar-close-btn');
+    const sidebarHeader = aside.firstElementChild;
+    if (sidebarHeader && !closeBtn) {
+      closeBtn = document.createElement('button');
+      closeBtn.id = 'cendric-sidebar-close-btn';
+      closeBtn.className = 'cendric-sidebar-close-btn';
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Close Menu');
+      closeBtn.title = 'Close Menu';
+      closeBtn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      `;
+      sidebarHeader.style.position = 'relative';
+      sidebarHeader.appendChild(closeBtn);
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMobileSidebar();
+      });
+    }
+  }
+
+  function openMobileSidebar() {
+    const aside = document.querySelector('aside');
+    const backdrop = document.getElementById('cendric-sidebar-backdrop');
+    const toggleBtn = document.getElementById('cendric-mobile-toggle-btn');
+    if (aside) aside.classList.add('cendric-sidebar-open');
+    if (backdrop) backdrop.classList.add('cendric-backdrop-active');
+    if (toggleBtn) toggleBtn.classList.add('active');
+    document.body.classList.add('cendric-drawer-open');
+  }
+
+  function closeMobileSidebar() {
+    const aside = document.querySelector('aside');
+    const backdrop = document.getElementById('cendric-sidebar-backdrop');
+    const toggleBtn = document.getElementById('cendric-mobile-toggle-btn');
+    if (aside) aside.classList.remove('cendric-sidebar-open');
+    if (backdrop) backdrop.classList.remove('cendric-backdrop-active');
+    if (toggleBtn) toggleBtn.classList.remove('active');
+    document.body.classList.remove('cendric-drawer-open');
+  }
+
+  function toggleMobileSidebar() {
+    const aside = document.querySelector('aside');
+    if (aside && aside.classList.contains('cendric-sidebar-open')) {
+      closeMobileSidebar();
+    } else {
+      openMobileSidebar();
+    }
+  }
+
   // Global click delegator for sidebar nav links & financial tools to guarantee 100% reliable opening
   document.addEventListener('click', (e) => {
+    // Automatically close mobile drawer when any link or tool is selected
+    if (window.innerWidth <= 900) {
+      if (e.target.closest('aside nav a, aside .cendric-custom-nav-link, aside button:not(#cendric-wallet-btn)')) {
+        closeMobileSidebar();
+      }
+    }
+
     // 1. Financial Tools & Admin Modal triggers
     const taxBtn = e.target.closest('#cendric-nav-tax, [data-cendric-tool="tax"]');
     if (taxBtn) {
@@ -5339,9 +5446,10 @@
     }
   }, true);
 
-  // Close modals on Escape key
+  // Close modals & mobile drawer on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      closeMobileSidebar();
       ['cendric-tax-modal', 'cendric-invoice-modal', 'cendric-csv-modal', 'cendric-bill-modal'].forEach(id => {
         const m = document.getElementById(id);
         if (m) {
@@ -5350,6 +5458,13 @@
         }
       });
       stopCamera();
+    }
+  });
+
+  // Automatically dismiss mobile drawer when screen is resized to desktop width
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) {
+      closeMobileSidebar();
     }
   });
 
