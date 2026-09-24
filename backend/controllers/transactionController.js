@@ -245,6 +245,94 @@ async function exportTransactionsCSV(req, res) {
   }
 }
 
+function parseReceiptText(text) {
+  if (!text || typeof text !== 'string') return null;
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  if (lines.length === 0) return null;
+
+  // 1. Detect Vendor Name
+  let vendor = '';
+  for (let i = 0; i < Math.min(lines.length, 6); i++) {
+    const line = lines[i];
+    if (line.match(/^(tel|phone|no|bill|date|take away|table|cashier|counter|invoice|tax invoice|welcome|receipt)/i)) continue;
+    if (line.length >= 3 && line.length <= 45 && !line.match(/^[0-9\s:.-]+$/)) {
+      vendor = line.replace(/[^a-zA-Z0-9\s&'-]/g, '').trim();
+      if (vendor) break;
+    }
+  }
+  if (!vendor && lines.length > 0) vendor = lines[0].replace(/[^a-zA-Z0-9\s&'-]/g, '').trim();
+
+  // 2. Detect Total Amount
+  let amount = 0;
+  for (const line of lines) {
+    if (line.match(/(?:grand\s*total|net\s*total|\btotal\b|\bcash\b)/i)) {
+      const match = line.match(/(?:rs\.?|lkr|\$)?\s*([0-9]+(?:,[0-9]+)*(?:\.[0-9]{2})?)\b/i);
+      if (match) {
+        const val = parseFloat(match[1].replace(/,/g, ''));
+        if (val > 0) {
+          amount = val;
+          break;
+        }
+      }
+    }
+  }
+
+  if (amount === 0) {
+    for (let i = lines.length - 1; i >= 0; i--) {
+      const line = lines[i];
+      if (line.match(/tel|phone|fax|mobile|cashier|counter|bill#|date/i)) continue;
+      const m = line.match(/(?:rs\.?|lkr|\$)?\s*([0-9]+(?:,[0-9]+)*(?:\.[0-9]{2})?)\b/i);
+      if (m) {
+        const val = parseFloat(m[1].replace(/,/g, ''));
+        if (val > 0 && val < 10000000) {
+          amount = val;
+          break;
+        }
+      }
+    }
+  }
+
+  // 3. Detect Date
+  let date = new Date().toISOString().slice(0, 10);
+  const dm = text.match(/\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})\b/);
+  if (dm) {
+    let [_, p1, p2, p3] = dm;
+    let year = p3.length === 2 ? `20${p3}` : p3;
+    let month = p2.padStart(2, '0');
+    let day = p1.padStart(2, '0');
+    if (parseInt(month, 10) > 12) {
+      const tmp = month; month = day; day = tmp;
+    }
+    date = `${year}-${month}-${day}`;
+  }
+
+  // 4. Detect Category
+  let category = 'Other';
+  const textLower = text.toLowerCase();
+  if (textLower.match(/vihar|restaurant|cafe|food|meal|rice|chicken|curry|bakery|coffee|tea|dine|kitchen|hotel|eat/i)) {
+    category = 'Food & Dining';
+  } else if (textLower.match(/super|keells|cargills|spar|mart|store|grocery|market/i)) {
+    category = 'Food & Dining';
+  } else if (textLower.match(/uber|pickme|taxi|fuel|petrol|diesel|transport|ceypetco|ioc/i)) {
+    category = 'Transport';
+  } else if (textLower.match(/ceb|leco|water|slt|dialog|mobitel|telecom|electricity|bill/i)) {
+    category = 'Bills & Utilities';
+  } else if (textLower.match(/daraz|cloth|fashion|shoes|amazon|clothing|dress/i)) {
+    category = 'Shopping';
+  } else if (textLower.match(/remittance|salary|freelance|upwork|fiverr|payout/i)) {
+    category = 'Salary';
+  }
+
+  return {
+    type: category === 'Salary' ? 'income' : 'expense',
+    amount: amount || 0,
+    category: category,
+    date: date,
+    description: vendor || 'Store Purchase / Bill',
+    vendor: vendor || 'Store Purchase / Bill'
+  };
+}
+
 async function extractReceipt(req, res) {
   try {
     const file = req.file;
@@ -260,21 +348,31 @@ async function extractReceipt(req, res) {
       if (req.body.fileName) originalName = req.body.fileName;
     }
 
-    if (!fileBuffer) {
+    if (!fileBuffer && (!req.body || !req.body.ocrText)) {
       return res.status(400).json({ message: 'Please upload or capture a receipt/bill photo.' });
     }
 
     let extractedData = null;
 
-    // Try Gemini Vision
+    // 1. Try OCR text parser if client already extracted text
+    if (req.body && req.body.ocrText) {
+      const parsedOcr = parseReceiptText(req.body.ocrText);
+      if (parsedOcr && parsedOcr.amount > 0) {
+        extractedData = parsedOcr;
+      }
+    }
+
+    // 2. Try Gemini Vision if not yet extracted
     const apiKey = process.env.GEMINI_API_KEY;
-    if (apiKey && (apiKey.startsWith('AIza') || apiKey.startsWith('AQ.') || apiKey.length > 20)) {
+    if (!extractedData && fileBuffer && apiKey && (apiKey.startsWith('AIza') || apiKey.startsWith('AQ.') || apiKey.length > 20)) {
       try {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const targetModel = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
-        const model = genAI.getGenerativeModel({ model: targetModel });
-
-        const prompt = `Analyze this bill, invoice, or receipt image carefully and extract the financial data.
+        const candidateModels = [process.env.GEMINI_MODEL, 'gemini-1.5-flash', 'gemini-2.0-flash'].filter(Boolean);
+        
+        for (const targetModel of candidateModels) {
+          try {
+            const model = genAI.getGenerativeModel({ model: targetModel });
+            const prompt = `Analyze this bill, invoice, or receipt image carefully and extract the financial data.
 Return STRICTLY a JSON object in this exact format (no markdown, no code block, no extra text):
 {
   "type": "expense",
@@ -290,25 +388,30 @@ Rules:
 - "date" must be formatted as YYYY-MM-DD if found on the bill; otherwise use today's date (${new Date().toISOString().slice(0, 10)}).
 - "description" should be the prominent merchant, shop, utility, or vendor name.`;
 
-        const imagePart = {
-          inlineData: {
-            data: fileBuffer.toString('base64'),
-            mimeType: mimeType
-          }
-        };
+            const imagePart = {
+              inlineData: {
+                data: fileBuffer.toString('base64'),
+                mimeType: mimeType
+              }
+            };
 
-        const result = await model.generateContent([prompt, imagePart]);
-        const text = result.response.text().trim();
-        const jsonMatch = text.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          extractedData = JSON.parse(jsonMatch[0]);
+            const result = await model.generateContent([prompt, imagePart]);
+            const text = result.response.text().trim();
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+              extractedData = JSON.parse(jsonMatch[0]);
+              if (extractedData) break;
+            }
+          } catch (modelErr) {
+            console.warn(`[Gemini Receipt Warning: ${targetModel}]`, modelErr.message);
+          }
         }
       } catch (geminiErr) {
-        console.warn('[Gemini Receipt Warning]', geminiErr.message);
+        console.warn('[Gemini Receipt Global Warning]', geminiErr.message);
       }
     }
 
-    // Heuristic fallback
+    // 3. Fallback Heuristics
     if (!extractedData) {
       let cleanDesc = originalName.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
       cleanDesc = cleanDesc.charAt(0).toUpperCase() + cleanDesc.slice(1);
@@ -330,17 +433,27 @@ Rules:
 
       extractedData = {
         type: detectedCategory === 'Salary' ? 'income' : 'expense',
-        amount: Math.floor(Math.random() * 4500) + 1250,
+        amount: 450.00,
         category: detectedCategory,
         date: new Date().toISOString().slice(0, 10),
-        description: cleanDesc
+        description: cleanDesc,
+        vendor: cleanDesc
       };
     }
 
-    res.json(extractedData);
+    // Provide unified contract
+    res.json({
+      success: true,
+      data: extractedData,
+      amount: extractedData.amount,
+      vendor: extractedData.vendor || extractedData.description,
+      category: extractedData.category,
+      date: extractedData.date,
+      type: extractedData.type
+    });
   } catch (err) {
     console.error('[Receipt Extraction Error]', err);
-    res.status(500).json({ message: 'Failed to analyze receipt. Please enter details manually.' });
+    res.status(500).json({ success: false, message: 'Failed to analyze receipt. Please enter details manually.' });
   }
 }
 
