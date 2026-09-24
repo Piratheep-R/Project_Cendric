@@ -412,6 +412,39 @@
       "renewalDate": "2026-10-12",
       "category": "AI Tools",
       "createdAt": "2026-09-23T16:05:39.523Z"
+    },
+    {
+      "_id": "e2caebdfed6272ea",
+      "userId": "f4bc227142941f6ed2951ae7",
+      "name": "GitHub Pro",
+      "amount": 1317,
+      "baseAmountUSD": 4,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-01",
+      "category": "Software & Tools",
+      "createdAt": "2026-09-24T10:43:59.994Z"
+    },
+    {
+      "_id": "26b93827edbd2d5f",
+      "userId": "f4bc227142941f6ed2951ae7",
+      "name": "Figma Professional",
+      "amount": 4940,
+      "baseAmountUSD": 15,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-05",
+      "category": "Design",
+      "createdAt": "2026-09-24T10:43:59.994Z"
+    },
+    {
+      "_id": "a8da6fdc9adb27ce",
+      "userId": "f4bc227142941f6ed2951ae7",
+      "name": "ChatGPT Plus",
+      "amount": 6586,
+      "baseAmountUSD": 20,
+      "billingCycle": "monthly",
+      "renewalDate": "2026-10-12",
+      "category": "AI Tools",
+      "createdAt": "2026-09-24T10:43:59.994Z"
     }
   ]
 }

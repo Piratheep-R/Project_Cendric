@@ -2118,7 +2118,7 @@
           <div class="cendric-sidebar-section-divider">
             <span>Financial Tools</span>
           </div>
-          <a class="cendric-custom-nav-link" id="cendric-nav-tax" href="#tax" title="Sri Lankan IRD Freelance Tax Calculator">
+          <a class="cendric-custom-nav-link" id="cendric-nav-tax" href="javascript:void(0)" role="button" title="Sri Lankan IRD Freelance Tax Calculator" data-cendric-tool="tax">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="4" y="2" width="16" height="20" rx="2"></rect>
               <line x1="8" y1="6" x2="16" y2="6"></line>
@@ -2132,7 +2132,7 @@
             <span>Tax Estimator</span>
             <span class="cendric-nav-badge cendric-badge-tax">IRD SL</span>
           </a>
-          <a class="cendric-custom-nav-link" id="cendric-nav-invoice" href="#invoice" title="Generate Freelance PDF Invoice">
+          <a class="cendric-custom-nav-link" id="cendric-nav-invoice" href="javascript:void(0)" role="button" title="Generate Freelance PDF Invoice" data-cendric-tool="invoice">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
@@ -2143,7 +2143,7 @@
             <span>Invoices</span>
             <span class="cendric-nav-badge cendric-badge-neutral">PDF</span>
           </a>
-          <a class="cendric-custom-nav-link" id="cendric-nav-camera-bill" href="#scanner" title="Snap & Scan Bill / Receipt">
+          <a class="cendric-custom-nav-link" id="cendric-nav-camera-bill" href="javascript:void(0)" role="button" title="Snap & Scan Bill / Receipt" data-cendric-tool="scanner">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
               <circle cx="12" cy="13" r="4"></circle>
@@ -2151,7 +2151,7 @@
             <span>Snap & Scan Bill</span>
             <span class="cendric-nav-badge cendric-badge-ai">AI</span>
           </a>
-          <a class="cendric-custom-nav-link" id="cendric-nav-ocr" href="#receipt" title="AI Receipt OCR & Statement Importer">
+          <a class="cendric-custom-nav-link" id="cendric-nav-ocr" href="javascript:void(0)" role="button" title="AI Receipt OCR & Statement Importer" data-cendric-tool="ocr">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
@@ -2178,18 +2178,22 @@
 
         document.getElementById('cendric-nav-tax')?.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           openTaxCalculatorModal();
         });
         document.getElementById('cendric-nav-invoice')?.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           openInvoiceModal();
         });
         document.getElementById('cendric-nav-ocr')?.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           openCsvImporterModal();
         });
         document.getElementById('cendric-nav-camera-bill')?.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           openBillScannerModal();
         });
         document.getElementById('cendric-nav-admin')?.addEventListener('click', (e) => {
@@ -2503,7 +2507,7 @@
       if (gSlider) gSlider.value = initialGross;
     }
     modal.classList.add('cendric-active');
-    modal.style.setProperty('display', 'flex', 'important');
+    modal.style.cssText = 'display: flex !important; position: fixed !important; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; z-index: 9999999 !important; background: rgba(10, 15, 30, 0.75) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; align-items: center !important; justify-content: center !important; padding: 20px; box-sizing: border-box;';
     updateTaxCalc();
   }
 
@@ -2768,7 +2772,7 @@
     const modal = document.getElementById('cendric-invoice-modal');
     if (!modal) return;
     modal.classList.add('cendric-active');
-    modal.style.setProperty('display', 'flex', 'important');
+    modal.style.cssText = 'display: flex !important; position: fixed !important; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; z-index: 9999999 !important; background: rgba(10, 15, 30, 0.75) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; align-items: center !important; justify-content: center !important; padding: 20px; box-sizing: border-box;';
     updateInvoicePreview();
   }
 
@@ -3174,7 +3178,7 @@
     const modal = document.getElementById('cendric-csv-modal');
     if (!modal) return;
     modal.classList.add('cendric-active');
-    modal.style.setProperty('display', 'flex', 'important');
+    modal.style.cssText = 'display: flex !important; position: fixed !important; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; z-index: 9999999 !important; background: rgba(10, 15, 30, 0.75) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; align-items: center !important; justify-content: center !important; padding: 20px; box-sizing: border-box;';
   }
 
   function setupCsvImporterModal() {
@@ -3534,7 +3538,7 @@
     const modal = document.getElementById('cendric-bill-modal');
     if (!modal) return;
     modal.classList.add('cendric-active');
-    modal.style.setProperty('display', 'flex', 'important');
+    modal.style.cssText = 'display: flex !important; position: fixed !important; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; z-index: 9999999 !important; background: rgba(10, 15, 30, 0.75) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; align-items: center !important; justify-content: center !important; padding: 20px; box-sizing: border-box;';
     resetBillScannerViews();
     startCamera();
   }
@@ -5268,12 +5272,55 @@
     scheduleCheckAndEnhance();
   }
 
-  // Global click delegator for sidebar nav links to guarantee routing
+  // Global click delegator for sidebar nav links & financial tools to guarantee 100% reliable opening
   document.addEventListener('click', (e) => {
+    // 1. Financial Tools & Admin Modal triggers
+    const taxBtn = e.target.closest('#cendric-nav-tax, [data-cendric-tool="tax"]');
+    if (taxBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      openTaxCalculatorModal();
+      return;
+    }
+
+    const invBtn = e.target.closest('#cendric-nav-invoice, [data-cendric-tool="invoice"]');
+    if (invBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      openInvoiceModal();
+      return;
+    }
+
+    const billBtn = e.target.closest('#cendric-nav-camera-bill, [data-cendric-tool="scanner"]');
+    if (billBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      openBillScannerModal();
+      return;
+    }
+
+    const ocrBtn = e.target.closest('#cendric-nav-ocr, [data-cendric-tool="ocr"]');
+    if (ocrBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      openCsvImporterModal();
+      return;
+    }
+
+    const adminBtn = e.target.closest('#cendric-nav-admin');
+    if (adminBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      history.pushState({}, '', '/admin');
+      handleRouteChange();
+      return;
+    }
+
+    // 2. Standard SPA navigation
     const link = e.target.closest('aside a[href], aside nav a');
     if (link) {
       const href = link.getAttribute('href');
-      if (href && href !== location.pathname) {
+      if (href && href.startsWith('/') && href !== location.pathname) {
         // Clean up chat overlay immediately on sidebar link click
         if (!href.includes('/chat')) {
           document.getElementById('cendric-chat-overlay')?.remove();
@@ -5291,6 +5338,20 @@
       }
     }
   }, true);
+
+  // Close modals on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      ['cendric-tax-modal', 'cendric-invoice-modal', 'cendric-csv-modal', 'cendric-bill-modal'].forEach(id => {
+        const m = document.getElementById(id);
+        if (m) {
+          m.classList.remove('cendric-active');
+          m.style.setProperty('display', 'none', 'important');
+        }
+      });
+      stopCamera();
+    }
+  });
 
   window.addEventListener('popstate', handleRouteChange);
   window.addEventListener('DOMContentLoaded', scheduleCheckAndEnhance);
